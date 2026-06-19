@@ -1,0 +1,402 @@
+.header {
+  width: 100%;
+  background-color: #006FFD;
+  height: 80px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-radius: 0;
+  transition: border-radius 0.35s ease;
+}
+
+.headerScrolled {
+  border-radius: 0 0 24px 24px;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 48px;
+}
+
+.logoIcon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.logoText {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.link:hover { opacity: 0.8; }
+
+.linkActive {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.iconBtn:hover { opacity: 0.75; }
+
+.icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.contactLink,
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.contactLink:hover { opacity: 0.8; }
+
+.loginBtn {
+  height: 42px;
+  padding: 0 22px;
+  background: #ffffff;
+  color: #006FFD;
+  border: none;
+  border-radius: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.loginBtn:hover  { opacity: 0.9; }
+.loginBtn:active { opacity: 0.75; }
+
+.authIcons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profileIcon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.burgerBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 0;
+}
+.burgerIcon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 80px 0 0 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 99;
+}
+
+.mobileMenu {
+  background: #006FFD;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileLink {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  transition: opacity 0.15s;
+}
+.mobileLink:hover { opacity: 0.8; }
+.mobileLinkActive { font-weight: 700; }
+
+.mobileBottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.mobileContact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.mobileAuthRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 1200px) {
+  .contactLink span { display: none; }
+}
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 24px;
+    position: relative;
+  }
+
+  .burgerBtn { display: flex; }
+  .nav       { display: none; }
+
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-right: 0;
+  }
+
+  .contactItem      { display: none; }
+  .contactLink span { display: none; }
+
+  .loginBtn { display: none; }
+
+  .right { gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  .inner { padding: 0 20px; }
+}
+
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  display: flex;
+}
+
+.drawer {
+  width: 85%;
+  max-width: 340px;
+  height: 100%;
+  background: #006FFD;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 32px;
+  overflow-y: auto;
+}
+
+.drawerHead {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.drawerLogo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.drawerLogoImg {
+  height: 36px;
+  object-fit: contain;
+}
+
+.drawerClose {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.85;
+}
+.drawerClose:hover { opacity: 1; }
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+  margin-bottom: 28px;
+}
+
+.drawerLink {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 0;
+  transition: opacity 0.15s;
+}
+.drawerLink:hover   { opacity: 0.75; }
+.drawerLinkActive   { opacity: 0.6; }
+
+.drawerProfileBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 52px;
+  background: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 100px;
+  color: #006FFD;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: background 0.15s;
+}
+.drawerProfileBtn:hover { background: rgba(255,255,255,0.25); }
+
+.drawerProfileIco {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.drawerLoginBtn {
+  width: 100%;
+  height: 52px;
+  background: #ffffff;
+  color: #006FFD;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: opacity 0.15s;
+}
+.drawerLoginBtn:hover { opacity: 0.9; }
+
+.drawerDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 24px;
+}
+
+.drawerStoreLabel {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 12px;
+}
+
+.drawerBadges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.drawerBadgeImg {
+  height: 38px;
+  object-fit: contain;
+}
+
+.drawerContact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #ffffff;
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+.drawerContact:hover { opacity: 0.8; }
+
+@media (max-width: 1024px) {
+  .drawerLink {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}

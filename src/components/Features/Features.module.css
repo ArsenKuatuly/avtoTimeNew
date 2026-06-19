@@ -1,0 +1,168 @@
+.section {
+  background-color: #EBF0FF;
+  width: 100%;
+  padding: 72px 100px;
+    border-radius: 100px;
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 52px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #0D0D0D;
+  text-align: center;
+  margin: 0 0 16px;
+}
+
+.topCard {
+  background: #006FFD;
+  border-radius: 60px;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  min-height: 260px;
+  position: relative;
+}
+
+.calendarImg {
+  width: 251px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-left: 32px;
+  margin-bottom: -8px;
+  position: relative;
+  z-index: 1;
+}
+
+.topCardText {
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+
+.bottomRow {
+  display: flex;
+  gap: 24px;
+}
+
+.smallCard {
+  flex: 1;
+  background: #006FFD;
+  border-radius: 60px;
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.smallCardText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+
+.bgIcon {
+  position: absolute;
+  bottom: 10px;
+  right: 18px;
+  width: 100px;
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+
+.cardTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+@media (min-width: 769px) {
+  .topCard,
+  .smallCard {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .cardVisible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .section { padding: 56px 48px; border-radius: 60px; }
+  .title { font-size: 38px; }
+  .cardTitle { font-size: 20px; }
+}
+
+@media (max-width: 768px) {
+  .section { padding: 40px 20px; border-radius: 40px; }
+  .title { font-size: 26px; margin-bottom: 8px; text-transform: none; }
+
+  .topCard {
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 36px;
+    min-height: unset;
+    padding-top: 24px;
+  }
+
+  .calendarImg {
+    width: 160px;
+    margin-left: 24px;
+    margin-bottom: 0;
+    order: 2;
+    align-self: flex-end;
+  }
+
+  .topCardText {
+    padding: 0 24px 0;
+    order: 1;
+    gap: 8px;
+  }
+
+  .bottomRow { flex-direction: column; gap: 16px; }
+
+  .smallCard {
+    border-radius: 36px;
+    min-height: 180px;
+    padding: 28px 24px;
+  }
+
+  .cardTitle { font-size: 20px; }
+  .cardDesc  { font-size: 14px; }
+
+  .bgIcon { width: 80px; }
+}

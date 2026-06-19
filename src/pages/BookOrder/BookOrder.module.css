@@ -1,0 +1,508 @@
+.formPage, .smsPage, .successPage {
+  min-height: calc(100vh - 80px);
+  background: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  padding: 24px 48px 48px;
+}
+
+.backBtn {
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.backBtn:hover { color: #006FFD; }
+
+.formLayout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  width: 100%;
+}
+
+.formLeft { flex: 0 0 460px; max-width: 460px; }
+.formTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0D0D0D;
+  margin: 0 0 28px;
+}
+
+.field { margin-bottom: 14px; position: relative; }
+
+.fieldInput {
+  width: 100%;
+  height: 56px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px 16px 0;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #0D0D0D;
+  outline: none;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.15s;
+  cursor: text;
+}
+.fieldInput:focus { border-color: #006FFD; }
+.fieldInput::placeholder { color: #9CA3AF; font-size: 14px; opacity: 1; transition: opacity 0.1s; }
+.fieldInput:focus::placeholder { opacity: 0; }
+
+.fieldLabel {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  font-size: 11px;
+  color: #9CA3AF;
+  font-family: 'Manrope', sans-serif;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.fieldInput:focus + .fieldLabel { opacity: 1; color: #006FFD; }
+.fieldInput:not(:placeholder-shown) + .fieldLabel { opacity: 1; }
+.dateWrap .fieldInput:focus + .fieldLabel { opacity: 1; color: #006FFD; }
+.dateWrap .fieldInput:not(:placeholder-shown) + .fieldLabel { opacity: 1; }
+
+.dateWrap { position: relative; cursor: pointer; }
+.calIco {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.paymentField {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 56px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 10px 44px 10px 16px;
+  box-sizing: border-box;
+  background: #fff;
+  cursor: pointer;
+  justify-content: center;
+}
+.paymentLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 11px;
+  color: #9CA3AF;
+}
+.paymentVal {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #0D0D0D;
+  font-weight: 500;
+}
+.paymentArrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #9CA3AF;
+}
+
+.promoRow { display: flex; gap: 10px; align-items: flex-start; }
+.promoField { flex: 1; }
+.promoApply {
+  height: 56px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: none;
+  background: #006FFD;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.promoApplyDis {
+  height: 56px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: none;
+  background: #E5E7EB;
+  color: #9CA3AF;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: default;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.formRight { width: 320px; flex-shrink: 0; padding-top: 64px; }
+.summary {
+  background: #F5F7FA;
+  border-radius: 16px;
+  padding: 20px;
+}
+.summaryTitle { font-size: 20px; font-weight: 800; color: #0D0D0D; margin: 0 0 16px; }
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #E5E7EB;
+  gap: 12px;
+}
+.summaryRow:last-of-type { border-bottom: none; }
+.summaryKey { font-size: 13px; color: #6B7280; flex-shrink: 0; }
+.summaryVal { font-size: 13px; font-weight: 600; color: #0D0D0D; text-align: right; }
+.summaryPrice { font-size: 14px; font-weight: 700; color: #006FFD; text-align: right; }
+
+.formBtnWrap {
+  margin-top: 20px;
+}
+
+.btnBlue {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  background: #006FFD;
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+.btnBlue:hover { opacity: 0.9; }
+.btnBlueLg {
+  width: 100%;
+  height: 54px;
+  border-radius: 16px;
+  border: none;
+  background: #006FFD;
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+.btnBlueLg:hover { opacity: 0.9; }
+.btnDisabled {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  background: #E5E7EB;
+  color: #9CA3AF;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: default;
+}
+
+.dpTitle {
+  font-family: 'Manrope', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  color: #0D0D0D;
+  margin: 0 0 20px;
+}
+
+.dpMonth {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0D0D0D;
+  margin: 0 0 12px;
+}
+
+.dpWeek {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.dpDay {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 0 8px;
+  position: relative;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.dpDay:hover:not(.dpDayPast) { background: #F5F7FA; }
+
+.dpDayName {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: #9CA3AF;
+}
+.dpDayNum {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0D0D0D;
+}
+.dpDayPast .dpDayName,
+.dpDayPast .dpDayNum { color: #D1D5DB; cursor: default; }
+
+.dpDayActive .dpDayName { color: #006FFD; }
+.dpDayActive .dpDayNum  { color: #0D0D0D; font-weight: 800; }
+
+.dpDayLine {
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: #006FFD;
+  border-radius: 2px;
+}
+
+.dpGroupLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0D0D0D;
+  margin: 12px 0 8px;
+}
+
+.dpGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.dpSlot {
+  height: 40px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0D0D0D;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dpSlot:hover:not(:disabled) {
+  border-color: #006FFD;
+}
+.dpSlotDis {
+  background: #F3F4F6;
+  border-color: #F3F4F6;
+  color: #D1D5DB;
+  cursor: default;
+}
+.dpSlotActive {
+  background: #006FFD;
+  border-color: #006FFD;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.dpFooter {
+  height: 88px;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 22px 24px 24px;
+  width: 420px;
+  max-width: 95vw;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+}
+.modalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.modalTitle { font-size: 20px; font-weight: 800; color: #0D0D0D; margin: 0; }
+.modalClose {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #F3F4F6;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #6B7280;
+}
+.modalClose:hover { background: #E5E7EB; }
+.modalSection { font-size: 15px; font-weight: 700; color: #0D0D0D; margin: 0 0 10px; }
+.modalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #F3F4F6;
+  gap: 16px;
+}
+.modalRow:last-child { border-bottom: none; }
+.modalKey { font-size: 14px; color: #9CA3AF; flex-shrink: 0; }
+.modalVal { font-size: 14px; font-weight: 600; color: #0D0D0D; text-align: right; }
+.modalSummary {
+  background: #F5F7FA;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 16px 0 20px;
+}
+.modalSummaryTitle { font-size: 15px; font-weight: 700; color: #0D0D0D; margin: 0 0 10px; }
+
+.smsPage { display: flex; flex-direction: column; }
+.smsBox {
+  max-width: 380px;
+  margin: 40px auto 0;
+  width: 100%;
+}
+.smsTitle { font-size: 24px; font-weight: 800; color: #0D0D0D; margin: 0 0 8px; text-align: center; }
+.smsSub { font-size: 14px; color: #6B7280; text-align: center; margin: 0; }
+.smsPhone { font-size: 14px; font-weight: 700; color: #0D0D0D; text-align: center; margin: 0 0 24px; }
+.otpRow {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.otpBox {
+  width: 64px;
+  height: 64px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #0D0D0D;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #ffffff;
+}
+
+.otpBox:focus { border-color: #006FFD; }
+.smsTimer { font-size: 13px; color: #6B7280; text-align: center; margin-top: 16px; }
+.smsResend { color: #006FFD; cursor: pointer; font-weight: 600; }
+
+.successPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+}
+.successIco { width: 64px; height: 64px; margin-bottom: 20px; }
+.successTitle { font-size: 28px; font-weight: 800; color: #0D0D0D; margin: 0 0 12px; }
+.successSub { font-size: 15px; color: #6B7280; margin: 0; }
+.successDate { font-size: 15px; font-weight: 700; color: #006FFD; margin: 4px 0 32px; }
+.successBtns { display: flex; flex-direction: column; gap: 12px; width: 380px; }
+.successBtnGray {
+  width: 100%; height: 52px; border-radius: 14px;
+  border: none; background: #F3F4F6; color: #374151;
+  font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
+}
+.successBtnBlue {
+  width: 100%; height: 52px; border-radius: 14px;
+  border: none; background: #006FFD; color: #ffffff;
+  font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .formPage, .smsPage, .successPage {
+    min-height: calc(100vh - 80px);
+    padding: 20px 16px 100px;
+  }
+
+  .formLayout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .formLeft {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .formTitle {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .formRight {
+    width: 100%;
+    flex-shrink: unset;
+    padding-top: 0;
+  }
+
+  .summary { padding: 16px; }
+  .summaryTitle { font-size: 17px; margin-bottom: 12px; }
+
+  .formBtnWrap {
+    position: fixed;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    margin-top: 0;
+    z-index: 20;
+  }
+
+  .btnBlue, .btnDisabled {
+    border-radius: 100px;
+    height: 54px;
+    font-size: 16px;
+  }
+
+  .dpTitle { font-size: 22px; margin-bottom: 16px; }
+
+  .dpScrollArea {
+    max-height: calc(100vh - 320px);
+  }
+
+  .dpFooter {
+    position: fixed;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .dpFooter .btnBlue,
+  .dpFooter .btnDisabled {
+    border-radius: 100px;
+    height: 54px;
+    position: static;
+  }
+
+  .smsBox { margin-top: 24px; }
+
+  .successBtns { width: 100%; }
+}

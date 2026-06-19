@@ -1,0 +1,212 @@
+.hero {
+  background-color: #006FFD;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+    border-radius: 0 0 100px 100px;
+}
+
+.inner {
+  width: 100%;
+  padding: 64px 100px;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  position: relative;
+}
+
+
+.left {
+  flex: 0 0 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 0;
+  z-index: 1;
+}
+
+.title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1.0;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 26px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.ctaBtn {
+  align-self: flex-start;
+  height: 52px;
+  padding: 0 28px;
+  background: #FFFFFF;
+  color: #006FFD;
+  border: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.ctaBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.badges {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.badge img {
+  height: 44px;
+  display: block;
+}
+
+.qrCard {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 48px;
+  padding: 20px 24px;
+  max-width: 320px;
+}
+
+.qrText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.qrTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.qrDesc {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.qrImg {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+
+.pautinka {
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 735px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  height: 520px;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+  cursor: pointer;
+}
+.phone:hover {
+  transform: scale(1.07) translateY(-10px);
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.25));
+}
+
+.phoneMobile { display: none; }
+
+@media (max-width: 1250px) {
+  .inner { padding: 48px 60px; }
+  .left  { flex: 0 0 460px; }
+  .title { font-size: 36px; }
+  .phone { height: 400px; }
+  .pautinka { width: 520px; }
+}
+
+@media (max-width: 940px) {
+  .phone { height: 320px; }
+  .pautinka { width: 445px; }
+}
+
+@media (max-width: 768px) {
+  .hero { border-radius: 0 0 40px 40px; }
+
+  .inner {
+    padding: 36px 20px 0;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaBtn { display: none; }
+
+  .left {
+    flex: unset;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .title { font-size: 48px; text-transform: none; }
+  .subtitle { font-size: 20px; }
+
+  .badges { flex-wrap: wrap; }
+  .badge img { height: 36px; }
+
+  .qrCard { display: none; }
+
+  .phoneDesktop { display: none; }
+
+  .phoneMobile {
+    display: block;
+    position: relative;
+    z-index: 1;
+    height: auto;
+    width: 240px;
+    margin: 8px auto -1px;
+    transition: none;
+    pointer-events: none;
+    cursor: default;
+  }
+  .phoneMobile:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .pautinka {
+    display: block;
+    width: 420px;
+    left: 50%;
+    right: auto;
+    bottom: -20px;
+    transform: translateX(-50%);
+  }
+}
