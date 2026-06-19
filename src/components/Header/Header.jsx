@@ -11,8 +11,8 @@ import profilelogo    from '../../assets/icons/profileLogo.svg';
 import mobileprofile  from '../../assets/icons/mobileprofile.png';
 import exitlogo       from '../../assets/icons/exitLogo.svg';
 import burgerbutton   from '../../assets/icons/burgerButton.svg';
-import playmarket     from '../../assets/icons/playmarket.png';
-import appstore       from '../../assets/icons/appstore.png';
+import playmarket     from '../../assets/icons/playMarket.svg';
+import appstore       from '../../assets/icons/appStore.svg';
 
 const NAV = [
   { to: '/',         label: 'Главная'     },

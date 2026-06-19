@@ -1,4 +1,5 @@
 node_modules/
+.tmp_inspect.js
 dist/
 build/
 .env

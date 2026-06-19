@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Hero.module.css';
 
 import herophone   from '../../assets/icons/herophone.png';
-import mobilephone from '../../assets/icons/mobilephone.png';
+import mobilephone from '../../assets/icons/mobilePhone.svg';
 import qrcode     from '../../assets/icons/heroQR.svg';
 import playmarket from '../../assets/icons/playMarket.svg';
 import appstore   from '../../assets/icons/appStore.svg';
