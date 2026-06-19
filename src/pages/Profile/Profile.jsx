@@ -7,6 +7,7 @@ import zapiseinet  from '../../assets/icons/zapiseinet.png';
 import mestoIco    from '../../assets/icons/mesto.png';
 import garagenet   from '../../assets/icons/garagenet.png';
 import errorGarage from '../../assets/icons/errorGarage.png';
+import errorAuth   from '../../assets/icons/errorAuth.svg';
 import calendarIco   from '../../assets/icons/iconCalendar.png';
 import moicards      from '../../assets/icons/moicards.png';
 import visaIco       from '../../assets/icons/visa.svg';
@@ -530,7 +531,7 @@ function MobileBookingDetail({ booking, onBack }) {
 
         {cancelled && (
           <div className={styles.cancelInfoBlock}>
-            <span className={styles.cancelInfoIcon}>⚠</span>
+            <img src={errorAuth} alt="" className={styles.cancelInfoIcon} />
             <div>
               <p className={styles.cancelInfoTitle}>Запись отменена</p>
               <p className={styles.cancelInfoSub}>Причина отмены: {cancelledReason}</p>
