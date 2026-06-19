@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styles from './Services.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import yellowStar  from '../../assets/icons/yellowStar.png';
+import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
 import searchIco   from '../../assets/icons/iconSearch.png';
 import mapCarSmall    from '../../assets/icons/mapCarSmall.svg';

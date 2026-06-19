@@ -5,7 +5,7 @@ import carImg   from '../../assets/icons/car.svg';
 import toright  from '../../assets/icons/toright.png';
 import galochka from '../../assets/icons/galochka.png';
 import strechImg        from '../../assets/icons/strech.png';
-import yellowStar       from '../../assets/icons/yellowStar.png';
+import yellowStar       from '../../assets/icons/yellowStar.svg';
 import transparentStar  from '../../assets/icons/transparentStar.png';
 import icoRect          from '../../assets/icons/rectangle.png';
 import icoBlueRect      from '../../assets/icons/blueRectangle.png';
