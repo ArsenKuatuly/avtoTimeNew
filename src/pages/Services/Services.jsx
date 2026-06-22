@@ -662,7 +662,7 @@ export default function Services() {
             </div>
 
             <div className={styles.detailFooter}>
-              <button className={styles.queueBtn}>Встать в очередь</button>
+              <button className={styles.queueBtn} onClick={() => navigate('/queue', { state: { company: selected } })}>Встать в очередь</button>
               <button
                 className={styles.bookBtn}
                 disabled={checkedActions.length === 0}

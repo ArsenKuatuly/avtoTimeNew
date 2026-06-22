@@ -10,6 +10,7 @@ import Partners from './pages/Partners/Partners';
 import Profile from './pages/Profile/Profile';
 import BookingDetail from './pages/BookingDetail/BookingDetail';
 import BookOrder from './pages/BookOrder/BookOrder';
+import Queue from './pages/Queue/Queue';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/booking/:id" element={<BookingDetail />} />
           <Route path="/book" element={<BookOrder />} />
+          <Route path="/queue" element={<Queue />} />
         </Routes>
         <Footer />
         <AuthModal />

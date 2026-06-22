@@ -37,8 +37,9 @@ export default function BookOrder() {
 
   const [name, setName]       = useState('');
   const [phone, setPhone]     = useState('');
-  const [pickerDate, setPickerDate] = useState(null);
+  const [pickerDate, setPickerDate] = useState(() => { const d = new Date(); d.setHours(0,0,0,0); return d; });
   const [pickerSlot, setPickerSlot] = useState(null);
+  const [weekOffset, setWeekOffset] = useState(0);
   const [promo, setPromo]     = useState('');
 
   const [smsDigits, setSmsDigits] = useState(['', '', '', '']);
@@ -66,7 +67,7 @@ export default function BookOrder() {
 
   const today = new Date(); today.setHours(0,0,0,0);
   const dayOfWeek = (today.getDay() + 6) % 7;
-  const monday = new Date(today); monday.setDate(today.getDate() - dayOfWeek);
+  const monday = new Date(today); monday.setDate(today.getDate() - dayOfWeek + weekOffset * 7);
   const weekDays = Array.from({length:7}, (_,i) => {
     const d = new Date(monday); d.setDate(monday.getDate() + i); return d;
   });
@@ -147,11 +148,16 @@ export default function BookOrder() {
 
   if (showDatePicker) return (
     <div className={styles.formPage}>
+      <button className={styles.backBtn} onClick={() => setShowDatePicker(false)}>‹ назад</button>
       <h1 className={styles.dpTitle}>Выберите дату</h1>
 
-      <p className={styles.dpMonth}>{MONTHS_NOM[weekDays[3].getMonth()]}</p>
+      <div className={styles.dpMonthNav}>
+        <button className={styles.dpNavBtn} onClick={() => setWeekOffset(o => o - 1)} disabled={weekOffset === 0}>‹</button>
+        <p className={styles.dpMonth}>{MONTHS_NOM[weekDays[3].getMonth()]} {weekDays[3].getFullYear()}</p>
+        <button className={styles.dpNavBtn} onClick={() => setWeekOffset(o => o + 1)}>›</button>
+      </div>
 
-      <div className={styles.dpWeek}>
+      <div className={styles.dpWeekWrap}>
         {weekDays.map((day, i) => {
           const isPast     = day < today;
           const isSelected = isSameDay(day, pickerDate);
@@ -160,30 +166,33 @@ export default function BookOrder() {
               className={`${styles.dpDay} ${isSelected ? styles.dpDayActive : ''} ${isPast ? styles.dpDayPast : ''}`}
               onClick={() => { if (!isPast) { setPickerDate(day); setPickerSlot(null); } }}>
               <span className={styles.dpDayName}>{DAY_SHORT[i]}</span>
-              <span className={styles.dpDayNum}>{day.getDate()}</span>
-              {isSelected && <span className={styles.dpDayLine} />}
+              <span className={`${styles.dpDayCircle} ${isSelected ? styles.dpDayCircleActive : ''}`}>
+                {day.getDate()}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {TIME_GROUPS.map((group, gIdx) => (
-        <div key={group.label}>
-          <p className={styles.dpGroupLabel}>{group.label}</p>
-          <div className={styles.dpGrid}>
-            {group.slots.map((slot, i) => (
-              <button key={i}
-                disabled={!slot.ok || !pickerDate}
-                className={`${styles.dpSlot}
-                  ${!slot.ok ? styles.dpSlotDis : ''}
-                  ${pickerSlot?.g === gIdx && pickerSlot?.i === i ? styles.dpSlotActive : ''}`}
-                onClick={() => setPickerSlot({ g: gIdx, i })}>
-                {slot.t}
-              </button>
-            ))}
+      <div className={styles.dpScrollArea}>
+        {TIME_GROUPS.map((group, gIdx) => (
+          <div key={group.label}>
+            <p className={styles.dpGroupLabel}>{group.label}</p>
+            <div className={styles.dpGrid}>
+              {group.slots.map((slot, i) => (
+                <button key={i}
+                  disabled={!slot.ok}
+                  className={`${styles.dpSlot}
+                    ${!slot.ok ? styles.dpSlotDis : ''}
+                    ${pickerSlot?.g === gIdx && pickerSlot?.i === i ? styles.dpSlotActive : ''}`}
+                  onClick={() => setPickerSlot({ g: gIdx, i })}>
+                  {slot.t}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       <div className={styles.dpFooter}>
         <button
@@ -260,16 +269,15 @@ export default function BookOrder() {
               <span className={styles.summaryPrice}>{total ? `${total.toLocaleString('ru-RU')} ₸` : '5 000 ₸'}</span>
             </div>
           </div>
+          <div className={styles.formBtnWrap}>
+            <button
+              className={formFilled ? styles.btnBlue : styles.btnDisabled}
+              disabled={!formFilled}
+              onClick={() => setShowConfirm(true)}>
+              Продолжить
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className={styles.formBtnWrap}>
-        <button
-          className={formFilled ? styles.btnBlue : styles.btnDisabled}
-          disabled={!formFilled}
-          onClick={() => setShowConfirm(true)}>
-          Продолжить
-        </button>
       </div>
 
       {showConfirm && (

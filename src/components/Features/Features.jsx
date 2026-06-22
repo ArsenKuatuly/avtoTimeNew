@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './Features.module.css';
 
-import calendar from '../../assets/icons/calendar.png';
-import percent  from '../../assets/icons/percent.png';
-import adress   from '../../assets/icons/adress.png';
-import star     from '../../assets/icons/star.png';
+import calendar from '../../assets/icons/calendar.svg';
+import percent  from '../../assets/icons/percent.svg';
+import adress   from '../../assets/icons/adress.svg';
+import star     from '../../assets/icons/star.svg';
 
 const SMALL_CARDS = [
   { title: 'Кэшбек 2 %',           desc: 'Получайте кэшбек 2 %  с каждой записи',                                          icon: percent },
