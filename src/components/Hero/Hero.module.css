@@ -81,10 +81,10 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(25, 75, 203, 1.15);
   border-radius: 48px;
-  padding: 20px 24px;
-  max-width: 320px;
+  padding: 30px 24px;
+  max-width: 340px;
 }
 
 .qrText {
@@ -111,11 +111,21 @@
   margin: 0;
 }
 
+.qrImgWrap {
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .qrImg {
   width: 88px;
   height: 88px;
   object-fit: contain;
-  flex-shrink: 0;
+  display: block;
 }
 
 

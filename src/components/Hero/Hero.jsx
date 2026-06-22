@@ -1,9 +1,8 @@
-import React from 'react';
 import styles from './Hero.module.css';
 
 import herophone   from '../../assets/icons/herophone.png';
 import mobilephone from '../../assets/icons/mobilePhone.svg';
-import qrcode     from '../../assets/icons/heroQR.svg';
+import qrcode     from '../../assets/icons/qr-avto.svg';
 import playmarket from '../../assets/icons/playMarket.svg';
 import appstore   from '../../assets/icons/appStore.svg';
 import pautinka   from '../../assets/icons/pautinka.png';
@@ -39,7 +38,9 @@ export default function Hero() {
               <p className={styles.qrTitle}>Загрузить<br />приложение</p>
               <p className={styles.qrDesc}>Наведите на qr<br />и скачайте приложение</p>
             </div>
-            <img src={qrcode} alt="QR code" className={styles.qrImg} />
+            <div className={styles.qrImgWrap}>
+              <img src={qrcode} alt="QR code" className={styles.qrImg} />
+            </div>
           </div>
         </div>
 

@@ -17,14 +17,13 @@ function formatPhone(raw) {
 }
 
 function PhoneStep() {
-  const { submitPhone, closeModal } = useAuth();
+  const { submitPhone, closeModal, loading, error } = useAuth();
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
     const formatted = formatPhone(e.target.value);
     setValue(formatted);
   };
-
 
   const digits = value.replace(/\D/g, '');
   const isReady = digits.length === 11;
@@ -47,23 +46,34 @@ function PhoneStep() {
         />
       </div>
 
+      {error && (
+        <div className={styles.errorBox}>
+          <img src={errorAuth} alt="Ошибка" className={styles.errorIcon} />
+          <span>{error}</span>
+        </div>
+      )}
+
       <button
-        className={`${styles.btn} ${isReady ? styles.btnActive : styles.btnDisabled}`}
-        disabled={!isReady}
+        className={`${styles.btn} ${isReady && !loading ? styles.btnActive : styles.btnDisabled}`}
+        disabled={!isReady || loading}
         onClick={() => submitPhone(value)}
       >
-        Продолжить
+        {loading ? 'Отправка...' : 'Продолжить'}
       </button>
     </div>
   );
 }
 
 function SmsStep() {
-  const { submitCode, closeModal, phone, backToPhone } = useAuth();
-  const [digits, setDigits] = useState(['', '', '', '']);
-  const [error, setError]   = useState(false);
+  const { submitCode, closeModal, phone, backToPhone, loading, error, resendCode } = useAuth();
+  const [digits, setDigits]   = useState(['', '', '', '']);
+  const [localErr, setLocalErr] = useState(false);
   const [seconds, setSeconds] = useState(59);
   const inputRefs = useRef([]);
+
+  useEffect(() => {
+    if (error) setLocalErr(true);
+  }, [error]);
 
   useEffect(() => {
     if (seconds <= 0) return;
@@ -78,7 +88,7 @@ function SmsStep() {
     const next = [...digits];
     next[i] = v;
     setDigits(next);
-    setError(false);
+    setLocalErr(false);
     if (v && i < 3) inputRefs.current[i + 1]?.focus();
   };
 
@@ -88,13 +98,9 @@ function SmsStep() {
     }
   };
 
-  const handleSubmit = () => {
-    if (code !== '1111') {
-      setError(true);
-      return;
-    }
-    setError(false);
-    submitCode();
+  const handleResend = () => {
+    setSeconds(59);
+    resendCode();
   };
 
   return (
@@ -114,7 +120,7 @@ function SmsStep() {
           <input
             key={i}
             ref={el => inputRefs.current[i] = el}
-            className={`${styles.otpBox} ${error ? styles.otpBoxError : ''}`}
+            className={`${styles.otpBox} ${localErr ? styles.otpBoxError : ''}`}
             value={d}
             onChange={e => handleDigitChange(i, e.target.value)}
             onKeyDown={e => handleKeyDown(i, e)}
@@ -125,25 +131,25 @@ function SmsStep() {
         ))}
       </div>
 
-      {error && (
+      {localErr && (
         <div className={styles.errorBox}>
           <img src={errorAuth} alt="Ошибка" className={styles.errorIcon} />
-          <span>Не верный код</span>
+          <span>{error || 'Неверный код'}</span>
         </div>
       )}
 
       <button
-        className={`${styles.btn} ${code.length === 4 && !error ? styles.btnActive : styles.btnDisabled}`}
-        disabled={code.length < 4 || error}
-        onClick={handleSubmit}
+        className={`${styles.btn} ${code.length === 4 && !localErr && !loading ? styles.btnActive : styles.btnDisabled}`}
+        disabled={code.length < 4 || localErr || loading}
+        onClick={() => submitCode(code)}
       >
-        Продолжить
+        {loading ? 'Проверка...' : 'Продолжить'}
       </button>
 
       <p className={styles.resend}>
         {seconds > 0
           ? `Отправить код еще раз через 00:${String(seconds).padStart(2, '0')}`
-          : <button className={styles.changeLink} onClick={() => setSeconds(59)}>Отправить код еще раз</button>
+          : <button className={styles.changeLink} onClick={handleResend}>Отправить код еще раз</button>
         }
       </p>
     </div>
@@ -151,10 +157,9 @@ function SmsStep() {
 }
 
 function NameStep() {
-  const { submitName } = useAuth();
+  const { submitName, loading, error } = useAuth();
   const [firstName, setFirstName] = useState('');
-  const [lastName,  setLastName]  = useState('');
-  const ready = firstName.trim() && lastName.trim();
+  const ready = firstName.trim();
 
   return (
     <div className={styles.modal}>
@@ -165,17 +170,24 @@ function NameStep() {
         <input className={styles.floatInput} value={firstName} onChange={e => setFirstName(e.target.value)} />
       </div>
 
-      <div className={`${styles.floatField} ${lastName.length > 0 ? styles.floatFieldFilled : ''}`}>
+      <div className={`${styles.floatField} ${styles.floatFieldFilled}`}>
         <label className={styles.floatLabel}>Фамилия</label>
-        <input className={styles.floatInput} value={lastName} onChange={e => setLastName(e.target.value)} />
+        <input className={styles.floatInput} value="(Только для дизайна)" readOnly disabled />
       </div>
 
+      {error && (
+        <div className={styles.errorBox}>
+          <img src={errorAuth} alt="Ошибка" className={styles.errorIcon} />
+          <span>{error}</span>
+        </div>
+      )}
+
       <button
-        className={`${styles.btn} ${ready ? styles.btnActive : styles.btnDisabled}`}
-        disabled={!ready}
-        onClick={() => submitName(firstName, lastName)}
+        className={`${styles.btn} ${ready && !loading ? styles.btnActive : styles.btnDisabled}`}
+        disabled={!ready || loading}
+        onClick={() => submitName(firstName, '')}
       >
-        Готово
+        {loading ? 'Сохранение...' : 'Готово'}
       </button>
     </div>
   );

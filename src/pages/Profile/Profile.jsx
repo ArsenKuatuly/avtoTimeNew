@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { getCarsByUser, toCar } from '../../api/vehicles';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './Profile.module.css';
@@ -71,6 +72,13 @@ const MENU = [
   { id: 'notifications', label: 'Уведомления', icon: icoNotif,    iconActive: icoNotifA    },
 ];
 
+function formatPhone(raw) {
+  const d = String(raw || '').replace(/\D/g, '');
+  const digits = d.length === 11 ? d.slice(1) : d;
+  if (digits.length !== 10) return raw;
+  return `+7 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8, 10)}`;
+}
+
 export default function Profile() {
   const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('data');
@@ -85,7 +93,7 @@ export default function Profile() {
           <aside className={styles.sidebar}>
             <div className={styles.userCard}>
               <p className={styles.userName}>{user?.firstName} {user?.lastName}</p>
-              <p className={styles.userPhone}>{user?.phone}</p>
+              <p className={styles.userPhone}>{formatPhone(user?.phone)}</p>
             </div>
 
             <div className={styles.giftRow}>
@@ -128,7 +136,7 @@ export default function Profile() {
           {!mobileTab ? (
             <>
               <p className={styles.mobileUserName}>{user?.firstName} {user?.lastName}</p>
-              <p className={styles.mobileUserPhone}>{user?.phone}</p>
+              <p className={styles.mobileUserPhone}>{formatPhone(user?.phone)}</p>
 
               <div className={styles.bonusCard} onClick={() => setMobileTab('bonuses')} style={{ cursor: 'pointer' }}>
                 <div className={styles.bonusCardText}>
@@ -175,7 +183,7 @@ function MyData({ user }) {
   const { logout } = useAuth();
   const navigate   = useNavigate();
   const [firstName,   setFirstName]   = useState(user?.firstName || '');
-  const [lastName,    setLastName]    = useState(user?.lastName  || '');
+  const [lastName]                    = useState(user?.lastName  || '');
   const [saved,       setSaved]       = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -222,8 +230,8 @@ function MyData({ user }) {
 
       <div className={styles.form}>
         <FloatInput label="Имя"     value={firstName} onChange={setFirstName} />
-        <FloatInput label="Фамилия" value={lastName}  onChange={setLastName}  />
-        <FloatInput label="Номер телефона" value={user?.phone || ''} readOnly />
+        <FloatInput label="Фамилия" value="(Только для дизайна)" readOnly />
+        <FloatInput label="Номер телефона" value={formatPhone(user?.phone)} readOnly />
       </div>
 
       <button
@@ -687,23 +695,27 @@ function MobileBookingDetail({ booking, onBack }) {
   );
 }
 
-const MOCK_CARS_INIT = [
-  { id: 1,  model: 'KIA',   make: '',       plate: '444 sss 01', body: 'Седан'     },
-  { id: 2,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Седан'     },
-  { id: 3,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Седан'     },
-  { id: 4,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Седан'     },
-  { id: 5,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Седан'     },
-  { id: 6,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Седан'     },
-  { id: 7,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Хэтчбек'  },
-  { id: 8,  model: 'KIA',   make: 'Optima', plate: '444 sss 01', body: 'Кроссовер' },
-];
 
 const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 const GARAGE_PAGE_SIZE = 6;
 
 function MyGarage() {
-  const [cars, setCars]         = useState(MOCK_CARS_INIT);
+  const { user, token }         = useAuth();
+  const [cars, setCars]         = useState([]);
+  const [loadingCars, setLoadingCars] = useState(true);
   const [page, setPage]         = useState(1);
+
+  useEffect(() => {
+    if (!user?.id || !token) return;
+    getCarsByUser(user.id, token)
+      .then(res => res.json())
+      .then(data => {
+        const list = data?.data || data || [];
+        setCars(Array.isArray(list) ? list.map(toCar) : []);
+      })
+      .catch(() => setCars([]))
+      .finally(() => setLoadingCars(false));
+  }, [user?.id, token]);
   const [showAdd, setShowAdd]   = useState(false);
   const [toast, setToast]       = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
@@ -782,7 +794,11 @@ function MyGarage() {
         </button>
       </div>
 
-      {cars.length === 0 ? (
+      {loadingCars ? (
+        <div className={styles.emptyGarage}>
+          <p className={styles.emptyGarageText}>Загрузка...</p>
+        </div>
+      ) : cars.length === 0 ? (
         <div className={styles.emptyGarage}>
           <span className={styles.emptyGarageIconWrap}>
             <img src={garagenet} alt="Гараж пуст" className={styles.emptyGarageImg} />
