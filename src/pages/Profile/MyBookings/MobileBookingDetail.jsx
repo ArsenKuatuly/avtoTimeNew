@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './MyBookings.module.css';
+import { CANCEL_REASONS } from '../../../constants/mockBookings';
+import { STATUS_COLOR } from './MyBookings';
 import carImg    from '../../../assets/icons/car.svg';
 import galochka  from '../../../assets/icons/galochka.png';
 import strechImg from '../../../assets/icons/strech.png';
@@ -8,17 +10,6 @@ import qrcode2   from '../../../assets/icons/qrcode2.png';
 import errorAuth from '../../../assets/icons/errorAuth.svg';
 import yellowStar      from '../../../assets/icons/yellowStar.svg';
 import transparentStar from '../../../assets/icons/transparentStar.png';
-import { STATUS_COLOR } from './MyBookings';
-
-const CANCEL_REASONS = [
-  'Слишком долго ехать',
-  'Изменились планы',
-  'Смена предпочтений',
-  'Технические проблемы',
-  'Погодные условия',
-  'Отсутсвие необходимости',
-  'Другое',
-];
 
 export default function MobileBookingDetail({ booking, onBack }) {
   const [cancelled, setCancelled]             = useState(false);

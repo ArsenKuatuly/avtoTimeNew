@@ -1,20 +1,13 @@
-import React, { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './MyBookings.module.css';
 import MobileBookingDetail from './MobileBookingDetail';
+import { MOCK_BOOKINGS } from '../../../constants/mockBookings';
 import carImg      from '../../../assets/icons/car.svg';
 import zapiseinet  from '../../../assets/icons/zapiseinet.png';
 import mestoIco    from '../../../assets/icons/mesto.png';
 import calendarIco from '../../../assets/icons/iconCalendar.png';
 import icoFilter   from '../../../assets/icons/filter.svg';
-
-const MOCK_BOOKINGS = [
-  { id: '1', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Новый',      payment: 'Картой онлайн', name: 'Акжол' },
-  { id: '2', label: 'Онлайн-запись',    service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'В процессе', payment: 'Наличными',    name: 'Акжол' },
-  { id: '3', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Завершён',   payment: 'Картой онлайн', name: 'Акжол' },
-  { id: '4', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Отменён',    payment: 'Картой онлайн', name: 'Акжол' },
-  { id: '5', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Отменён',    payment: 'Наличными',    name: 'Акжол' },
-];
 
 const STATUS_TABS = ['Все', 'Новый', 'В процессе', 'Завершён', 'Отменён'];
 const PAGE_SIZE = 5;
@@ -135,14 +128,14 @@ export default function MyBookings({ onBackToProfile }) {
         <>
           <div className={styles.bookingList}>
             {paged.map(booking => (
-              <React.Fragment key={booking.id}>
+              <Fragment key={booking.id}>
                 <div className={styles.desktopBookingWrap}>
                   <BookingCard booking={booking} onClick={() => navigate(`/booking/${booking.id}`)} />
                 </div>
                 <div className={styles.mobileBookingWrap} onClick={() => setSelectedBooking(booking)}>
                   <MobileBookingCard booking={booking} />
                 </div>
-              </React.Fragment>
+              </Fragment>
             ))}
           </div>
           {totalPages > 1 && (
