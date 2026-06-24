@@ -1,4 +1,4 @@
-.section {}
+﻿.section {}
 
 .sectionHeader {
   display: flex;
@@ -11,7 +11,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 28px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -19,16 +19,16 @@
   position: fixed;
   top: 24px;
   right: 24px;
-  background: #22C55E;
-  color: #ffffff;
+  background: var(--color-success);
+  color: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   padding: 12px 20px;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   z-index: 9999;
   box-shadow: 0 4px 16px rgba(34,197,94,0.3);
   animation: slideIn 0.25s ease;
@@ -47,13 +47,13 @@
 .addCarBtn {
   height: 42px;
   padding: 0 22px;
-  background: #006FFD;
+  background: var(--color-primary);
   border: none;
   border-radius: 10px;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  color: #ffffff;
+  font-size: var(--font-size-sm);
+  color: var(--color-white);
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -72,8 +72,8 @@
   justify-content: center;
   width: 100px;
   height: 100px;
-  border-radius: 50%;
-  background: #F3F4F6;
+  border-radius: var(--radius-round);
+  background: var(--color-background-light);
   margin-bottom: 16px;
 }
 .emptyGarageImg {
@@ -85,7 +85,7 @@
 .emptyGarageText {
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -97,17 +97,17 @@
 }
 
 .carCard {
-  background: #ffffff;
-  border: 1.5px solid #E5E7EB;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   padding: 16px 16px 14px;
   transition: box-shadow 0.15s, border-color 0.15s;
   cursor: pointer;
 }
-.carCard:hover { box-shadow: 0 4px 14px rgba(0,111,253,0.08); border-color: #C7D7FF; }
+.carCard:hover { box-shadow: 0 4px 14px rgba(0,111,253,0.08); border-color: var(--color-primary-pale); }
 
-.carCardError { border-color: #FDE68A; background: #FFFBEB; }
-.carCardError:hover { border-color: #F59E0B; box-shadow: 0 4px 14px rgba(245,158,11,0.1); }
+.carCardError { border-color: var(--color-car-error-border); background: var(--color-car-error-bg); }
+.carCardError:hover { border-color: var(--color-car-error-hover); box-shadow: 0 4px 14px rgba(245,158,11,0.1); }
 
 .carCardTop {
   display: flex;
@@ -118,14 +118,14 @@
 .carName {
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 16px;
-  color: #0D0D0D;
+  font-size: var(--font-size-md);
+  color: var(--color-text);
   margin: 0 0 3px;
 }
 .carSub {
   font-family: 'Manrope', sans-serif;
-  font-size: 16px;
-  color: #9CA3AF;
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -134,20 +134,20 @@
   background: none;
   border: none;
   font-size: 18px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0 4px;
   line-height: 1;
   transition: color 0.15s;
 }
-.carMenuBtn:hover { color: #374151; }
+.carMenuBtn:hover { color: var(--color-text-secondary); }
 
 .carMenuDropdown {
   position: absolute;
   top: 24px;
   right: 0;
-  background: #ffffff;
-  border: 1.5px solid #E5E7EB;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.12);
   z-index: 10;
@@ -161,15 +161,15 @@
   padding: 10px 16px;
   background: none;
   border: none;
-  border-bottom: 1px solid #F3F4F6;
+  border-bottom: 1px solid var(--color-background-light);
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #374151;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
   cursor: pointer;
   text-align: left;
   transition: background 0.12s;
 }
-.carMenuItem:hover { background: #F5F7FA; }
+.carMenuItem:hover { background: var(--color-background); }
 
 .carMenuItemDelete {
   display: block;
@@ -178,13 +178,13 @@
   background: none;
   border: none;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #EF4444;
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
   cursor: pointer;
   text-align: left;
   transition: background 0.12s;
 }
-.carMenuItemDelete:hover { background: #FEE2E2; }
+.carMenuItemDelete:hover { background: var(--color-error-light); }
 
 .carError {
   display: flex;
@@ -192,8 +192,8 @@
   gap: 6px;
   margin-top: 10px;
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
-  color: #D97706;
+  font-size: var(--font-size-xs);
+  color: var(--color-warning-dark);
 }
 .carErrorIco { width: 14px; height: 14px; object-fit: contain; flex-shrink: 0; }
 
@@ -201,15 +201,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: var(--spacing-md);
   margin-top: 24px;
 }
 .pageBtn {
   width: 36px;
   height: 36px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
   font-size: 18px;
   cursor: pointer;
   display: flex;
@@ -217,9 +217,9 @@
   justify-content: center;
   transition: border-color 0.15s;
 }
-.pageBtn:hover:not(:disabled) { border-color: #006FFD; color: #006FFD; }
+.pageBtn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
 .pageBtn:disabled { opacity: 0.35; cursor: default; }
-.pageInfo { font-family: 'Manrope', sans-serif; font-size: 14px; color: #374151; }
+.pageInfo { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 
 .confirmOverlay {
   position: fixed;
@@ -233,8 +233,8 @@
 }
 
 .addCarModal {
-  background: #ffffff;
-  border-radius: 16px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
   padding: 28px;
   width: 100%;
   max-width: 480px;
@@ -253,8 +253,8 @@
 .addCarModalTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  color: #0D0D0D;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
   margin: 0;
   order: 1;
 }
@@ -263,47 +263,47 @@
   background: none;
   border: none;
   font-size: 18px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0;
   transition: color 0.15s;
   order: 2;
 }
-.addCarModalClose:hover { color: #374151; }
+.addCarModalClose:hover { color: var(--color-text-secondary); }
 
 .addCarLabel {
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-secondary);
   margin: 0 0 -6px;
 }
 
-.bodyChips { display: flex; gap: 8px; }
+.bodyChips { display: flex; gap: var(--spacing-sm); }
 .bodyChip {
   padding: 7px 16px;
   border-radius: 20px;
-  border: 1.5px solid #E5E7EB;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  color: #374151;
+  color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.15s;
 }
-.bodyChip:hover { border-color: #006FFD; color: #006FFD; }
+.bodyChip:hover { border-color: var(--color-primary); color: var(--color-primary); }
 .bodyChipActive,
-.bodyChipActive:hover { background: #006FFD; border-color: #006FFD; color: #ffffff; }
+.bodyChipActive:hover { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); }
 
 .garageField {
   position: relative;
-  border: 1.5px solid #E5E7EB;
+  border: 1.5px solid var(--color-border);
   border-radius: 10px;
   height: 56px;
   transition: border-color 0.15s;
 }
-.garageField:focus-within { border-color: #006FFD; }
+.garageField:focus-within { border-color: var(--color-primary); }
 .garageLabel {
   position: absolute;
   left: 16px;
@@ -311,7 +311,7 @@
   transform: translateY(-50%);
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   pointer-events: none;
   transition: all 0.15s;
 }
@@ -332,7 +332,7 @@
   padding: 20px 16px 6px;
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
-  color: #0D0D0D;
+  color: var(--color-text);
   border-radius: 10px;
   box-sizing: border-box;
 }
@@ -341,22 +341,22 @@
   width: 100%;
   height: 52px;
   border: none;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   cursor: pointer;
   transition: opacity 0.15s;
   margin-top: 4px;
 }
-.addCarSubmitActive { background: #006FFD; color: #ffffff; }
+.addCarSubmitActive { background: var(--color-primary); color: var(--color-white); }
 .addCarSubmitActive:hover { opacity: 0.9; }
-.addCarSubmitDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+.addCarSubmitDisabled { background: var(--color-border); color: var(--color-text-muted); cursor: default; }
 
 .deleteCarModal {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 24px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
   width: 100%;
   max-width: 420px;
   display: flex;
@@ -368,14 +368,14 @@
 .deleteCarTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  color: #0D0D0D;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
   margin: 0 0 8px;
 }
 .deleteCarText {
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #6B7280;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
   line-height: 1.5;
   margin: 0;
 }
@@ -384,27 +384,27 @@
 .confirmBack {
   flex: 1;
   height: 48px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 12px;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-size: 15px;
-  color: #006FFD;
+  color: var(--color-primary);
   cursor: pointer;
   transition: background 0.15s;
 }
-.confirmBack:hover { background: #F5F7FA; }
+.confirmBack:hover { background: var(--color-background); }
 .confirmDelete {
   flex: 1;
   height: 48px;
   border: none;
-  border-radius: 12px;
-  background: #006FFD;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-size: 15px;
-  color: #ffffff;
+  color: var(--color-white);
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -416,7 +416,7 @@
   .sectionHeader {
     margin-bottom: 20px;
     padding-bottom: 16px;
-    border-bottom: 1px solid #F0F0F0;
+    border-bottom: 1px solid var(--color-separator);
   }
   .sectionTitle { font-size: 22px; }
 
@@ -426,7 +426,7 @@
     left: 50%;
     bottom: 32px;
     transform: translateX(-50%);
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     padding: 14px 26px;
   }
 
@@ -434,7 +434,7 @@
     height: auto;
     padding: 0;
     background: none;
-    color: #006FFD;
+    color: var(--color-primary);
     font-size: 15px;
   }
   .addCarBtn:hover { opacity: 0.8; }
@@ -442,7 +442,7 @@
   .addCarBtnTextShort { display: inline; }
 
   .carGrid { grid-template-columns: 1fr; }
-  .carCard { border-radius: 16px; }
+  .carCard { border-radius: var(--radius-lg); }
   .carMenuWrap { display: none; }
 
   .confirmOverlay {
@@ -475,7 +475,7 @@
   }
   .addCarModalTitle { order: 2; font-size: 22px; }
 
-  .garageField { border-radius: 16px; height: 54px; }
+  .garageField { border-radius: var(--radius-lg); height: 54px; }
 
   .mobileSheetOverlay {
     display: flex;
@@ -487,7 +487,7 @@
   }
 
   .mobileActionSheet {
-    background: #ffffff;
+    background: var(--color-white);
     border-radius: 24px 24px 0 0;
     padding: 24px 16px 40px;
     width: 100%;
@@ -501,21 +501,21 @@
     font-family: 'Manrope', sans-serif;
     font-weight: 700;
     font-size: 22px;
-    color: #0D0D0D;
+    color: var(--color-text);
     margin: 0 0 10px;
   }
 
   .mobileActionBtn {
     display: block;
     width: 100%;
-    background: #F5F5F5;
+    background: var(--color-surface-alt);
     border: none;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 18px 16px;
     font-family: 'Manrope', sans-serif;
     font-weight: 500;
-    font-size: 16px;
-    color: #0D0D0D;
+    font-size: var(--font-size-md);
+    color: var(--color-text);
     text-align: left;
     cursor: pointer;
   }

@@ -1,5 +1,5 @@
-.hero {
-  background-color: #006FFD;
+﻿.hero {
+  background-color: var(--color-primary);
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -20,7 +20,7 @@
   flex: 0 0 580px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--spacing-lg);
   padding-bottom: 0;
   z-index: 1;
 }
@@ -30,7 +30,7 @@
   font-weight: 800;
   font-size: 48px;
   line-height: 1.0;
-  color: #ffffff;
+  color: var(--color-white);
   text-transform: uppercase;
   letter-spacing: -0.01em;
   margin: 0;
@@ -39,9 +39,9 @@
 .subtitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   line-height: 26px;
-  color: #ffffff;
+  color: var(--color-white);
   margin: 0;
 }
 
@@ -49,13 +49,13 @@
   align-self: flex-start;
   height: 52px;
   padding: 0 28px;
-  background: #FFFFFF;
-  color: #006FFD;
+  background: var(--color-white);
+  color: var(--color-primary);
   border: 1.5px solid rgba(255, 255, 255, 0.75);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
@@ -63,12 +63,12 @@
 
 .ctaBtn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  color: var(--color-white);
 }
 
 .badges {
   display: flex;
-  gap: 16px;
+  gap: var(--spacing-md);
   align-items: center;
 }
 
@@ -90,22 +90,22 @@
 .qrText {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .qrTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   line-height: 22px;
-  color: #ffffff;
+  color: var(--color-white);
   margin: 0;
 }
 
 .qrDesc {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   line-height: 18px;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
@@ -113,8 +113,8 @@
 
 .qrImgWrap {
   flex-shrink: 0;
-  background: #ffffff;
-  border-radius: 16px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
   padding: 10px;
   display: flex;
   align-items: center;
@@ -182,11 +182,11 @@
   .left {
     flex: unset;
     width: 100%;
-    gap: 16px;
+    gap: var(--spacing-md);
   }
 
   .title { font-size: 48px; text-transform: none; }
-  .subtitle { font-size: 20px; }
+  .subtitle { font-size: var(--font-size-lg); }
 
   .badges { flex-wrap: wrap; }
   .badge img { height: 36px; }

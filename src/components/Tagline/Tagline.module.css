@@ -1,4 +1,4 @@
-.section {
+﻿.section {
   width: 100%;
   padding: 80px 100px;
   box-sizing: border-box;
@@ -29,13 +29,13 @@
 
 .block2 {
   z-index: 1;
-  background: #4A5068;
+  background: var(--color-tagline-1);
   transform: rotate(3deg);
 }
 
 .block3 {
   z-index: 0;
-  background: #5C6278;
+  background: var(--color-tagline-2);
   transform: rotate(5.5deg);
 }
 
@@ -46,7 +46,7 @@
   height: 418px;
   border-radius: 36px;
   overflow: hidden;
-  background: #1C2230;
+  background: var(--color-tagline-3);
 }
 
 .content {
@@ -55,7 +55,7 @@
   padding: 36px 48px 48px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: var(--spacing-xl);
   box-sizing: border-box;
 }
 
@@ -72,8 +72,8 @@
   margin: 0;
 }
 
-.white { color: #ffffff; }
-.blue  { color: #006FFD; }
+.white { color: var(--color-white); }
+.blue  { color: var(--color-primary); }
 
 @media (min-width: 769px) {
   .wrapper {

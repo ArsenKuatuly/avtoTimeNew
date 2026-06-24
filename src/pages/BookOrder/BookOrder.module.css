@@ -1,6 +1,6 @@
-.formPage, .smsPage, .successPage {
+﻿.formPage, .smsPage, .successPage {
   min-height: calc(100vh - 80px);
-  background: #ffffff;
+  background: var(--color-white);
   font-family: 'Manrope', sans-serif;
   padding: 24px 48px 48px;
 }
@@ -9,16 +9,16 @@
   background: none;
   border: none;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #374151;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
   cursor: pointer;
   padding: 0;
   margin-bottom: 24px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
 }
-.backBtn:hover { color: #006FFD; }
+.backBtn:hover { color: var(--color-primary); }
 
 .formLayout {
   display: flex;
@@ -32,7 +32,7 @@
 .formTitle {
   font-size: 28px;
   font-weight: 800;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 28px;
 }
 
@@ -41,20 +41,20 @@
 .fieldInput {
   width: 100%;
   height: 56px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 16px 16px 0;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #0D0D0D;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
   outline: none;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--color-white);
   transition: border-color 0.15s;
   cursor: text;
 }
-.fieldInput:focus { border-color: #006FFD; }
-.fieldInput::placeholder { color: #9CA3AF; font-size: 14px; opacity: 1; transition: opacity 0.1s; }
+.fieldInput:focus { border-color: var(--color-primary); }
+.fieldInput::placeholder { color: var(--color-text-muted); font-size: var(--font-size-sm); opacity: 1; transition: opacity 0.1s; }
 .fieldInput:focus::placeholder { opacity: 0; }
 
 .fieldLabel {
@@ -62,15 +62,15 @@
   top: 10px;
   left: 16px;
   font-size: 11px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   font-family: 'Manrope', sans-serif;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s;
 }
-.fieldInput:focus + .fieldLabel { opacity: 1; color: #006FFD; }
+.fieldInput:focus + .fieldLabel { opacity: 1; color: var(--color-primary); }
 .fieldInput:not(:placeholder-shown) + .fieldLabel { opacity: 1; }
-.dateWrap .fieldInput:focus + .fieldLabel { opacity: 1; color: #006FFD; }
+.dateWrap .fieldInput:focus + .fieldLabel { opacity: 1; color: var(--color-primary); }
 .dateWrap .fieldInput:not(:placeholder-shown) + .fieldLabel { opacity: 1; }
 
 .dateWrap { position: relative; cursor: pointer; }
@@ -90,23 +90,23 @@
   flex-direction: column;
   gap: 2px;
   height: 56px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 10px 44px 10px 16px;
   box-sizing: border-box;
-  background: #fff;
+  background: var(--color-white);
   cursor: pointer;
   justify-content: center;
 }
 .paymentLabel {
   font-family: 'Manrope', sans-serif;
   font-size: 11px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
 }
 .paymentVal {
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #0D0D0D;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
   font-weight: 500;
 }
 .paymentArrow {
@@ -114,8 +114,8 @@
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 20px;
-  color: #9CA3AF;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
 }
 
 .promoRow { display: flex; gap: 10px; align-items: flex-start; }
@@ -123,13 +123,13 @@
 .promoApply {
   height: 56px;
   padding: 0 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
-  background: #006FFD;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
@@ -137,13 +137,13 @@
 .promoApplyDis {
   height: 56px;
   padding: 0 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
-  background: #E5E7EB;
-  color: #9CA3AF;
+  background: var(--color-border);
+  color: var(--color-text-muted);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   cursor: default;
   white-space: nowrap;
   flex-shrink: 0;
@@ -151,23 +151,23 @@
 
 .formRight { width: 320px; flex-shrink: 0; padding-top: 64px; }
 .summary {
-  background: #F5F7FA;
-  border-radius: 16px;
+  background: var(--color-background);
+  border-radius: var(--radius-lg);
   padding: 20px;
 }
-.summaryTitle { font-size: 20px; font-weight: 800; color: #0D0D0D; margin: 0 0 16px; }
+.summaryTitle { font-size: var(--font-size-lg); font-weight: 800; color: var(--color-text); margin: 0 0 16px; }
 .summaryRow {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 8px 0;
-  border-bottom: 1px solid #E5E7EB;
+  border-bottom: 1px solid var(--color-border);
   gap: 12px;
 }
 .summaryRow:last-of-type { border-bottom: none; }
-.summaryKey { font-size: 13px; color: #6B7280; flex-shrink: 0; }
-.summaryVal { font-size: 13px; font-weight: 600; color: #0D0D0D; text-align: right; }
-.summaryPrice { font-size: 14px; font-weight: 700; color: #006FFD; text-align: right; }
+.summaryKey { font-size: 13px; color: var(--color-text-placeholder); flex-shrink: 0; }
+.summaryVal { font-size: 13px; font-weight: 600; color: var(--color-text); text-align: right; }
+.summaryPrice { font-size: var(--font-size-sm); font-weight: 700; color: var(--color-primary); text-align: right; }
 
 .formBtnWrap {
   margin-top: 20px;
@@ -176,10 +176,10 @@
 .btnBlue {
   width: 100%;
   height: 50px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
-  background: #006FFD;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 15px;
@@ -189,23 +189,23 @@
 .btnBlueLg {
   width: 100%;
   height: 54px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   border: none;
-  background: #006FFD;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   cursor: pointer;
 }
 .btnBlueLg:hover { opacity: 0.9; }
 .btnDisabled {
   width: 100%;
   height: 50px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: none;
-  background: #E5E7EB;
-  color: #9CA3AF;
+  background: var(--color-border);
+  color: var(--color-text-muted);
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 15px;
@@ -216,7 +216,7 @@
   font-family: 'Manrope', sans-serif;
   font-size: 26px;
   font-weight: 800;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 20px;
 }
 
@@ -231,31 +231,31 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  border: 1.5px solid #E5E7EB;
-  background: #fff;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-white);
   font-size: 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #374151;
+  color: var(--color-text-secondary);
   transition: background 0.15s;
 }
-.dpNavBtn:hover:not(:disabled) { background: #F5F7FA; }
+.dpNavBtn:hover:not(:disabled) { background: var(--color-background); }
 .dpNavBtn:disabled { opacity: 0.3; cursor: default; }
 
 .dpMonth {
   font-family: 'Manrope', sans-serif;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   font-weight: 700;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0;
 }
 
 .dpWeekWrap {
   display: flex;
-  background: #F5F7FA;
-  border-radius: 16px;
+  background: var(--color-background);
+  border-radius: var(--radius-lg);
   padding: 8px 4px;
   margin-bottom: 20px;
   gap: 2px;
@@ -271,16 +271,16 @@
   border: none;
   cursor: pointer;
   padding: 8px 4px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   transition: background 0.15s;
 }
-.dpDay:hover:not(.dpDayPast) { background: #EAECF0; }
+.dpDay:hover:not(.dpDayPast) { background: var(--color-gray-hover); }
 
 .dpDayName {
   font-family: 'Manrope', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.03em;
 }
@@ -288,27 +288,27 @@
 .dpDayCircle {
   width: 36px;
   height: 36px;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: #0D0D0D;
+  color: var(--color-text);
   transition: all 0.15s;
 }
 
 .dpDayCircleActive {
-  background: #006FFD;
-  color: #ffffff;
+  background: var(--color-primary);
+  color: var(--color-white);
   font-weight: 700;
 }
 
 .dpDayPast { cursor: default; }
-.dpDayPast .dpDayName { color: #D1D5DB; }
-.dpDayPast .dpDayCircle { color: #D1D5DB; }
-.dpDayActive .dpDayName { color: #006FFD; }
+.dpDayPast .dpDayName { color: var(--color-border-light); }
+.dpDayPast .dpDayCircle { color: var(--color-border-light); }
+.dpDayActive .dpDayName { color: var(--color-primary); }
 
 .dpScrollArea {
   padding-bottom: 100px;
@@ -316,9 +316,9 @@
 
 .dpGroupLabel {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   font-weight: 600;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 20px 0 10px;
@@ -327,34 +327,34 @@
 .dpGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .dpSlot {
   height: 44px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 100px;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   font-weight: 500;
-  color: #0D0D0D;
+  color: var(--color-text);
   cursor: pointer;
   transition: all 0.15s;
 }
 .dpSlot:hover:not(:disabled) {
-  border-color: #006FFD;
+  border-color: var(--color-primary);
 }
 .dpSlotDis {
-  background: #F9FAFB;
-  border-color: #F3F4F6;
-  color: #D1D5DB;
+  background: var(--color-background-soft);
+  border-color: var(--color-background-light);
+  color: var(--color-border-light);
   cursor: default;
 }
 .dpSlotActive {
-  background: #006FFD;
-  border-color: #006FFD;
-  color: #ffffff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
   font-weight: 700;
 }
 
@@ -375,7 +375,7 @@
   z-index: 100;
 }
 .modal {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 20px;
   padding: 22px 24px 24px;
   width: 420px;
@@ -388,37 +388,37 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.modalTitle { font-size: 20px; font-weight: 800; color: #0D0D0D; margin: 0; }
+.modalTitle { font-size: var(--font-size-lg); font-weight: 800; color: var(--color-text); margin: 0; }
 .modalClose {
   width: 32px; height: 32px;
-  border-radius: 50%;
+  border-radius: var(--radius-round);
   border: none;
-  background: #F3F4F6;
+  background: var(--color-background-light);
   font-size: 15px;
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  color: #6B7280;
+  color: var(--color-text-placeholder);
 }
-.modalClose:hover { background: #E5E7EB; }
-.modalSection { font-size: 15px; font-weight: 700; color: #0D0D0D; margin: 0 0 10px; }
+.modalClose:hover { background: var(--color-border); }
+.modalSection { font-size: 15px; font-weight: 700; color: var(--color-text); margin: 0 0 10px; }
 .modalRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #F3F4F6;
-  gap: 16px;
+  border-bottom: 1px solid var(--color-background-light);
+  gap: var(--spacing-md);
 }
 .modalRow:last-child { border-bottom: none; }
-.modalKey { font-size: 14px; color: #9CA3AF; flex-shrink: 0; }
-.modalVal { font-size: 14px; font-weight: 600; color: #0D0D0D; text-align: right; }
+.modalKey { font-size: var(--font-size-sm); color: var(--color-text-muted); flex-shrink: 0; }
+.modalVal { font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); text-align: right; }
 .modalSummary {
-  background: #F5F7FA;
+  background: var(--color-background);
   border-radius: 14px;
   padding: 14px 16px;
   margin: 16px 0 20px;
 }
-.modalSummaryTitle { font-size: 15px; font-weight: 700; color: #0D0D0D; margin: 0 0 10px; }
+.modalSummaryTitle { font-size: 15px; font-weight: 700; color: var(--color-text); margin: 0 0 10px; }
 
 .smsPage { display: flex; flex-direction: column; }
 .smsBox {
@@ -426,9 +426,9 @@
   margin: 40px auto 0;
   width: 100%;
 }
-.smsTitle { font-size: 24px; font-weight: 800; color: #0D0D0D; margin: 0 0 8px; text-align: center; }
-.smsSub { font-size: 14px; color: #6B7280; text-align: center; margin: 0; }
-.smsPhone { font-size: 14px; font-weight: 700; color: #0D0D0D; text-align: center; margin: 0 0 24px; }
+.smsTitle { font-size: var(--font-size-xl); font-weight: 800; color: var(--color-text); margin: 0 0 8px; text-align: center; }
+.smsSub { font-size: var(--font-size-sm); color: var(--color-text-placeholder); text-align: center; margin: 0; }
+.smsPhone { font-size: var(--font-size-sm); font-weight: 700; color: var(--color-text); text-align: center; margin: 0 0 24px; }
 .otpRow {
   display: flex;
   gap: 12px;
@@ -439,21 +439,21 @@
 .otpBox {
   width: 64px;
   height: 64px;
-  border: 1.5px solid #E5E7EB;
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   font-family: 'Manrope', sans-serif;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   font-weight: 600;
   text-align: center;
-  color: #0D0D0D;
+  color: var(--color-text);
   outline: none;
   transition: border-color 0.15s;
-  background: #ffffff;
+  background: var(--color-white);
 }
 
-.otpBox:focus { border-color: #006FFD; }
-.smsTimer { font-size: 13px; color: #6B7280; text-align: center; margin-top: 16px; }
-.smsResend { color: #006FFD; cursor: pointer; font-weight: 600; }
+.otpBox:focus { border-color: var(--color-primary); }
+.smsTimer { font-size: 13px; color: var(--color-text-placeholder); text-align: center; margin-top: 16px; }
+.smsResend { color: var(--color-primary); cursor: pointer; font-weight: 600; }
 
 .successPage {
   display: flex;
@@ -463,18 +463,18 @@
   min-height: calc(100vh - 80px);
 }
 .successIco { width: 64px; height: 64px; margin-bottom: 20px; }
-.successTitle { font-size: 28px; font-weight: 800; color: #0D0D0D; margin: 0 0 12px; }
-.successSub { font-size: 15px; color: #6B7280; margin: 0; }
-.successDate { font-size: 15px; font-weight: 700; color: #006FFD; margin: 4px 0 32px; }
+.successTitle { font-size: 28px; font-weight: 800; color: var(--color-text); margin: 0 0 12px; }
+.successSub { font-size: 15px; color: var(--color-text-placeholder); margin: 0; }
+.successDate { font-size: 15px; font-weight: 700; color: var(--color-primary); margin: 4px 0 32px; }
 .successBtns { display: flex; flex-direction: column; gap: 12px; width: 380px; }
 .successBtnGray {
   width: 100%; height: 52px; border-radius: 14px;
-  border: none; background: #F3F4F6; color: #374151;
+  border: none; background: var(--color-background-light); color: var(--color-text-secondary);
   font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
 }
 .successBtnBlue {
   width: 100%; height: 52px; border-radius: 14px;
-  border: none; background: #006FFD; color: #ffffff;
+  border: none; background: var(--color-primary); color: var(--color-white);
   font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer;
 }
 
@@ -486,7 +486,7 @@
 
   .formLayout {
     flex-direction: column;
-    gap: 16px;
+    gap: var(--spacing-md);
   }
 
   .formLeft {
@@ -506,7 +506,7 @@
     padding-top: 0;
   }
 
-  .summary { padding: 16px; }
+  .summary { padding: var(--spacing-md); }
   .summaryTitle { font-size: 17px; margin-bottom: 12px; }
 
   .formBtnWrap {
@@ -519,9 +519,9 @@
   }
 
   .btnBlue, .btnDisabled {
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     height: 54px;
-    font-size: 16px;
+    font-size: var(--font-size-md);
   }
 
   .dpTitle { font-size: 22px; margin-bottom: 16px; }
@@ -539,7 +539,7 @@
 
   .dpFooter .btnBlue,
   .dpFooter .btnDisabled {
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     height: 54px;
     position: static;
   }

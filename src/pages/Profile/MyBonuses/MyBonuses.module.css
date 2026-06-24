@@ -1,10 +1,10 @@
-.section {}
+﻿.section {}
 
 .sectionTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 28px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0;
 }
 
@@ -12,23 +12,23 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-size: 15px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 6px;
 }
 .bonusDesc {
   font-family: 'Manrope', sans-serif;
   font-size: 13px;
-  color: #6B7280;
+  color: var(--color-text-placeholder);
   margin: 0 0 28px;
 }
 
 .punchGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: var(--spacing-md);
 }
 .punchCard {
-  border: 1.5px solid #E5E7EB;
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   padding: 20px 16px 14px;
   display: flex;
@@ -50,10 +50,10 @@
 .punchMore {
   background: none;
   border: none;
-  color: #006FFD;
+  color: var(--color-primary);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   cursor: pointer;
   padding: 0;
 }
@@ -71,8 +71,8 @@
 }
 
 .historyModal {
-  background: #ffffff;
-  border-radius: 16px;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
   padding: 28px;
   width: 100%;
   max-width: 420px;
@@ -88,20 +88,20 @@
 .historyTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 20px;
-  color: #0D0D0D;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
   margin: 0;
 }
 .addCarModalClose {
   background: none;
   border: none;
   font-size: 18px;
-  color: #9CA3AF;
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0;
   transition: color 0.15s;
 }
-.addCarModalClose:hover { color: #374151; }
+.addCarModalClose:hover { color: var(--color-text-secondary); }
 
 .historyItem {
   display: flex;
@@ -109,7 +109,7 @@
   gap: 12px;
   padding: 14px 0;
 }
-.historyItemBorder { border-bottom: 1px solid #F3F4F6; }
+.historyItemBorder { border-bottom: 1px solid var(--color-background-light); }
 .historyIco {
   width: 40px;
   height: 40px;
@@ -119,27 +119,27 @@
 .historyName {
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  color: #0D0D0D;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
   margin: 0 0 2px;
 }
 .historySub {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
-  color: #9CA3AF;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
   margin: 0;
 }
 .historyDate {
   font-family: 'Manrope', sans-serif;
   font-size: 13px;
-  color: #6B7280;
+  color: var(--color-text-placeholder);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 /* MobileBonuses styles */
 .bonusBalanceCard {
-  background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%);
+  background: linear-gradient(135deg, var(--color-bonus-gradient-start) 0%, var(--color-bonus-gradient-end) 100%);
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 14px;
@@ -154,12 +154,12 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 28px;
-  color: #ffffff;
+  color: var(--color-white);
   margin: 0 0 6px;
 }
 .bonusBalanceSub {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   color: rgba(255,255,255,0.7);
   margin: 0;
 }
@@ -173,9 +173,9 @@
   padding: 0;
   margin-bottom: 20px;
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color: #006FFD;
+  color: var(--color-primary);
   cursor: pointer;
 }
 .bonusInfoIco {
@@ -188,7 +188,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 18px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 12px;
 }
 
@@ -197,8 +197,8 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  background: #ffffff;
-  border: 1.5px solid #E5E7EB;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   padding: 14px 16px;
   margin-bottom: 12px;
@@ -214,7 +214,7 @@
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: #0D0D0D;
+  color: var(--color-text);
 }
 
 .bonusStatsRow {
@@ -227,7 +227,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #F9FAFB;
+  background: var(--color-background-soft);
   border-radius: 14px;
   padding: 14px 12px;
 }
@@ -239,8 +239,8 @@
 }
 .bonusStatLabel {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
-  color: #6B7280;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-placeholder);
   margin: 0 0 3px;
 }
 .bonusStatVal {
@@ -249,21 +249,21 @@
   font-size: 15px;
   margin: 0;
 }
-.bonusStatPos { color: #22C55E; }
-.bonusStatNeg { color: #EF4444; }
+.bonusStatPos { color: var(--color-success); }
+.bonusStatNeg { color: var(--color-error); }
 
 .bonusTxGroup { margin-bottom: 12px; }
 .bonusTxDate {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 15px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 8px;
 }
 .bonusTxCard {
-  background: #ffffff;
-  border: 1.5px solid #F3F4F6;
-  border-radius: 16px;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-background-light);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 .bonusTxRow {
@@ -272,39 +272,39 @@
   justify-content: space-between;
   padding: 14px 16px;
 }
-.bonusTxRowBorder { border-bottom: 1px solid #F3F4F6; }
+.bonusTxRowBorder { border-bottom: 1px solid var(--color-background-light); }
 .bonusTxName {
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
-  color: #0D0D0D;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
   margin: 0 0 3px;
 }
 .bonusTxSub {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
-  color: #6B7280;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-placeholder);
   margin: 0;
 }
 .bonusTxPos {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 14px;
-  color: #006FFD;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 .bonusTxNeg {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 14px;
-  color: #EF4444;
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
   white-space: nowrap;
 }
 
 .bonusPeriodSub {
   font-family: 'Manrope', sans-serif;
-  font-size: 12px;
-  color: #6B7280;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-placeholder);
   margin: 3px 0 0;
 }
 
@@ -318,7 +318,7 @@
 }
 
 .cancelSheet {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 24px 24px 0 0;
   padding: 24px 16px 36px;
   width: 100%;
@@ -341,7 +341,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 4px;
-  border-bottom: 1px solid #F3F4F6;
+  border-bottom: 1px solid var(--color-background-light);
   cursor: pointer;
 }
 .cancelReasonItem:last-child { border-bottom: none; }
@@ -349,12 +349,12 @@
 .cancelReasonText {
   font-family: 'Manrope', sans-serif;
   font-size: 15px;
-  color: #0D0D0D;
+  color: var(--color-text);
 }
 
 .cancelReasonCheck {
-  color: #006FFD;
-  font-size: 16px;
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
   font-weight: 700;
 }
 
@@ -362,12 +362,12 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 22px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0 0 10px;
 }
 
 .levelsSheet {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 24px 24px 0 0;
   padding: 24px 16px 36px;
   width: 100%;
@@ -388,7 +388,7 @@
   background: none;
   border: none;
   font-size: 18px;
-  color: #6B7280;
+  color: var(--color-text-placeholder);
   cursor: pointer;
   padding: 0;
   line-height: 1;
@@ -401,7 +401,7 @@
 
 .levelsTimelineItem {
   display: flex;
-  gap: 16px;
+  gap: var(--spacing-md);
   align-items: flex-start;
 }
 
@@ -426,7 +426,7 @@
   min-height: 28px;
   background: repeating-linear-gradient(
     to bottom,
-    #D1D5DB 0px, #D1D5DB 4px,
+    var(--color-border-light) 0px, var(--color-border-light) 4px,
     transparent 4px, transparent 8px
   );
   margin: 4px 0;
@@ -441,15 +441,15 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 26px;
-  color: #006FFD;
+  color: var(--color-primary);
   margin: 0 0 2px;
   line-height: 1.1;
 }
 
 .levelStepLabel {
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #6B7280;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
   margin: 0;
 }
 

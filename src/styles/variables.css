@@ -1,0 +1,93 @@
+:root {
+  --color-primary:      #006FFD;
+  --color-primary-light: #EBF0FF;
+  --color-primary-pale:  #C7D7FF;
+
+  --color-white:             #ffffff;
+  --color-text:              #0D0D0D;
+  --color-text-secondary:    #374151;
+  --color-text-muted:        #9CA3AF;
+  --color-text-placeholder:  #6B7280;
+
+  --color-background:       #F5F7FA;
+  --color-background-light: #F3F4F6;
+  --color-background-soft:  #F9FAFB;
+  --color-surface:          #F4F5F4;
+
+  --color-border:       #E5E7EB;
+  --color-border-light: #D1D5DB;
+
+  --color-success:      #22C55E;
+  --color-success-light: #D1FAE5;
+  --color-success-dark:  #059669;
+  --color-error:        #EF4444;
+  --color-error-light:  #FEE2E2;
+  --color-error-dark:   #DC2626;
+  --color-warning:      #F97316;
+  --color-warning-light: #FFF3D6;
+  --color-warning-dark:  #D97706;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-pill: 100px;
+  --radius-round: 50%;
+
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+
+  --color-black:       #000000;
+  --color-text-dark:   #1C1C1C;
+  --color-separator:   #F0F0F0;
+  --color-surface-alt: #F5F5F5;
+
+  --color-info-light:   #E8F6FF;
+  --color-indigo-hover: #C7D2FE;
+  --color-gray-hover:   #EAECF0;
+
+  --color-warning-ultra-light: #FFF3E8;
+
+  --color-footer-text:    #696877;
+  --color-footer-divider: #C9CACC;
+
+  --color-tagline-1: #4A5068;
+  --color-tagline-2: #5C6278;
+  --color-tagline-3: #1C2230;
+
+  --color-dark-blue: #2A3550;
+
+  --color-bonus-gradient-start: #2563EB;
+  --color-bonus-gradient-end:   #60A5FA;
+
+  --color-profile-gradient-start: #3D93FF;
+  --color-profile-gradient-end:   #0052D6;
+
+  --color-queue-border: #9098A7;
+
+  --color-profile-menu-bg: #F3F5F9;
+
+  --color-badge-green-bg:   #ECFCD3;
+  --color-badge-green-text: #37C932;
+
+  --color-car-error-border: #FDE68A;
+  --color-car-error-bg:     #FFFBEB;
+  --color-car-error-hover:  #F59E0B;
+
+  --color-primary-ultra-light: #EEF3FF;
+  --color-primary-hover:       #dce8ff;
+  --color-blue-soft:           #EFF6FF;
+  --color-blue-soft-2:         #E7F6FF;
+  --color-blue-soft-3:         #F0F6FF;
+  --color-border-soft:         #E9EAEC;
+
+  --font-main: 'Manrope', sans-serif;
+}

@@ -1,8 +1,8 @@
-.section {
-  background-color: #EBF0FF;
+﻿.section {
+  background-color: var(--color-primary-light);
   width: 100%;
   padding: 72px 100px;
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
 }
 
 .inner {
@@ -10,7 +10,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--spacing-lg);
 }
 
 
@@ -20,13 +20,13 @@
   font-size: 52px;
   line-height: 1.1;
   text-transform: uppercase;
-  color: #0D0D0D;
+  color: var(--color-text);
   text-align: center;
   margin: 0 0 16px;
 }
 
 .topCard {
-  background: #006FFD;
+  background: var(--color-primary);
   border-radius: 60px;
   display: flex;
   align-items: center;
@@ -55,12 +55,12 @@
 
 .bottomRow {
   display: flex;
-  gap: 24px;
+  gap: var(--spacing-lg);
 }
 
 .smallCard {
   flex: 1;
-  background: #006FFD;
+  background: var(--color-primary);
   border-radius: 60px;
   padding: 32px 28px;
   position: relative;
@@ -93,16 +93,16 @@
 .cardTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: var(--font-size-xl);
   line-height: 1.2;
-  color: #ffffff;
+  color: var(--color-white);
   margin: 0;
 }
 
 .cardDesc {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   line-height: 22px;
   color: rgba(255, 255, 255, 0.85);
   margin: 0;
@@ -124,7 +124,7 @@
 @media (max-width: 1024px) {
   .section { padding: 56px 48px; border-radius: 60px; }
   .title { font-size: 38px; }
-  .cardTitle { font-size: 20px; }
+  .cardTitle { font-size: var(--font-size-lg); }
 }
 
 @media (max-width: 768px) {
@@ -150,10 +150,10 @@
   .topCardText {
     padding: 0 24px 0;
     order: 1;
-    gap: 8px;
+    gap: var(--spacing-sm);
   }
 
-  .bottomRow { flex-direction: column; gap: 16px; }
+  .bottomRow { flex-direction: column; gap: var(--spacing-md); }
 
   .smallCard {
     border-radius: 36px;
@@ -161,8 +161,8 @@
     padding: 28px 24px;
   }
 
-  .cardTitle { font-size: 20px; }
-  .cardDesc  { font-size: 14px; }
+  .cardTitle { font-size: var(--font-size-lg); }
+  .cardDesc  { font-size: var(--font-size-sm); }
 
   .bgIcon { width: 80px; }
 }

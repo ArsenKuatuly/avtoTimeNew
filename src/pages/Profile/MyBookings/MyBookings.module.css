@@ -1,4 +1,4 @@
-.section {}
+﻿.section {}
 
 .sectionHeader {
   display: flex;
@@ -11,13 +11,13 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 28px;
-  color: #0D0D0D;
+  color: var(--color-text);
   margin: 0;
 }
 
 .filterRow {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-sm);
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
@@ -25,18 +25,18 @@
 .filterTab {
   padding: 8px 16px;
   border-radius: 20px;
-  border: 1.5px solid #E5E7EB;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  background: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
-  font-size: 14px;
-  color: #6B7280;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
   cursor: pointer;
   transition: all 0.15s;
 }
-.filterTab:hover { border-color: #006FFD; color: #006FFD; }
+.filterTab:hover { border-color: var(--color-primary); color: var(--color-primary); }
 .filterTabActive,
-.filterTabActive:hover { background: #006FFD; border-color: #006FFD; color: #ffffff; }
+.filterTabActive:hover { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); }
 
 .desktopBookingWrap { display: block; }
 .mobileBookingWrap  { display: none; }
@@ -47,14 +47,14 @@
 .bookingCard {
   display: flex;
   align-items: stretch;
-  background: #ffffff;
-  border: 1.5px solid #E5E7EB;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
   border-radius: 14px;
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow 0.15s, border-color 0.15s;
 }
-.bookingCard:hover { box-shadow: 0 4px 16px rgba(0,111,253,0.1); border-color: #C7D7FF; }
+.bookingCard:hover { box-shadow: 0 4px 16px rgba(0,111,253,0.1); border-color: var(--color-primary-pale); }
 
 .bookingCarImg { width: 160px; height: 130px; object-fit: cover; flex-shrink: 0; }
 
@@ -68,18 +68,18 @@
   gap: 2px;
 }
 
-.bookingLabel  { font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 500; color: #9CA3AF; margin: 0 0 2px; }
-.bookingService { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: #006FFD; margin: 0 0 3px; }
-.bookingPrice  { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #0D0D0D; margin: 0 0 2px; }
-.bookingDate   { font-family: 'Manrope', sans-serif; font-size: 14px; color: #374151; margin: 0 0 2px; }
-.bookingWash   { font-family: 'Manrope', sans-serif; font-size: 14px; color: #9CA3AF; margin: 0 0 2px; }
+.bookingLabel  { font-family: 'Manrope', sans-serif; font-size: var(--font-size-xs); font-weight: 500; color: var(--color-text-muted); margin: 0 0 2px; }
+.bookingService { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-md); color: var(--color-primary); margin: 0 0 3px; }
+.bookingPrice  { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text); margin: 0 0 2px; }
+.bookingDate   { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-secondary); margin: 0 0 2px; }
+.bookingWash   { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-muted); margin: 0 0 2px; }
 .bookingAddress {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
   font-family: 'Manrope', sans-serif;
-  font-size: 14px;
-  color: #6B7280;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-placeholder);
   margin: 0;
 }
 
@@ -100,7 +100,7 @@
   border-radius: 20px;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 12px;
+  font-size: var(--font-size-xs);
   white-space: nowrap;
 }
 
@@ -113,21 +113,21 @@
 .emptyBookingsCircle { display: none; }
 .emptyBookingsImgSm  { display: none; }
 .emptyBookingsImg    { width: 120px; height: 120px; object-fit: contain; margin-bottom: 16px; opacity: 0.7; }
-.emptyBookingsText   { font-family: 'Manrope', sans-serif; font-size: 15px; color: #9CA3AF; margin: 0; }
+.emptyBookingsText   { font-family: 'Manrope', sans-serif; font-size: 15px; color: var(--color-text-muted); margin: 0; }
 
 .pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: var(--spacing-md);
   margin-top: 24px;
 }
 .pageBtn {
   width: 36px;
   height: 36px;
-  border: 1.5px solid #E5E7EB;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
   font-size: 18px;
   cursor: pointer;
   display: flex;
@@ -135,24 +135,24 @@
   justify-content: center;
   transition: border-color 0.15s;
 }
-.pageBtn:hover:not(:disabled) { border-color: #006FFD; color: #006FFD; }
+.pageBtn:hover:not(:disabled) { border-color: var(--color-primary); color: var(--color-primary); }
 .pageBtn:disabled { opacity: 0.35; cursor: default; }
-.pageInfo { font-family: 'Manrope', sans-serif; font-size: 14px; color: #374151; }
+.pageInfo { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-secondary); }
 
 .toast {
   position: fixed;
   top: 24px;
   right: 24px;
-  background: #22C55E;
-  color: #ffffff;
+  background: var(--color-success);
+  color: var(--color-white);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--font-size-sm);
   padding: 12px 20px;
   border-radius: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   z-index: 9999;
   box-shadow: 0 4px 16px rgba(34,197,94,0.3);
   animation: slideIn 0.25s ease;
@@ -166,7 +166,7 @@
 .mobileSheetOverlay { display: none; }
 
 @media (max-width: 1024px) {
-  .sectionHeader { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #F0F0F0; }
+  .sectionHeader { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--color-separator); }
   .sectionTitle { font-size: 22px; }
 
   .mobileBackBtn {
@@ -177,8 +177,8 @@
     margin: 0;
     font-family: 'Manrope', sans-serif;
     font-weight: 600;
-    font-size: 14px;
-    color: #9CA3AF;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
     cursor: pointer;
   }
 
@@ -188,12 +188,12 @@
     left: 50%;
     bottom: 32px;
     transform: translateX(-50%);
-    border-radius: 100px;
+    border-radius: var(--radius-pill);
     padding: 14px 26px;
   }
 
   .filterRow          { display: none; }
-  .bookingFilterBtn   { display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; padding: 4px; position: relative; }
+  .bookingFilterBtn   { display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; padding: var(--spacing-xs); position: relative; }
   .desktopBookingWrap { display: none; }
   .mobileBookingWrap  { display: block; }
 
@@ -203,8 +203,8 @@
     position: absolute;
     top: -6px;
     right: -6px;
-    background: #F97316;
-    color: #ffffff;
+    background: var(--color-warning);
+    color: var(--color-white);
     font-family: 'Manrope', sans-serif;
     font-size: 11px;
     font-weight: 700;
@@ -222,8 +222,8 @@
     display: flex;
     width: 88px;
     height: 88px;
-    border-radius: 50%;
-    background: #F3F4F6;
+    border-radius: var(--radius-round);
+    background: var(--color-background-light);
     align-items: center;
     justify-content: center;
     margin-bottom: 16px;
@@ -233,25 +233,25 @@
   .emptyBookings      { padding: 80px 0 40px; }
 
   .mobileBookingCard {
-    border: 1.5px solid #E5E7EB;
-    border-radius: 16px;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-lg);
     padding: 14px 16px;
-    background: #ffffff;
+    background: var(--color-white);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 6px;
   }
   .mobileBookingCardTop { display: flex; align-items: center; justify-content: space-between; }
-  .mobileBookingLabel   { font-family: 'Manrope', sans-serif; font-size: 12px; color: #9CA3AF; }
-  .mobileBookingBadge   { font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 600; border: 1.5px solid; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
-  .mobileBookingService { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; color: #006FFD; margin: 2px 0 0; }
+  .mobileBookingLabel   { font-family: 'Manrope', sans-serif; font-size: var(--font-size-xs); color: var(--color-text-muted); }
+  .mobileBookingBadge   { font-family: 'Manrope', sans-serif; font-size: var(--font-size-xs); font-weight: 600; border: 1.5px solid; border-radius: 20px; padding: 3px 10px; white-space: nowrap; }
+  .mobileBookingService { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; color: var(--color-primary); margin: 2px 0 0; }
   .mobileBookingRow     { display: flex; align-items: center; justify-content: space-between; }
-  .mobileBookingRowAddr { border-top: 1px solid #F3F4F6; padding-top: 8px; margin-top: 2px; }
-  .mobileBookingPrice   { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #0D0D0D; }
-  .mobileBookingDate    { font-family: 'Manrope', sans-serif; font-size: 13px; color: #6B7280; }
-  .mobileBookingWash    { font-family: 'Manrope', sans-serif; font-size: 13px; color: #9CA3AF; }
-  .mobileBookingAddr    { display: flex; align-items: center; gap: 4px; font-family: 'Manrope', sans-serif; font-size: 13px; color: #6B7280; }
+  .mobileBookingRowAddr { border-top: 1px solid var(--color-background-light); padding-top: 8px; margin-top: 2px; }
+  .mobileBookingPrice   { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text); }
+  .mobileBookingDate    { font-family: 'Manrope', sans-serif; font-size: 13px; color: var(--color-text-placeholder); }
+  .mobileBookingWash    { font-family: 'Manrope', sans-serif; font-size: 13px; color: var(--color-text-muted); }
+  .mobileBookingAddr    { display: flex; align-items: center; gap: var(--spacing-xs); font-family: 'Manrope', sans-serif; font-size: 13px; color: var(--color-text-placeholder); }
 
   .mobileSheetOverlay {
     display: flex;
@@ -263,7 +263,7 @@
   }
 
   .mobileFilterSheet {
-    background: #ffffff;
+    background: var(--color-white);
     border-radius: 24px 24px 0 0;
     padding: 24px 16px 36px;
     width: 100%;
@@ -272,24 +272,24 @@
     animation: sheetUp 0.2s ease;
   }
   .mobileFilterHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .mobileFilterTitle  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 20px; color: #0D0D0D; margin: 0; }
-  .mobileFilterReset  { background: none; border: none; font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 500; color: #9CA3AF; cursor: pointer; padding: 0; }
-  .mobileFilterResetActive { color: #006FFD; }
-  .mobileFilterLabel  { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #6B7280; margin: 0 0 10px; }
-  .mobileFilterChips  { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  .mobileFilterChip   { height: 36px; padding: 0 16px; border-radius: 18px; border: 1.5px solid #E5E7EB; background: #ffffff; font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: #374151; cursor: pointer; white-space: nowrap; }
-  .mobileFilterChipActive { background: #006FFD; border-color: #006FFD; color: #ffffff; }
+  .mobileFilterTitle  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-lg); color: var(--color-text); margin: 0; }
+  .mobileFilterReset  { background: none; border: none; font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-muted); cursor: pointer; padding: 0; }
+  .mobileFilterResetActive { color: var(--color-primary); }
+  .mobileFilterLabel  { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text-placeholder); margin: 0 0 10px; }
+  .mobileFilterChips  { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); margin-bottom: 20px; }
+  .mobileFilterChip   { height: 36px; padding: 0 16px; border-radius: 18px; border: 1.5px solid var(--color-border); background: var(--color-white); font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; }
+  .mobileFilterChipActive { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-white); }
   .mobileFilterPeriodRow  { position: relative; margin-bottom: 24px; }
-  .mobileFilterPeriodInput { width: 100%; height: 52px; border-radius: 14px; border: 1.5px solid #E5E7EB; padding: 0 48px 0 16px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #0D0D0D; background: #F9FAFB; box-sizing: border-box; outline: none; }
-  .mobileFilterPeriodInput::placeholder { color: #9CA3AF; }
+  .mobileFilterPeriodInput { width: 100%; height: 52px; border-radius: 14px; border: 1.5px solid var(--color-border); padding: 0 48px 0 16px; font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text); background: var(--color-background-soft); box-sizing: border-box; outline: none; }
+  .mobileFilterPeriodInput::placeholder { color: var(--color-text-muted); }
   .mobileFilterCalIco { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; object-fit: contain; pointer-events: none; }
-  .mobileFilterApply  { width: 100%; height: 52px; border-radius: 16px; border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; }
-  .mobileFilterApplyActive   { background: #006FFD; color: #ffffff; }
-  .mobileFilterApplyDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+  .mobileFilterApply  { width: 100%; height: 52px; border-radius: var(--radius-lg); border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-md); cursor: pointer; }
+  .mobileFilterApplyActive   { background: var(--color-primary); color: var(--color-white); }
+  .mobileFilterApplyDisabled { background: var(--color-border); color: var(--color-text-muted); cursor: default; }
 
   .mobileDetailPage {
     margin: -20px -16px -32px;
-    background: #F5F7FA;
+    background: var(--color-background);
     min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
@@ -298,40 +298,40 @@
   .mobileDetailImgWrap { position: relative; width: 100%; height: 220px; flex-shrink: 0; }
   .mobileDetailImg     { width: 100%; height: 100%; object-fit: cover; display: block; }
   .mobileDetailDots    { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
-  .mobileDetailDot     { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.5); }
-  .mobileDetailDotActive { background: #ffffff; }
+  .mobileDetailDot     { width: 6px; height: 6px; border-radius: var(--radius-round); background: rgba(255,255,255,0.5); }
+  .mobileDetailDotActive { background: var(--color-white); }
   .mobileDetailBody    { padding: 16px 16px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-  .mobileDetailService  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: #006FFD; margin: 0; }
+  .mobileDetailService  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-md); color: var(--color-primary); margin: 0; }
   .mobileDetailPriceRow { display: flex; align-items: center; justify-content: space-between; }
-  .mobileDetailPrice    { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 18px; color: #0D0D0D; }
-  .mobileDetailWashName { font-family: 'Manrope', sans-serif; font-size: 14px; color: #9CA3AF; margin: -6px 0 0; }
+  .mobileDetailPrice    { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 18px; color: var(--color-text); }
+  .mobileDetailWashName { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-muted); margin: -6px 0 0; }
 
-  .cancelInfoBlock { display: flex; align-items: flex-start; gap: 12px; background: #FFEBD7; border-radius: 16px; padding: 14px 16px; }
-  .cancelInfoIcon  { font-size: 20px; color: #F97316; flex-shrink: 0; line-height: 1.2; }
-  .cancelInfoTitle { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 14px; color: #F97316; margin: 0 0 4px; }
-  .cancelInfoSub   { font-family: 'Manrope', sans-serif; font-size: 13px; color: #F97316; margin: 0; }
+  .cancelInfoBlock { display: flex; align-items: flex-start; gap: 12px; background: #FFEBD7; border-radius: var(--radius-lg); padding: 14px 16px; }
+  .cancelInfoIcon  { font-size: var(--font-size-lg); color: var(--color-warning); flex-shrink: 0; line-height: 1.2; }
+  .cancelInfoTitle { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-sm); color: var(--color-warning); margin: 0 0 4px; }
+  .cancelInfoSub   { font-family: 'Manrope', sans-serif; font-size: 13px; color: var(--color-warning); margin: 0; }
 
-  .twoGisBtn { display: flex; align-items: center; gap: 10px; width: 100%; background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 16px; padding: 14px 16px; font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 600; color: #0D0D0D; cursor: pointer; }
+  .twoGisBtn { display: flex; align-items: center; gap: 10px; width: 100%; background: var(--color-white); border: 1.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 14px 16px; font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); cursor: pointer; }
   .twoGisIco { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
 
-  .mobileQrSection { background: #ffffff; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .mobileQrTitle   { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: #0D0D0D; margin: 0; align-self: flex-start; }
+  .mobileQrSection { background: var(--color-white); border-radius: var(--radius-lg); padding: var(--spacing-md); display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .mobileQrTitle   { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-md); color: var(--color-text); margin: 0; align-self: flex-start; }
   .mobileQrImg     { width: 180px; height: 180px; object-fit: contain; }
 
-  .mobileDetailsSection       { background: #ffffff; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 0; }
-  .mobileDetailsSectionTitle  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 16px; color: #0D0D0D; margin: 0 0 12px; }
-  .mobileDetailsRow           { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F3F4F6; }
+  .mobileDetailsSection       { background: var(--color-white); border-radius: var(--radius-lg); padding: var(--spacing-md); display: flex; flex-direction: column; gap: 0; }
+  .mobileDetailsSectionTitle  { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: var(--font-size-md); color: var(--color-text); margin: 0 0 12px; }
+  .mobileDetailsRow           { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--color-background-light); }
   .mobileDetailsRow:last-child { border-bottom: none; }
-  .mobileDetailsKey { font-family: 'Manrope', sans-serif; font-size: 14px; color: #9CA3AF; }
-  .mobileDetailsVal { font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 600; color: #0D0D0D; }
+  .mobileDetailsKey { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-muted); }
+  .mobileDetailsVal { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text); }
 
-  .mobileDetailFooter { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px 28px; background: #ffffff; border-top: 1px solid #F0F0F0; }
+  .mobileDetailFooter { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px 28px; background: var(--color-white); border-top: 1px solid var(--color-separator); }
 
-  .cancelBookingBtn { display: block; width: 100%; height: 52px; border-radius: 16px; border: none; background: #EBF0FF; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; color: #006FFD; cursor: pointer; }
-  .reviewBookingBtn { display: block; width: 100%; height: 52px; border-radius: 16px; border: none; background: #006FFD; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; color: #ffffff; cursor: pointer; margin-bottom: 8px; }
+  .cancelBookingBtn { display: block; width: 100%; height: 52px; border-radius: var(--radius-lg); border: none; background: var(--color-primary-light); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-md); color: var(--color-primary); cursor: pointer; }
+  .reviewBookingBtn { display: block; width: 100%; height: 52px; border-radius: var(--radius-lg); border: none; background: var(--color-primary); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-md); color: var(--color-white); cursor: pointer; margin-bottom: 8px; }
 
   .cancelSheet {
-    background: #ffffff;
+    background: var(--color-white);
     border-radius: 24px 24px 0 0;
     padding: 24px 16px 36px;
     width: 100%;
@@ -342,32 +342,32 @@
     animation: sheetUp 0.2s ease;
   }
   .cancelReasonList { display: flex; flex-direction: column; gap: 0; margin: 8px 0 20px; }
-  .cancelReasonItem { display: flex; align-items: center; justify-content: space-between; padding: 16px 4px; border-bottom: 1px solid #F3F4F6; cursor: pointer; }
+  .cancelReasonItem { display: flex; align-items: center; justify-content: space-between; padding: 16px 4px; border-bottom: 1px solid var(--color-background-light); cursor: pointer; }
   .cancelReasonItem:last-child { border-bottom: none; }
-  .cancelReasonText  { font-family: 'Manrope', sans-serif; font-size: 15px; color: #0D0D0D; }
-  .cancelReasonCheck { color: #006FFD; font-size: 16px; font-weight: 700; }
+  .cancelReasonText  { font-family: 'Manrope', sans-serif; font-size: 15px; color: var(--color-text); }
+  .cancelReasonCheck { color: var(--color-primary); font-size: var(--font-size-md); font-weight: 700; }
   .cancelSheetBtns { display: flex; gap: 10px; margin-top: 4px; }
-  .cancelSheetBack { flex: 1; height: 52px; border-radius: 16px; border: 1.5px solid #E5E7EB; background: #ffffff; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; color: #006FFD; cursor: pointer; }
-  .cancelSheetConfirm { flex: 2; height: 52px; border-radius: 16px; border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; }
-  .cancelSheetConfirmActive   { background: #006FFD; color: #ffffff; }
-  .cancelSheetConfirmDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+  .cancelSheetBack { flex: 1; height: 52px; border-radius: var(--radius-lg); border: 1.5px solid var(--color-border); background: var(--color-white); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; color: var(--color-primary); cursor: pointer; }
+  .cancelSheetConfirm { flex: 2; height: 52px; border-radius: var(--radius-lg); border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer; }
+  .cancelSheetConfirmActive   { background: var(--color-primary); color: var(--color-white); }
+  .cancelSheetConfirmDisabled { background: var(--color-border); color: var(--color-text-muted); cursor: default; }
 
-  .mobileActionTitle { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 22px; color: #0D0D0D; margin: 0 0 10px; }
+  .mobileActionTitle { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 22px; color: var(--color-text); margin: 0 0 10px; }
 
-  .reviewSheet { background: #ffffff; border-radius: 24px 24px 0 0; padding: 24px 16px 40px; width: 100%; display: flex; flex-direction: column; gap: 0; animation: sheetUp 0.2s ease; }
-  .reviewSheetSub { font-family: 'Manrope', sans-serif; font-size: 14px; color: #6B7280; margin: 4px 0 20px; }
+  .reviewSheet { background: var(--color-white); border-radius: 24px 24px 0 0; padding: 24px 16px 40px; width: 100%; display: flex; flex-direction: column; gap: 0; animation: sheetUp 0.2s ease; }
+  .reviewSheetSub { font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text-placeholder); margin: 4px 0 20px; }
   .mobileStarsRow { display: flex; gap: 10px; margin-bottom: 10px; }
   .mobileStar { width: 36px; height: 36px; object-fit: contain; cursor: pointer; }
-  .reviewRatingLabel { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 14px; color: #FBBF24; margin: 0 0 16px; }
+  .reviewRatingLabel { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-sm); color: #FBBF24; margin: 0 0 16px; }
   .reviewTextareaWrap { position: relative; margin-top: 8px; }
-  .reviewTextarea { width: 100%; height: 100px; border: 1.5px solid #E5E7EB; border-radius: 16px; padding: 14px 16px 24px; font-family: 'Manrope', sans-serif; font-size: 14px; color: #0D0D0D; resize: none; outline: none; box-sizing: border-box; }
-  .reviewTextarea::placeholder { color: #9CA3AF; }
-  .reviewTextarea:focus { border-color: #006FFD; }
+  .reviewTextarea { width: 100%; height: 100px; border: 1.5px solid var(--color-border); border-radius: var(--radius-lg); padding: 14px 16px 24px; font-family: 'Manrope', sans-serif; font-size: var(--font-size-sm); color: var(--color-text); resize: none; outline: none; box-sizing: border-box; }
+  .reviewTextarea::placeholder { color: var(--color-text-muted); }
+  .reviewTextarea:focus { border-color: var(--color-primary); }
   .reviewResizeIco { position: absolute; bottom: 8px; right: 10px; width: 14px; height: 14px; object-fit: contain; opacity: 0.4; pointer-events: none; }
-  .reviewCharCount { font-family: 'Manrope', sans-serif; font-size: 12px; color: #9CA3AF; text-align: right; display: block; margin: 4px 0 16px; }
-  .reviewSheetBtn  { width: 100%; height: 52px; border-radius: 16px; border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; cursor: pointer; margin-top: 4px; }
-  .reviewSheetBtnActive   { background: #006FFD; color: #ffffff; }
-  .reviewSheetBtnDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+  .reviewCharCount { font-family: 'Manrope', sans-serif; font-size: var(--font-size-xs); color: var(--color-text-muted); text-align: right; display: block; margin: 4px 0 16px; }
+  .reviewSheetBtn  { width: 100%; height: 52px; border-radius: var(--radius-lg); border: none; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: var(--font-size-md); cursor: pointer; margin-top: 4px; }
+  .reviewSheetBtnActive   { background: var(--color-primary); color: var(--color-white); }
+  .reviewSheetBtnDisabled { background: var(--color-border); color: var(--color-text-muted); cursor: default; }
 }
 
 @keyframes sheetUp {

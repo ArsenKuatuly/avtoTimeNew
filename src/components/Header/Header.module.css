@@ -1,6 +1,6 @@
-.header {
+﻿.header {
   width: 100%;
-  background-color: #006FFD;
+  background-color: var(--color-primary);
   height: 80px;
   position: sticky;
   top: 0;
@@ -40,7 +40,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 17px;
-  color: #ffffff;
+  color: var(--color-white);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -48,14 +48,14 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: var(--spacing-xl);
 }
 
 .link {
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 15px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
   white-space: nowrap;
   transition: opacity 0.15s;
@@ -72,7 +72,7 @@
 .right {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--spacing-lg);
   margin-left: auto;
   flex-shrink: 0;
 }
@@ -103,7 +103,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 15px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -112,10 +112,10 @@
 .loginBtn {
   height: 42px;
   padding: 0 22px;
-  background: #ffffff;
-  color: #006FFD;
+  background: var(--color-white);
+  color: var(--color-primary);
   border: none;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 15px;
@@ -162,7 +162,7 @@
 }
 
 .mobileMenu {
-  background: #006FFD;
+  background: var(--color-primary);
   padding: 24px 20px 32px;
   display: flex;
   flex-direction: column;
@@ -178,7 +178,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 17px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
   padding: 14px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
@@ -190,25 +190,25 @@
 .mobileBottom {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--spacing-md);
   margin-top: 24px;
 }
 
 .mobileContact {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-sm);
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 15px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
 }
 
 .mobileAuthRow {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--spacing-md);
 }
 
 @media (max-width: 1200px) {
@@ -236,7 +236,7 @@
 
   .loginBtn { display: none; }
 
-  .right { gap: 16px; }
+  .right { gap: var(--spacing-md); }
 }
 
 @media (max-width: 768px) {
@@ -255,7 +255,7 @@
   width: 85%;
   max-width: 340px;
   height: 100%;
-  background: #006FFD;
+  background: var(--color-primary);
   display: flex;
   flex-direction: column;
   padding: 0 20px 32px;
@@ -284,7 +284,7 @@
 .drawerClose {
   background: none;
   border: none;
-  color: #ffffff;
+  color: var(--color-white);
   font-size: 22px;
   cursor: pointer;
   padding: 0;
@@ -304,7 +304,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 28px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
   padding: 12px 0;
   transition: opacity 0.15s;
@@ -319,13 +319,13 @@
   gap: 10px;
   width: 100%;
   height: 52px;
-  background: #ffffff;
+  background: var(--color-white);
   border: 1.5px solid rgba(255, 255, 255, 0.4);
-  border-radius: 100px;
-  color: #006FFD;
+  border-radius: var(--radius-pill);
+  color: var(--color-primary);
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   cursor: pointer;
   margin-bottom: 24px;
   transition: background 0.15s;
@@ -341,13 +341,13 @@
 .drawerLoginBtn {
   width: 100%;
   height: 52px;
-  background: #ffffff;
-  color: #006FFD;
+  background: var(--color-white);
+  color: var(--color-primary);
   border: none;
-  border-radius: 100px;
+  border-radius: var(--radius-pill);
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   cursor: pointer;
   margin-bottom: 24px;
   transition: opacity 0.15s;
@@ -387,7 +387,7 @@
   font-family: 'Manrope', sans-serif;
   font-weight: 500;
   font-size: 15px;
-  color: #ffffff;
+  color: var(--color-white);
   text-decoration: none;
   margin-bottom: 16px;
 }

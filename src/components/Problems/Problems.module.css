@@ -1,4 +1,4 @@
-.section {
+﻿.section {
   width: 100%;
 }
 
@@ -17,25 +17,25 @@
   font-size: 52px;
   line-height: 1.1;
   text-transform: uppercase;
-  color: #2A3550;
+  color: var(--color-dark-blue);
   margin: 0;
 }
 
 
 .cards {
   display: flex;
-  gap: 24px;
+  gap: var(--spacing-lg);
 }
 
 .card {
   flex: 1;
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 80px;
   padding: 66px 43px 75px 43px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-    border: #1C1C1C solid 1px;
+  gap: var(--spacing-md);
+    border: var(--color-text-dark) solid 1px;
 }
 
 .percent {
@@ -43,15 +43,15 @@
   font-weight: 800;
   font-size: 80px;
   line-height: 1;
-  color: #006FFD;
+  color: var(--color-primary);
 }
 
 .desc {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: var(--font-size-md);
   line-height: 22px;
-  color: #6B7280;
+  color: var(--color-text-placeholder);
   margin: 0;
 }
 
