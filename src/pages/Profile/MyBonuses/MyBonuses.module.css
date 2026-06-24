@@ -1,0 +1,479 @@
+.section {}
+
+.sectionTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #0D0D0D;
+  margin: 0;
+}
+
+.bonusSubtitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #0D0D0D;
+  margin: 0 0 6px;
+}
+.bonusDesc {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0 0 28px;
+}
+
+.punchGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.punchCard {
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  padding: 20px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.stampGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.stamp {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.punchMore {
+  background: none;
+  border: none;
+  color: #006FFD;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+.punchMore:hover { text-decoration: underline; }
+
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 160px;
+  z-index: 1000;
+}
+
+.historyModal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.historyHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.historyTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #0D0D0D;
+  margin: 0;
+}
+.addCarModalClose {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+.addCarModalClose:hover { color: #374151; }
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+}
+.historyItemBorder { border-bottom: 1px solid #F3F4F6; }
+.historyIco {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.historyName {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0D0D0D;
+  margin: 0 0 2px;
+}
+.historySub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 0;
+}
+.historyDate {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: #6B7280;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* MobileBonuses styles */
+.bonusBalanceCard {
+  background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 14px;
+}
+.bonusBalanceLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  margin: 0 0 6px;
+}
+.bonusBalanceAmount {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+.bonusBalanceSub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+
+.bonusLevelsLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #006FFD;
+  cursor: pointer;
+}
+.bonusInfoIco {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.bonusSectionLabel {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: #0D0D0D;
+  margin: 0 0 12px;
+}
+
+.bonusDateRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+.bonusCalIco {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.bonusDateText {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0D0D0D;
+}
+
+.bonusStatsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.bonusStatCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F9FAFB;
+  border-radius: 14px;
+  padding: 14px 12px;
+}
+.bonusStatIco {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.bonusStatLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0 0 3px;
+}
+.bonusStatVal {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+}
+.bonusStatPos { color: #22C55E; }
+.bonusStatNeg { color: #EF4444; }
+
+.bonusTxGroup { margin-bottom: 12px; }
+.bonusTxDate {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #0D0D0D;
+  margin: 0 0 8px;
+}
+.bonusTxCard {
+  background: #ffffff;
+  border: 1.5px solid #F3F4F6;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.bonusTxRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+}
+.bonusTxRowBorder { border-bottom: 1px solid #F3F4F6; }
+.bonusTxName {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #0D0D0D;
+  margin: 0 0 3px;
+}
+.bonusTxSub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0;
+}
+.bonusTxPos {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #006FFD;
+  white-space: nowrap;
+}
+.bonusTxNeg {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #EF4444;
+  white-space: nowrap;
+}
+
+.bonusPeriodSub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: #6B7280;
+  margin: 3px 0 0;
+}
+
+.mobileSheetOverlay {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 200;
+  align-items: flex-end;
+}
+
+.cancelSheet {
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  padding: 24px 16px 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: sheetUp 0.2s ease;
+}
+
+.cancelReasonList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 8px 0 20px;
+}
+
+.cancelReasonItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 4px;
+  border-bottom: 1px solid #F3F4F6;
+  cursor: pointer;
+}
+.cancelReasonItem:last-child { border-bottom: none; }
+
+.cancelReasonText {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: #0D0D0D;
+}
+
+.cancelReasonCheck {
+  color: #006FFD;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mobileActionTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: #0D0D0D;
+  margin: 0 0 10px;
+}
+
+.levelsSheet {
+  background: #ffffff;
+  border-radius: 24px 24px 0 0;
+  padding: 24px 16px 36px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  animation: sheetUp 0.2s ease;
+}
+
+.levelsSheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.levelsSheetClose {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.levelsTimeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.levelsTimelineItem {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.levelsTimelineLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 32px;
+}
+
+.levelStepIco {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.levelStepLine {
+  width: 2px;
+  flex: 1;
+  min-height: 28px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #D1D5DB 0px, #D1D5DB 4px,
+    transparent 4px, transparent 8px
+  );
+  margin: 4px 0;
+}
+
+.levelsTimelineRight {
+  padding-bottom: 28px;
+  padding-top: 2px;
+}
+
+.levelStepCashback {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  color: #006FFD;
+  margin: 0 0 2px;
+  line-height: 1.1;
+}
+
+.levelStepLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .sectionTitle { font-size: 22px; }
+
+  .punchGrid { grid-template-columns: 1fr 1fr; }
+
+  .confirmOverlay {
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
+  .historyModal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: sheetUp 0.2s ease;
+  }
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}

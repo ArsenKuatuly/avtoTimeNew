@@ -1,0 +1,290 @@
+.section {}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #0D0D0D;
+  margin: 0;
+}
+
+.deleteLink {
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0;
+}
+.deleteLink:hover { color: #EF4444; }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 340px;
+  margin-bottom: 24px;
+}
+
+.floatField {
+  position: relative;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  height: 56px;
+  transition: border-color 0.15s;
+}
+.floatField:focus-within { border-color: #006FFD; }
+
+.floatLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: #9CA3AF;
+  pointer-events: none;
+  transition: all 0.15s;
+}
+
+.floatFieldFilled .floatLabel,
+.floatField:focus-within .floatLabel {
+  top: 10px;
+  transform: none;
+  font-size: 11px;
+  color: #9CA3AF;
+}
+
+.floatInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 20px 16px 6px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: #0D0D0D;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.saveBtn {
+  width: 340px;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.saveBtnActive { background: #006FFD; color: #ffffff; }
+.saveBtnActive:hover { opacity: 0.9; }
+.saveBtnDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: #22C55E;
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+  animation: slideIn 0.25s ease;
+}
+
+.toastCheck {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(80px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 160px;
+  z-index: 1000;
+}
+
+.confirmModal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px 17px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.confirmTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.confirmIcon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.confirmTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: #0D0D0D;
+  margin: 0 0 10px;
+}
+
+.confirmText {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.confirmBtns {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.confirmBack {
+  flex: 1;
+  height: 48px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  background: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #006FFD;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.confirmBack:hover { background: #F5F7FA; }
+
+.confirmDelete {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #006FFD;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.confirmDelete:hover { opacity: 0.9; }
+
+.deleteLinkMobile { display: none; }
+
+@media (max-width: 1024px) {
+  .sectionHeader {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F0F0F0;
+  }
+
+  .sectionTitle { font-size: 22px; }
+
+  .deleteLink { display: none; }
+
+  .form {
+    max-width: 100%;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .floatField {
+    border-radius: 16px;
+    height: 54px;
+  }
+
+  .saveBtn {
+    width: 100%;
+    height: 54px;
+    border-radius: 16px;
+  }
+
+  .deleteLinkMobile {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #006FFD;
+    padding: 8px 0;
+    margin-top: 16px;
+    cursor: pointer;
+  }
+
+  .toast {
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    border-radius: 100px;
+    padding: 14px 26px;
+  }
+
+  .confirmOverlay {
+    align-items: flex-end;
+    padding-top: 0;
+  }
+
+  .confirmModal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: sheetUp 0.2s ease;
+  }
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}

@@ -1,0 +1,431 @@
+.section {}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: #0D0D0D;
+  margin: 0;
+}
+
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: #22C55E;
+  color: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 9999;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+  animation: slideIn 0.25s ease;
+}
+.toastCheck { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
+@keyframes slideIn {
+  from { transform: translateX(80px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.addCarBtn {
+  height: 42px;
+  padding: 0 22px;
+  background: #006FFD;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.addCarBtn:hover { opacity: 0.88; }
+
+.emptyGarage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0 40px;
+}
+.emptyGarageImg { width: 48px; height: 48px; object-fit: contain; opacity: 0.55; margin-bottom: 16px; }
+.emptyGarageText { font-family: 'Manrope', sans-serif; font-size: 15px; color: #9CA3AF; margin: 0; }
+
+.carGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.carCard {
+  background: #ffffff;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 14px;
+  padding: 16px 16px 14px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.carCard:hover { box-shadow: 0 4px 14px rgba(0,111,253,0.08); border-color: #C7D7FF; }
+
+.carCardTop { display: flex; align-items: flex-start; justify-content: space-between; }
+
+.carName { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 16px; color: #0D0D0D; margin: 0 0 3px; }
+.carSub  { font-family: 'Manrope', sans-serif; font-size: 16px; color: #9CA3AF; margin: 0; }
+
+.carMenuWrap { position: relative; flex-shrink: 0; }
+.carMenuBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.carMenuBtn:hover { color: #374151; }
+
+.carMenuDropdown {
+  position: absolute;
+  top: 24px;
+  right: 0;
+  background: #ffffff;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  z-index: 10;
+  overflow: hidden;
+  min-width: 110px;
+}
+.carMenuItem {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #F3F4F6;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+.carMenuItem:hover { background: #F5F7FA; }
+.carMenuItemDelete {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #EF4444;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+}
+.carMenuItemDelete:hover { background: #FEE2E2; }
+
+.cardNameRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.primaryBadge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: #ECFCD3;
+  color: #37C932;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cardTypeIco { width: 48px; height: 28px; object-fit: contain; margin-top: 10px; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.pageBtn {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 8px;
+  background: #ffffff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+.pageBtn:hover:not(:disabled) { border-color: #006FFD; color: #006FFD; }
+.pageBtn:disabled { opacity: 0.35; cursor: default; }
+.pageInfo { font-family: 'Manrope', sans-serif; font-size: 14px; color: #374151; }
+
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 160px;
+  z-index: 1000;
+}
+
+.addCarModal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.addCarModalHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.addCarModalTitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #0D0D0D;
+  margin: 0;
+  order: 1;
+}
+.addCarModalClose {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+  order: 2;
+}
+.addCarModalClose:hover { color: #374151; }
+
+.garageField {
+  position: relative;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  height: 56px;
+  transition: border-color 0.15s;
+}
+.garageField:focus-within { border-color: #006FFD; }
+.garageLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: #9CA3AF;
+  pointer-events: none;
+  transition: all 0.15s;
+}
+.garageField:focus-within .garageLabel,
+.garageFieldFilled .garageLabel {
+  top: 10px;
+  transform: none;
+  font-size: 11px;
+}
+.garageInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 20px 16px 6px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  color: #0D0D0D;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.cardRow { display: flex; gap: 12px; }
+.cardCvvWrap { width: 110px; flex-shrink: 0; }
+.cardExpiryWrap {
+  position: relative;
+  flex: 1;
+  height: 56px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 10px;
+  transition: border-color 0.15s;
+}
+.cardExpiryWrap:focus-within { border-color: #006FFD; }
+.cardExpiryWrap:focus-within .garageLabel { top: 10px; transform: none; font-size: 11px; }
+.cardExpiryWrap .garageInput { padding-right: 44px; }
+.cardExpiryIco {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.cardToggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+.cardToggleLabel { font-family: 'Manrope', sans-serif; font-size: 14px; color: #374151; }
+.toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #E5E7EB;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.toggleOn { background: #006FFD; }
+.toggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.toggleOn .toggleThumb { transform: translateX(20px); }
+
+.addCarSubmit {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  margin-top: 4px;
+}
+.addCarSubmitActive { background: #006FFD; color: #ffffff; }
+.addCarSubmitActive:hover { opacity: 0.9; }
+.addCarSubmitDisabled { background: #E5E7EB; color: #9CA3AF; cursor: default; }
+
+.deleteCarModal {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.deleteCarTop { display: flex; align-items: flex-start; gap: 14px; }
+.deleteCarIco { width: 32px; height: 32px; object-fit: contain; flex-shrink: 0; margin-top: 2px; }
+.deleteCarTitle { font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 20px; color: #0D0D0D; margin: 0 0 8px; }
+.deleteCarText { font-family: 'Manrope', sans-serif; font-size: 14px; color: #6B7280; line-height: 1.5; margin: 0; }
+
+.confirmBtns { display: flex; gap: 12px; margin-top: 8px; }
+.confirmBack {
+  flex: 1;
+  height: 48px;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 12px;
+  background: #ffffff;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #006FFD;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.confirmBack:hover { background: #F5F7FA; }
+.confirmDelete {
+  flex: 1;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #006FFD;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.confirmDelete:hover { opacity: 0.9; }
+
+@media (max-width: 1024px) {
+  .sectionHeader { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #F0F0F0; }
+  .sectionTitle { font-size: 22px; }
+
+  .toast {
+    top: auto;
+    right: auto;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    border-radius: 100px;
+    padding: 14px 26px;
+  }
+
+  .addCarBtn { height: auto; padding: 0; background: none; color: #006FFD; font-size: 15px; }
+  .addCarBtn:hover { opacity: 0.8; }
+
+  .carGrid { grid-template-columns: 1fr; }
+  .carCard { border-radius: 16px; }
+  .carMenuWrap { display: none; }
+
+  .confirmOverlay { align-items: flex-end; padding-top: 0; }
+
+  .addCarModal,
+  .deleteCarModal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: sheetUp 0.2s ease;
+  }
+
+  .addCarModalHead { justify-content: flex-start; gap: 12px; }
+  .addCarModalClose { order: -1; font-size: 0; }
+  .addCarModalClose::before { content: '‹'; font-size: 26px; line-height: 1; }
+  .addCarModalTitle { order: 2; font-size: 22px; }
+
+  .garageField { border-radius: 16px; height: 54px; }
+
+  .deleteCarIco { display: none; }
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
