@@ -1,6 +1,7 @@
 export function formatPhone(raw) {
   const digits = String(raw || '').replace(/\D/g, '');
-  const d = digits.startsWith('7') || digits.startsWith('8') ? digits.slice(1) : digits;
+  // Strip leading digit only when full 11-digit format (7XXXXXXXXXX with country code)
+  const d = digits.length === 11 ? digits.slice(1) : digits;
   if (d.length === 0) return '+7';
   let result = '+7';
   if (d.length > 0) result += ' ' + d.slice(0, 3);
