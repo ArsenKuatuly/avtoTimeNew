@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './MyBookings.module.css';
 import { CANCEL_REASONS } from '../../../constants/mockBookings';
-import { STATUS_COLOR } from './MyBookings';
+import { STATUS_COLOR } from '../../../utils/statusColors';
 import carImg    from '../../../assets/icons/car.svg';
 import galochka  from '../../../assets/icons/galochka.png';
 import strechImg from '../../../assets/icons/strech.png';

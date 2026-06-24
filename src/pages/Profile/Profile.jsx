@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './Profile.module.css';
+import { formatPhone } from '../../utils/formatPhone';
 import MyData          from './MyData/MyData';
 import MyBookings      from './MyBookings/MyBookings';
 import MyGarage        from './MyGarage/MyGarage';
@@ -22,13 +23,6 @@ import icoGarageA   from '../../assets/icons/bmoigarage.png';
 import icoCardsA    from '../../assets/icons/bmoikarty.png';
 import icoBonusesA  from '../../assets/icons/bmoibonusy.png';
 import icoNotifA    from '../../assets/icons/buvedomleniya.png';
-
-function formatPhone(raw) {
-  const d = String(raw || '').replace(/\D/g, '');
-  const digits = d.length === 11 ? d.slice(1) : d;
-  if (digits.length !== 10) return raw;
-  return `+7 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8, 10)}`;
-}
 
 const MENU = [
   { id: 'data',          label: 'Мои данные',  icon: icoData,     iconActive: icoDataA     },

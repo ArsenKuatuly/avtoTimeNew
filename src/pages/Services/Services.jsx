@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Services.module.css';
+import { formatCurrency } from '../../utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
@@ -543,7 +544,7 @@ export default function Services() {
                           <div className={styles.actionInfo}>
                             <p className={styles.actionName}>{getActName(a)}</p>
                             <div className={styles.actionPriceRow}>
-                              <span className={styles.actionPrice}>{getPrice(a).toLocaleString('ru-RU')} ₸</span>
+                              <span className={styles.actionPrice}>{formatCurrency(getPrice(a))}</span>
                               {getOldPrice(a) && (
                                 <span className={styles.actionOldPrice}>{getOldPrice(a).toLocaleString('ru-RU')} тг</span>
                               )}

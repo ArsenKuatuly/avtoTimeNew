@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './BookingDetail.module.css';
+import { STATUS_COLOR } from '../../utils/statusColors';
 import carImg   from '../../assets/icons/car.svg';
 import toright  from '../../assets/icons/toright.png';
 import galochka from '../../assets/icons/galochka.png';
@@ -37,12 +38,6 @@ const QUEUE_STEPS_BY_STATUS = {
   ],
 };
 
-const STATUS_COLOR = {
-  'Новый':      { bg: '#EBF0FF', color: '#006FFD' },
-  'В процессе': { bg: '#FFF3D6', color: '#D97706' },
-  'Завершён':   { bg: '#D1FAE5', color: '#059669' },
-  'Отменён':    { bg: '#FEE2E2', color: '#DC2626' },
-};
 
 const CANCEL_REASONS = [
   'Изменились планы',

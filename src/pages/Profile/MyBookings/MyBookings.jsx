@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './MyBookings.module.css';
 import MobileBookingDetail from './MobileBookingDetail';
 import { MOCK_BOOKINGS } from '../../../constants/mockBookings';
+import { STATUS_COLOR } from '../../../utils/statusColors';
 import carImg      from '../../../assets/icons/car.svg';
 import zapiseinet  from '../../../assets/icons/zapiseinet.png';
 import mestoIco    from '../../../assets/icons/mesto.png';
@@ -11,13 +12,6 @@ import icoFilter   from '../../../assets/icons/filter.svg';
 
 const STATUS_TABS = ['Все', 'Новый', 'В процессе', 'Завершён', 'Отменён'];
 const PAGE_SIZE = 5;
-
-export const STATUS_COLOR = {
-  'Новый':      { bg: '#EBF0FF', color: '#006FFD' },
-  'В процессе': { bg: '#FFF3D6', color: '#D97706' },
-  'Завершён':   { bg: '#D1FAE5', color: '#059669' },
-  'Отменён':    { bg: '#FEE2E2', color: '#DC2626' },
-};
 
 function BookingCard({ booking, onClick }) {
   const { status, label, service, price, date, wash, address } = booking;

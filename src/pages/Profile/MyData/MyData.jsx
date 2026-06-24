@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './MyData.module.css';
+import { formatPhone } from '../../../utils/formatPhone';
 import deletelogo from '../../../assets/icons/deletelogo.png';
 import galochka   from '../../../assets/icons/galochka.png';
-
-function formatPhone(raw) {
-  const d = String(raw || '').replace(/\D/g, '');
-  const digits = d.length === 11 ? d.slice(1) : d;
-  if (digits.length !== 10) return raw;
-  return `+7 ${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 8)} ${digits.slice(8, 10)}`;
-}
 
 function FloatInput({ label, value, onChange, readOnly }) {
   const hasValue = value && value.length > 0;

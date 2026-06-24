@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './Queue.module.css';
+import { formatCurrency } from '../../utils/formatCurrency';
 import blueCar     from '../../assets/icons/blueCar.svg';
 import yellowCar   from '../../assets/icons/yellowCar.svg';
 import redCar      from '../../assets/icons/redCar.svg';
@@ -271,7 +272,7 @@ export default function Queue() {
                     <div className={styles.serviceItemInfo}>
                       <p className={styles.serviceItemName}>{a.name}</p>
                       <div className={styles.serviceItemPrices}>
-                        <span className={styles.serviceItemPrice}>{price.toLocaleString('ru-RU')} ₸</span>
+                        <span className={styles.serviceItemPrice}>{formatCurrency(price)}</span>
                         {oldPrice && <span className={styles.serviceItemOld}>{oldPrice.toLocaleString('ru-RU')} тг</span>}
                       </div>
                     </div>

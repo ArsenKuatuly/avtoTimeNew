@@ -1,12 +1,10 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './BookOrder.module.css';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { MONTHS_NOM, DAY_SHORT, formatDateLabel } from '../../utils/formatDate';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
-
-const MONTHS_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const MONTHS_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
-const DAY_SHORT  = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
 const TIME_GROUPS = [
   { label: 'Утро', slots: [
@@ -46,7 +44,7 @@ export default function BookOrder() {
   const [timer, setTimer]         = useState(59);
   const otpRefs = useRef([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (step !== 2) return;
     setTimer(59);
     const id = setInterval(() => setTimer(t => t > 0 ? t - 1 : 0), 1000);
@@ -76,7 +74,7 @@ export default function BookOrder() {
   const pickerTime = pickerSlot ? TIME_GROUPS[pickerSlot.g].slots[pickerSlot.i].t : null;
 
   const datetimeDisplay = pickerDate && pickerTime
-    ? `${pickerDate.getDate()} ${MONTHS_GEN[pickerDate.getMonth()]}, ${pickerTime}`
+    ? formatDateLabel(pickerDate, pickerTime)
     : '';
 
   const formFilled   = name.trim() && phone.trim() && datetimeDisplay;
@@ -266,7 +264,7 @@ export default function BookOrder() {
             </div>
             <div className={styles.summaryRow}>
               <span className={styles.summaryKey}>К оплате</span>
-              <span className={styles.summaryPrice}>{total ? `${total.toLocaleString('ru-RU')} ₸` : '5 000 ₸'}</span>
+              <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
             </div>
           </div>
           <div className={styles.formBtnWrap}>
@@ -316,7 +314,7 @@ export default function BookOrder() {
               </div>
               <div className={styles.modalRow}>
                 <span className={styles.modalKey}>К оплате</span>
-                <span className={styles.summaryPrice}>{total ? `${total.toLocaleString('ru-RU')} ₸` : '5 000 ₸'}</span>
+                <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
               </div>
             </div>
             <button className={styles.btnBlueLg} onClick={() => { setShowConfirm(false); setStep(2); }}>
