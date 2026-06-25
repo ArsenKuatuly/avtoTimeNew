@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './BookingDetail.module.css';
+import { Button } from '../../components/ui';
 import { STATUS_COLOR } from '../../utils/statusColors';
 import carImg   from '../../assets/icons/car.svg';
 import toright  from '../../assets/icons/toright.png';
@@ -121,18 +122,18 @@ export default function BookingDetail() {
           <h1 className={styles.pageTitle}>Детали записи</h1>
           <div className={styles.titleBtns}>
             {canReview && (
-              <button
-                className={`${styles.reviewTopBtn} ${reviewed ? styles.reviewTopBtnDone : ''}`}
-                onClick={reviewed ? undefined : openReview}
+              <Button
                 disabled={reviewed}
+                className={`${styles.reviewTopBtn} ${reviewed ? styles.reviewTopBtnDone : ''}`}
+                onClick={openReview}
               >
                 Оставить отзыв
-              </button>
+              </Button>
             )}
             {canCancel && (
-              <button className={styles.cancelTopBtn} onClick={openCancel}>
+              <Button className={styles.cancelTopBtn} onClick={openCancel}>
                 Отменить запись
-              </button>
+              </Button>
             )}
           </div>
         </div>
@@ -256,13 +257,9 @@ export default function BookingDetail() {
             </div>
             <span className={styles.charCount}>{reviewComment.length} / 100</span>
 
-            <button
-              className={`${styles.reviewSubmitBtn} ${rating > 0 ? styles.reviewSubmitBtnActive : styles.reviewSubmitBtnDisabled}`}
-              disabled={rating === 0}
-              onClick={handleReviewSubmit}
-            >
+            <Button fullWidth disabled={rating === 0} onClick={handleReviewSubmit}>
               Оставить отзыв
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -312,16 +309,12 @@ export default function BookingDetail() {
 
             {!showReasons && (
               <div className={styles.modalBtns}>
-                <button className={styles.backModalBtn} onClick={() => setShowCancel(false)}>
+                <Button variant="ghost" className={styles.backModalBtn} onClick={() => setShowCancel(false)}>
                   Назад
-                </button>
-                <button
-                  className={`${styles.confirmCancelBtn} ${reason ? styles.confirmCancelBtnActive : styles.confirmCancelBtnDisabled}`}
-                  disabled={!reason}
-                  onClick={handleCancelConfirm}
-                >
+                </Button>
+                <Button className={styles.confirmCancelBtn} disabled={!reason} onClick={handleCancelConfirm}>
                   Отменить запись
-                </button>
+                </Button>
               </div>
             )}
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { getCarsByUser, toCar } from '../../../api/vehicles';
 import styles from './MyGarage.module.css';
+import { Button, Input } from '../../../components/ui';
 import garagenet   from '../../../assets/icons/garagenet.png';
 import errorGarage from '../../../assets/icons/errorGarage.png';
 import deletelogo  from '../../../assets/icons/deletelogo.png';
@@ -9,20 +10,6 @@ import galochka    from '../../../assets/icons/galochka.png';
 
 const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 const GARAGE_PAGE_SIZE = 6;
-
-function GarageInput({ label, value, onChange }) {
-  const filled = value.length > 0;
-  return (
-    <div className={`${styles.garageField} ${filled ? styles.garageFieldFilled : ''}`}>
-      <label className={styles.garageLabel}>{label}</label>
-      <input
-        className={styles.garageInput}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-      />
-    </div>
-  );
-}
 
 export default function MyGarage() {
   const { user, token }               = useAuth();
@@ -109,10 +96,10 @@ export default function MyGarage() {
 
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Мой гараж</h2>
-        <button className={styles.addCarBtn} onClick={openAdd}>
+        <Button className={styles.addCarBtn} onClick={openAdd}>
           <span className={styles.addCarBtnTextFull}>Добавить авто</span>
           <span className={styles.addCarBtnTextShort}>Добавить</span>
-        </button>
+        </Button>
       </div>
 
       {loadingCars ? (
@@ -191,14 +178,10 @@ export default function MyGarage() {
                 <button key={t} className={`${styles.bodyChip} ${body === t ? styles.bodyChipActive : ''}`} onClick={() => setBody(t)}>{t}</button>
               ))}
             </div>
-            <GarageInput label="Марка"     value={make}  onChange={setMake}  />
-            <GarageInput label="Модель"    value={model} onChange={setModel} />
-            <GarageInput label="Гос номер" value={plate} onChange={setPlate} />
-            <button
-              className={`${styles.addCarSubmit} ${canAdd ? styles.addCarSubmitActive : styles.addCarSubmitDisabled}`}
-              disabled={!canAdd}
-              onClick={handleAdd}
-            >Добавить</button>
+            <Input label="Марка"     value={make}  onChange={e => setMake(e.target.value)}  />
+            <Input label="Модель"    value={model} onChange={e => setModel(e.target.value)} />
+            <Input label="Гос номер" value={plate} onChange={e => setPlate(e.target.value)} />
+            <Button fullWidth disabled={!canAdd} onClick={handleAdd}>Добавить</Button>
           </div>
         </div>
       )}
@@ -216,8 +199,8 @@ export default function MyGarage() {
               </div>
             </div>
             <div className={styles.confirmBtns}>
-              <button className={styles.confirmBack} onClick={() => setDeleteCar(null)}>Отмена</button>
-              <button className={styles.confirmDelete} onClick={confirmDelete}>Удалить</button>
+              <Button variant="secondary" className={styles.confirmBtn} onClick={() => setDeleteCar(null)}>Отмена</Button>
+              <Button className={styles.confirmBtn} onClick={confirmDelete}>Удалить</Button>
             </div>
           </div>
         </div>
@@ -246,14 +229,10 @@ export default function MyGarage() {
                 <button key={t} className={`${styles.bodyChip} ${eBody === t ? styles.bodyChipActive : ''}`} onClick={() => setEBody(t)}>{t}</button>
               ))}
             </div>
-            <GarageInput label="Модель"    value={eModel} onChange={setEModel} />
-            <GarageInput label="Марка"     value={eMake}  onChange={setEMake}  />
-            <GarageInput label="Гос номер" value={ePlate} onChange={setEPlate} />
-            <button
-              className={`${styles.addCarSubmit} ${canEdit ? styles.addCarSubmitActive : styles.addCarSubmitDisabled}`}
-              disabled={!canEdit}
-              onClick={handleEdit}
-            >Редактировать</button>
+            <Input label="Модель"    value={eModel} onChange={e => setEModel(e.target.value)} />
+            <Input label="Марка"     value={eMake}  onChange={e => setEMake(e.target.value)}  />
+            <Input label="Гос номер" value={ePlate} onChange={e => setEPlate(e.target.value)} />
+            <Button fullWidth disabled={!canEdit} onClick={handleEdit}>Редактировать</Button>
           </div>
         </div>
       )}

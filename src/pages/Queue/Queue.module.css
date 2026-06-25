@@ -207,33 +207,6 @@
   font-size: 15px;
 }
 
-.btnBlue {
-  width: 100%;
-  height: 52px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.btnBlue:hover { opacity: 0.9; }
-
-.btnGray {
-  width: 100%;
-  height: 52px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: default;
-}
 
 .queueCol {
   flex: 1;
@@ -373,28 +346,10 @@
 .successBtnGray {
   height: 52px;
   border-radius: 14px;
-  border: none;
   background: var(--color-primary-ultra-light);
   color: var(--color-primary);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
 }
 .successBtnGray:hover { background: var(--color-primary-hover); }
-
-.successBtnBlue {
-  height: 52px;
-  border-radius: 14px;
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-}
-.successBtnBlue:hover { opacity: 0.9; }
 
 /* ——— Services modal ——— */
 .modalOverlay {
@@ -531,14 +486,8 @@
   flex: 1;
   height: 52px;
   border-radius: 14px;
-  border: none;
   background: var(--color-primary-ultra-light);
   color: var(--color-primary);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.15s;
 }
 .serviceModalBack:hover { background: var(--color-primary-hover); }
 
@@ -546,26 +495,4 @@
   flex: 1;
   height: 52px;
   border-radius: 14px;
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.serviceModalAdd:hover { opacity: 0.9; }
-
-.serviceModalAddDis {
-  flex: 1;
-  height: 52px;
-  border-radius: 14px;
-  border: none;
-  background: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: default;
 }

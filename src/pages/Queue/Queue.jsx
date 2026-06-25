@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './Queue.module.css';
+import { Button } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import blueCar     from '../../assets/icons/blueCar.svg';
 import yellowCar   from '../../assets/icons/yellowCar.svg';
@@ -105,8 +106,8 @@ export default function Queue() {
         <p className={styles.queueNum}>№ 7</p>
       </div>
       <div className={styles.successBtns}>
-        <button className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</button>
-        <button className={styles.successBtnBlue} onClick={() => navigate('/profile')}>В мои записи</button>
+        <Button fullWidth className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</Button>
+        <Button fullWidth onClick={() => navigate('/profile')}>В мои записи</Button>
       </div>
     </div>
   );
@@ -134,8 +135,7 @@ export default function Queue() {
                 disabled={step !== 1}
               />
               {step === 1 && (
-                <button className={canContinue[1] ? styles.btnBlue : styles.btnGray}
-                  disabled={!canContinue[1]} onClick={next}>Продолжить</button>
+                <Button fullWidth disabled={!canContinue[1]} onClick={next}>Продолжить</Button>
               )}
             </div>
           </div>
@@ -167,8 +167,7 @@ export default function Queue() {
                 )}
               </div>
               {step === 2 && (
-                <button className={canContinue[2] ? styles.btnBlue : styles.btnGray}
-                  disabled={!canContinue[2]} onClick={next}>Продолжить</button>
+                <Button fullWidth disabled={!canContinue[2]} onClick={next}>Продолжить</Button>
               )}
             </div>
           </div>
@@ -187,8 +186,7 @@ export default function Queue() {
                 disabled={step < 3}
               />
               {step === 3 && (
-                <button className={canContinue[3] ? styles.btnBlue : styles.btnGray}
-                  disabled={!canContinue[3]} onClick={next}>Продолжить</button>
+                <Button fullWidth disabled={!canContinue[3]} onClick={next}>Продолжить</Button>
               )}
             </div>
           </div>
@@ -209,8 +207,7 @@ export default function Queue() {
                 <span className={styles.arrow}>›</span>
               </button>
               {step === 4 && (
-                <button className={canContinue[4] ? styles.btnBlue : styles.btnGray}
-                  disabled={!canContinue[4]} onClick={next}>Продолжить</button>
+                <Button fullWidth disabled={!canContinue[4]} onClick={next}>Продолжить</Button>
               )}
             </div>
           </div>
@@ -285,13 +282,10 @@ export default function Queue() {
             </div>
 
             <div className={styles.serviceModalBtns}>
-              <button className={styles.serviceModalBack} onClick={() => setServicesModal(false)}>Назад</button>
-              <button
-                className={tempIds.length > 0 ? styles.serviceModalAdd : styles.serviceModalAddDis}
-                disabled={tempIds.length === 0}
-                onClick={confirmServices}>
+              <Button className={styles.serviceModalBack} onClick={() => setServicesModal(false)}>Назад</Button>
+              <Button className={styles.serviceModalAdd} disabled={tempIds.length === 0} onClick={confirmServices}>
                 Добавить
-              </button>
+              </Button>
             </div>
           </div>
         </div>

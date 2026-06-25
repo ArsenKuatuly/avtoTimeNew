@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import styles from './AuthModal.module.css';
+import { Button, Input } from '../ui';
 import { formatPhone } from '../../utils/formatPhone';
 import errorAuth from '../../assets/icons/errorAuth.png';
 import bottomEsc from '../../assets/icons/bottomEsc.png';
@@ -10,8 +11,13 @@ function PhoneStep() {
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
-    const formatted = formatPhone(e.target.value);
-    setValue(formatted);
+    const allDigits = e.target.value.replace(/\D/g, '');
+    // Strip the prefix '7' (from the displayed '+7') when there are more digits after it,
+    // so the country code digit doesn't accumulate into the local number during typing
+    const local = allDigits.length > 1 && allDigits.startsWith('7')
+      ? allDigits.slice(1)
+      : allDigits;
+    setValue(local.length > 0 ? formatPhone(local) : '');
   };
 
   const digits = value.replace(/\D/g, '');
@@ -24,16 +30,13 @@ function PhoneStep() {
       </button>
       <h2 className={styles.title}>Войти</h2>
 
-      <div className={`${styles.floatField} ${value.length > 0 ? styles.floatFieldFilled : ''}`}>
-        <label className={styles.floatLabel}>Номер телефона</label>
-        <input
-          className={styles.floatInput}
-          value={value}
-          onChange={handleChange}
-          type="tel"
-          maxLength={16}
-        />
-      </div>
+      <Input
+        label="Номер телефона"
+        value={value}
+        onChange={handleChange}
+        type="tel"
+        maxLength={16}
+      />
 
       {error && (
         <div className={styles.errorBox}>
@@ -42,13 +45,9 @@ function PhoneStep() {
         </div>
       )}
 
-      <button
-        className={`${styles.btn} ${isReady && !loading ? styles.btnActive : styles.btnDisabled}`}
-        disabled={!isReady || loading}
-        onClick={() => submitPhone(value)}
-      >
+      <Button fullWidth size="lg" loading={loading} disabled={!isReady} onClick={() => submitPhone(value)}>
         {loading ? 'Отправка...' : 'Продолжить'}
-      </button>
+      </Button>
     </div>
   );
 }
@@ -127,13 +126,15 @@ function SmsStep() {
         </div>
       )}
 
-      <button
-        className={`${styles.btn} ${code.length === 4 && !localErr && !loading ? styles.btnActive : styles.btnDisabled}`}
-        disabled={code.length < 4 || localErr || loading}
+      <Button
+        fullWidth
+        size="lg"
+        loading={loading}
+        disabled={code.length < 4 || localErr}
         onClick={() => submitCode(code)}
       >
         {loading ? 'Проверка...' : 'Продолжить'}
-      </button>
+      </Button>
 
       <p className={styles.resend}>
         {seconds > 0
@@ -154,15 +155,9 @@ function NameStep() {
     <div className={styles.modal}>
       <h2 className={`${styles.title} ${styles.titleCenter}`}>Укажите имя и фамилию</h2>
 
-      <div className={`${styles.floatField} ${firstName.length > 0 ? styles.floatFieldFilled : ''}`}>
-        <label className={styles.floatLabel}>Имя</label>
-        <input className={styles.floatInput} value={firstName} onChange={e => setFirstName(e.target.value)} />
-      </div>
+      <Input label="Имя" value={firstName} onChange={e => setFirstName(e.target.value)} />
 
-      <div className={`${styles.floatField} ${styles.floatFieldFilled}`}>
-        <label className={styles.floatLabel}>Фамилия</label>
-        <input className={styles.floatInput} value="(Только для дизайна)" readOnly disabled />
-      </div>
+      <Input label="Фамилия" value="(Только для дизайна)" disabled />
 
       {error && (
         <div className={styles.errorBox}>
@@ -171,13 +166,9 @@ function NameStep() {
         </div>
       )}
 
-      <button
-        className={`${styles.btn} ${ready && !loading ? styles.btnActive : styles.btnDisabled}`}
-        disabled={!ready || loading}
-        onClick={() => submitName(firstName, '')}
-      >
+      <Button fullWidth size="lg" loading={loading} disabled={!ready} onClick={() => submitName(firstName, '')}>
         {loading ? 'Сохранение...' : 'Готово'}
-      </button>
+      </Button>
     </div>
   );
 }

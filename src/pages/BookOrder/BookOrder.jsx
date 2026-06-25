@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './BookOrder.module.css';
+import { Button, Modal } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { MONTHS_NOM, DAY_SHORT, formatDateLabel } from '../../utils/formatDate';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
@@ -89,8 +90,8 @@ export default function BookOrder() {
       <p className={styles.successSub}>{company ? `Автомойка ${company.name} ожидает вас:` : 'Ожидает вас:'}</p>
       <p className={styles.successDate}>{dateLabel}</p>
       <div className={styles.successBtns}>
-        <button className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</button>
-        <button className={styles.successBtnBlue} onClick={() => navigate('/profile')}>В мои записи</button>
+        <Button variant="ghost" fullWidth className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</Button>
+        <Button fullWidth onClick={() => navigate('/profile')}>В мои записи</Button>
       </div>
     </div>
   );
@@ -133,8 +134,7 @@ export default function BookOrder() {
             />
           ))}
         </div>
-        <button className={smsCode.length === 4 ? styles.btnBlue : styles.btnDisabled}
-          disabled={smsCode.length < 4} onClick={() => setStep(3)}>Продолжить</button>
+        <Button fullWidth className={styles.actionBtn} disabled={smsCode.length < 4} onClick={() => setStep(3)}>Продолжить</Button>
         <p className={styles.smsTimer}>
           {timer > 0
             ? `Отправить код еще раз через 00:${String(timer).padStart(2,'0')}`
@@ -193,12 +193,9 @@ export default function BookOrder() {
       </div>
 
       <div className={styles.dpFooter}>
-        <button
-          className={pickerDate && pickerTime ? styles.btnBlue : styles.btnDisabled}
-          disabled={!pickerDate || !pickerTime}
-          onClick={() => setShowDatePicker(false)}>
+        <Button fullWidth className={styles.actionBtn} disabled={!pickerDate || !pickerTime} onClick={() => setShowDatePicker(false)}>
           {pickerDate && pickerTime ? `Выбрать (${datetimeDisplay})` : 'Выбрать'}
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -246,8 +243,7 @@ export default function BookOrder() {
                 onChange={e => setPromo(e.target.value)} placeholder="Промокод" />
               <label className={styles.fieldLabel}>Промокод</label>
             </div>
-            <button className={promo ? styles.promoApply : styles.promoApplyDis}
-              disabled={!promo}>Применить</button>
+            <Button disabled={!promo} className={styles.promoApply}>Применить</Button>
           </div>
         </div>
 
@@ -268,61 +264,50 @@ export default function BookOrder() {
             </div>
           </div>
           <div className={styles.formBtnWrap}>
-            <button
-              className={formFilled ? styles.btnBlue : styles.btnDisabled}
-              disabled={!formFilled}
-              onClick={() => setShowConfirm(true)}>
+            <Button fullWidth className={styles.actionBtn} disabled={!formFilled} onClick={() => setShowConfirm(true)}>
               Продолжить
-            </button>
+            </Button>
           </div>
         </div>
       </div>
 
-      {showConfirm && (
-        <div className={styles.modalOverlay} onClick={() => setShowConfirm(false)}>
-          <div className={styles.modal} onClick={e => e.stopPropagation()}>
-            <div className={styles.modalHead}>
-              <h3 className={styles.modalTitle}>Подтверждение записи</h3>
-              <button className={styles.modalClose} onClick={() => setShowConfirm(false)}>✕</button>
-            </div>
-            <p className={styles.modalSection}>Детали</p>
-            <div className={styles.modalRow}>
-              <span className={styles.modalKey}>Имя</span>
-              <span className={styles.modalVal}>{name}</span>
-            </div>
-            <div className={styles.modalRow}>
-              <span className={styles.modalKey}>Автомойка</span>
-              <span className={styles.modalVal}>{company?.name || 'Crystal'}</span>
-            </div>
-            <div className={styles.modalRow}>
-              <span className={styles.modalKey}>Дата и время</span>
-              <span className={styles.modalVal}>{dateLabel}</span>
-            </div>
-            <div className={styles.modalRow}>
-              <span className={styles.modalKey}>Способ оплаты</span>
-              <span className={styles.modalVal}>Картой онлайн</span>
-            </div>
-            <div className={styles.modalSummary}>
-              <p className={styles.modalSummaryTitle}>Итого</p>
-              <div className={styles.modalRow}>
-                <span className={styles.modalKey}>Мое авто</span>
-                <span className={styles.modalVal}>{carLabel}</span>
-              </div>
-              <div className={styles.modalRow}>
-                <span className={styles.modalKey}>Услуга</span>
-                <span className={styles.modalVal}>{serviceLabel}</span>
-              </div>
-              <div className={styles.modalRow}>
-                <span className={styles.modalKey}>К оплате</span>
-                <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
-              </div>
-            </div>
-            <button className={styles.btnBlueLg} onClick={() => { setShowConfirm(false); setStep(2); }}>
-              Перейти к оплате
-            </button>
+      <Modal isOpen={showConfirm} onClose={() => setShowConfirm(false)} title="Подтверждение записи" width="420px">
+        <p className={styles.modalSection}>Детали</p>
+        <div className={styles.modalRow}>
+          <span className={styles.modalKey}>Имя</span>
+          <span className={styles.modalVal}>{name}</span>
+        </div>
+        <div className={styles.modalRow}>
+          <span className={styles.modalKey}>Автомойка</span>
+          <span className={styles.modalVal}>{company?.name || 'Crystal'}</span>
+        </div>
+        <div className={styles.modalRow}>
+          <span className={styles.modalKey}>Дата и время</span>
+          <span className={styles.modalVal}>{dateLabel}</span>
+        </div>
+        <div className={styles.modalRow}>
+          <span className={styles.modalKey}>Способ оплаты</span>
+          <span className={styles.modalVal}>Картой онлайн</span>
+        </div>
+        <div className={styles.modalSummary}>
+          <p className={styles.modalSummaryTitle}>Итого</p>
+          <div className={styles.modalRow}>
+            <span className={styles.modalKey}>Мое авто</span>
+            <span className={styles.modalVal}>{carLabel}</span>
+          </div>
+          <div className={styles.modalRow}>
+            <span className={styles.modalKey}>Услуга</span>
+            <span className={styles.modalVal}>{serviceLabel}</span>
+          </div>
+          <div className={styles.modalRow}>
+            <span className={styles.modalKey}>К оплате</span>
+            <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
           </div>
         </div>
-      )}
+        <Button fullWidth size="lg" onClick={() => { setShowConfirm(false); setStep(2); }}>
+          Перейти к оплате
+        </Button>
+      </Modal>
     </div>
   );
 }

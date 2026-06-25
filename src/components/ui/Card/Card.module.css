@@ -1,0 +1,31 @@
+.card {
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: 14px;
+  padding: 16px;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+
+.clickable { cursor: pointer; }
+.clickable:hover {
+  box-shadow: 0 4px 14px rgba(0, 111, 253, 0.08);
+  border-color: var(--color-primary-pale);
+}
+.clickable:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.warning {
+  border-color: var(--color-car-error-border);
+  background: var(--color-car-error-bg);
+}
+.warning.clickable:hover {
+  border-color: var(--color-car-error-hover);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.1);
+}
+
+.error {
+  border-color: var(--color-error);
+  background: var(--color-error-light);
+}

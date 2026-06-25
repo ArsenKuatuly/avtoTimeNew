@@ -1,0 +1,60 @@
+.floatField {
+  position: relative;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  height: 56px;
+  transition: border-color 0.15s;
+}
+.floatField:focus-within { border-color: var(--color-primary); }
+
+.floatLabel {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-main);
+  font-size: 15px;
+  color: var(--color-text-muted);
+  pointer-events: none;
+  transition: all 0.15s;
+}
+
+.floatFieldFilled .floatLabel,
+.floatField:focus-within .floatLabel {
+  top: 7px;
+  transform: none;
+  font-size: 11px;
+}
+
+.floatFieldError { border-color: var(--color-error) !important; }
+.floatFieldError .floatLabel { color: var(--color-error) !important; }
+.floatFieldError:focus-within { border-color: var(--color-error) !important; }
+
+.floatFieldDisabled {
+  background: var(--color-background-light);
+  opacity: 0.7;
+}
+
+.floatInput {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  padding: 20px 16px 6px;
+  font-family: var(--font-main);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+.floatInput:disabled { cursor: not-allowed; }
+
+.errorText {
+  margin: 4px 0 0 4px;
+  font-family: var(--font-main);
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+}

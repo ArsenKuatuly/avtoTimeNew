@@ -123,29 +123,6 @@
 .promoApply {
   height: 56px;
   padding: 0 20px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 600;
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.promoApplyDis {
-  height: 56px;
-  padding: 0 20px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 600;
-  font-size: var(--font-size-sm);
-  cursor: default;
-  white-space: nowrap;
   flex-shrink: 0;
 }
 
@@ -173,44 +150,6 @@
   margin-top: 20px;
 }
 
-.btnBlue {
-  width: 100%;
-  height: 50px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-}
-.btnBlue:hover { opacity: 0.9; }
-.btnBlueLg {
-  width: 100%;
-  height: 54px;
-  border-radius: var(--radius-lg);
-  border: none;
-  background: var(--color-primary);
-  color: var(--color-white);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: var(--font-size-md);
-  cursor: pointer;
-}
-.btnBlueLg:hover { opacity: 0.9; }
-.btnDisabled {
-  width: 100%;
-  height: 50px;
-  border-radius: var(--radius-md);
-  border: none;
-  background: var(--color-border);
-  color: var(--color-text-muted);
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: default;
-}
 
 .dpTitle {
   font-family: 'Manrope', sans-serif;
@@ -365,41 +304,6 @@
   right: 48px;
 }
 
-.modalOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-.modal {
-  background: var(--color-white);
-  border-radius: 20px;
-  padding: 22px 24px 24px;
-  width: 420px;
-  max-width: 95vw;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
-}
-.modalHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.modalTitle { font-size: var(--font-size-lg); font-weight: 800; color: var(--color-text); margin: 0; }
-.modalClose {
-  width: 32px; height: 32px;
-  border-radius: var(--radius-round);
-  border: none;
-  background: var(--color-background-light);
-  font-size: 15px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--color-text-placeholder);
-}
-.modalClose:hover { background: var(--color-border); }
 .modalSection { font-size: 15px; font-weight: 700; color: var(--color-text); margin: 0 0 10px; }
 .modalRow {
   display: flex;
@@ -467,16 +371,7 @@
 .successSub { font-size: 15px; color: var(--color-text-placeholder); margin: 0; }
 .successDate { font-size: 15px; font-weight: 700; color: var(--color-primary); margin: 4px 0 32px; }
 .successBtns { display: flex; flex-direction: column; gap: 12px; width: 380px; }
-.successBtnGray {
-  width: 100%; height: 52px; border-radius: 14px;
-  border: none; background: var(--color-background-light); color: var(--color-text-secondary);
-  font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 15px; cursor: pointer;
-}
-.successBtnBlue {
-  width: 100%; height: 52px; border-radius: 14px;
-  border: none; background: var(--color-primary); color: var(--color-white);
-  font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer;
-}
+.successBtnGray { background: var(--color-background-light); border-radius: 14px; }
 
 @media (max-width: 1024px) {
   .formPage, .smsPage, .successPage {
@@ -518,10 +413,9 @@
     z-index: 20;
   }
 
-  .btnBlue, .btnDisabled {
+  .actionBtn {
     border-radius: var(--radius-pill);
     height: 54px;
-    font-size: var(--font-size-md);
   }
 
   .dpTitle { font-size: 22px; margin-bottom: 16px; }
@@ -535,13 +429,6 @@
     bottom: 20px;
     left: 16px;
     right: 16px;
-  }
-
-  .dpFooter .btnBlue,
-  .dpFooter .btnDisabled {
-    border-radius: var(--radius-pill);
-    height: 54px;
-    position: static;
   }
 
   .smsBox { margin-top: 24px; }

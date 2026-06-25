@@ -2,24 +2,10 @@ import { useState } from 'react';
 import { useAuth } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styles from './MyData.module.css';
+import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
 import deletelogo from '../../../assets/icons/deletelogo.png';
 import galochka   from '../../../assets/icons/galochka.png';
-
-function FloatInput({ label, value, onChange, readOnly }) {
-  const hasValue = value && value.length > 0;
-  return (
-    <div className={`${styles.floatField} ${hasValue ? styles.floatFieldFilled : ''}`}>
-      <label className={styles.floatLabel}>{label}</label>
-      <input
-        className={styles.floatInput}
-        value={value}
-        onChange={onChange ? e => onChange(e.target.value) : undefined}
-        readOnly={readOnly}
-      />
-    </div>
-  );
-}
 
 export default function MyData({ user }) {
   const { logout }    = useAuth();
@@ -62,26 +48,22 @@ export default function MyData({ user }) {
               </div>
             </div>
             <div className={styles.confirmBtns}>
-              <button className={styles.confirmBack} onClick={() => setShowConfirm(false)}>Назад</button>
-              <button className={styles.confirmDelete} onClick={handleDelete}>Удалить</button>
+              <Button variant="secondary" className={styles.confirmBtn} onClick={() => setShowConfirm(false)}>Назад</Button>
+              <Button variant="primary" className={styles.confirmBtn} onClick={handleDelete}>Удалить</Button>
             </div>
           </div>
         </div>
       )}
 
       <div className={styles.form}>
-        <FloatInput label="Имя"     value={firstName} onChange={setFirstName} />
-        <FloatInput label="Фамилия" value="(Только для дизайна)" readOnly />
-        <FloatInput label="Номер телефона" value={formatPhone(user?.phone)} readOnly />
+        <Input label="Имя"     value={firstName} onChange={e => setFirstName(e.target.value)} />
+        <Input label="Фамилия" value="(Только для дизайна)" readOnly />
+        <Input label="Номер телефона" value={formatPhone(user?.phone)} readOnly />
       </div>
 
-      <button
-        className={`${styles.saveBtn} ${isDirty ? styles.saveBtnActive : styles.saveBtnDisabled}`}
-        disabled={!isDirty}
-        onClick={handleSave}
-      >
+      <Button size="lg" disabled={!isDirty} onClick={handleSave} className={styles.saveBtn}>
         Сохранить
-      </button>
+      </Button>
 
       <button className={styles.deleteLinkMobile} onClick={() => setShowConfirm(true)}>Удалить аккаунт</button>
 
