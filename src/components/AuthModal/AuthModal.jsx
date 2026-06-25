@@ -12,8 +12,6 @@ function PhoneStep() {
 
   const handleChange = (e) => {
     const allDigits = e.target.value.replace(/\D/g, '');
-    // Strip the prefix '7' (from the displayed '+7') when there are more digits after it,
-    // so the country code digit doesn't accumulate into the local number during typing
     const local = allDigits.length > 1 && allDigits.startsWith('7')
       ? allDigits.slice(1)
       : allDigits;

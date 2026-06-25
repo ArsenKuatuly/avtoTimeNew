@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import * as api from '../api/auth';
+import { AuthService } from '../services/AuthService';
 
 const AuthContext = createContext(null);
 
@@ -19,7 +19,7 @@ const toUser = (data) => {
 const extractToken   = (d) => d?.token || d?.access_token || d?.data?.token;
 const extractRefresh = (d) => d?.refresh_token || d?.data?.refresh_token;
 
-// +7 XXX XXX XX XX → 7XXXXXXXXX (10 digits without country code)
+
 const toApiPhone = (formatted) => formatted.replace(/\D/g, '').slice(1);
 
 export function AuthProvider({ children }) {
@@ -37,33 +37,26 @@ export function AuthProvider({ children }) {
 
     (async () => {
       try {
-        const valid = await api.verifyToken(savedToken);
-        if (valid.ok) {
-          const meRes = await api.getMe(savedToken);
-          if (meRes.ok) {
-            setUser(toUser(await meRes.json()));
-            setToken(savedToken);
-            return;
-          }
-        }
+        await AuthService.verifyToken(savedToken);
+        const me = await AuthService.getMe(savedToken);
+        setUser(toUser(me));
+        setToken(savedToken);
+        return;
+      } catch {}
 
-        if (savedRefresh) {
-          const refreshRes = await api.doRefreshToken(savedRefresh);
-          if (refreshRes.ok) {
-            const data      = await refreshRes.json();
-            const newToken  = extractToken(data);
-            const newRefresh = extractRefresh(data);
-            localStorage.setItem(TOKEN_KEY, newToken);
-            if (newRefresh) localStorage.setItem(REFRESH_KEY, newRefresh);
-            const meRes = await api.getMe(newToken);
-            if (meRes.ok) {
-              setUser(toUser(await meRes.json()));
-              setToken(newToken);
-              return;
-            }
-          }
-        }
-      } catch { /* ignore */ }
+      if (savedRefresh) {
+        try {
+          const data       = await AuthService.refreshToken(savedRefresh);
+          const newToken   = extractToken(data);
+          const newRefresh = extractRefresh(data);
+          localStorage.setItem(TOKEN_KEY, newToken);
+          if (newRefresh) localStorage.setItem(REFRESH_KEY, newRefresh);
+          const me = await AuthService.getMe(newToken);
+          setUser(toUser(me));
+          setToken(newToken);
+          return;
+        } catch { }
+      }
 
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(REFRESH_KEY);
@@ -78,11 +71,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError('');
     try {
-      const res = await api.sendCode(toApiPhone(p));
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.message || 'Ошибка отправки кода');
-      }
+      await AuthService.sendCode(toApiPhone(p));
       setPhone(p);
       setModalStep('sms');
     } catch (e) {
@@ -96,8 +85,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError('');
     try {
-      const res = await api.sendCode(toApiPhone(phone));
-      if (!res.ok) throw new Error('Ошибка отправки кода');
+      await AuthService.sendCode(toApiPhone(phone));
     } catch (e) {
       setError(e.message);
     } finally {
@@ -109,21 +97,15 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError('');
     try {
-      const res = await api.checkCode(toApiPhone(phone), code);
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body.message || 'Неверный код');
-      }
-      const data     = await res.json();
-      const tk       = extractToken(data);
+      const data      = await AuthService.checkCode(toApiPhone(phone), code);
+      const tk        = extractToken(data);
       const refreshTk = extractRefresh(data);
       localStorage.setItem(TOKEN_KEY, tk);
       if (refreshTk) localStorage.setItem(REFRESH_KEY, refreshTk);
       setToken(tk);
 
-      const meRes  = await api.getMe(tk);
-      const meData = await meRes.json();
-      const userData = toUser(meData);
+      const me       = await AuthService.getMe(tk);
+      const userData = toUser(me);
 
       if (!userData.firstName && !userData.lastName) {
         setModalStep('name');
@@ -142,9 +124,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError('');
     try {
-      const res = await api.updateProfile(token, { first_name: firstName, last_name: lastName });
-      if (!res.ok) throw new Error('Ошибка сохранения данных');
-      const data = await res.json();
+      const data = await AuthService.updateProfile(token, { first_name: firstName, last_name: lastName });
       setUser(toUser(data?.user || data?.data || { first_name: firstName, last_name: lastName, phone }));
       setModalStep(null);
     } catch (e) {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getCarsByUser, toCar } from '../api/vehicles';
+import { VehicleService } from '../services/VehicleService';
 
 const PAGE_SIZE = 6;
 
@@ -28,12 +28,8 @@ export function useGarage() {
 
   useEffect(() => {
     if (!user?.id || !token) return;
-    getCarsByUser(user.id, token)
-      .then(res => res.json())
-      .then(data => {
-        const list = data?.data || data || [];
-        setCars(Array.isArray(list) ? list.map(toCar) : []);
-      })
+    VehicleService.getByUser(user.id, token)
+      .then(setCars)
       .catch(() => setCars([]))
       .finally(() => setLoading(false));
   }, [user?.id, token]);
