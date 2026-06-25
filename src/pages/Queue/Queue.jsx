@@ -46,17 +46,22 @@ export default function Queue() {
   const [modelOpen, setModelOpen] = useState(false);
   const [done, setDone]           = useState(false);
 
-  const [offerings, setOfferings]               = useState([]);
+  const [offerings,         setOfferings]         = useState([]);
+  const [offeringsLoading,  setOfferingsLoading]  = useState(false);
+  const [offeringsError,    setOfferingsError]    = useState(null);
   const [selectedOfferings, setSelectedOfferings] = useState([]);
-  const [tempIds, setTempIds]                   = useState([]);
-  const [servicesModal, setServicesModal]       = useState(false);
+  const [tempIds,           setTempIds]           = useState([]);
+  const [servicesModal,     setServicesModal]     = useState(false);
 
   useEffect(() => {
     if (!company?.id) return;
+    setOfferingsLoading(true);
+    setOfferingsError(null);
     fetch(`${BASE_URL}/api/v1/partner-offerings/list?partner_id=${company.id}`)
       .then(r => r.json())
       .then(data => setOfferings(data.data || []))
-      .catch(() => {});
+      .catch(() => setOfferingsError('Не удалось загрузить услуги'))
+      .finally(() => setOfferingsLoading(false));
   }, [company?.id]);
 
   const handlePhone = (e) => {
@@ -258,7 +263,11 @@ export default function Queue() {
             <h2 className={styles.serviceModalTitle}>Услуги</h2>
 
             <div className={styles.serviceModalList}>
-              {offerings.length === 0 ? (
+              {offeringsLoading ? (
+                <p className={styles.serviceModalEmpty}>Загрузка...</p>
+              ) : offeringsError ? (
+                <p className={styles.serviceModalEmpty}>{offeringsError}</p>
+              ) : offerings.length === 0 ? (
                 <p className={styles.serviceModalEmpty}>Нет доступных услуг</p>
               ) : offerings.map(a => {
                 const price    = getPrice(a);

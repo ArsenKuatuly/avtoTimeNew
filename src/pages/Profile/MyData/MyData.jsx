@@ -8,7 +8,7 @@ import galochka   from '../../../assets/icons/galochka.png';
 export default function MyData({ user }) {
   const {
     firstName, setFirstName,
-    isDirty, saved,
+    isDirty, saving, saveError, saved,
     showConfirm, setShowConfirm,
     handleSave, handleDelete,
   } = useProfile(user);
@@ -47,9 +47,11 @@ export default function MyData({ user }) {
         <Input label="Номер телефона" value={formatPhone(user?.phone)} readOnly />
       </div>
 
-      <Button size="lg" disabled={!isDirty} onClick={handleSave} className={styles.saveBtn}>
+      <Button size="lg" disabled={!isDirty || saving} loading={saving} onClick={handleSave} className={styles.saveBtn}>
         Сохранить
       </Button>
+
+      {saveError && <p className={styles.saveError}>{saveError}</p>}
 
       <button className={styles.deleteLinkMobile} onClick={() => setShowConfirm(true)}>Удалить аккаунт</button>
 

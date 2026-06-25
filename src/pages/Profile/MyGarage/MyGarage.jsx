@@ -10,7 +10,7 @@ const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 
 export default function MyGarage() {
   const {
-    cars, loading: loadingCars, paged, totalPages,
+    cars, loading: loadingCars, fetchError, paged, totalPages,
     page, setPage,
     toast, toastMsg,
     openMenu, setOpenMenu,
@@ -51,6 +51,10 @@ export default function MyGarage() {
       {loadingCars ? (
         <div className={styles.emptyGarage}>
           <p className={styles.emptyGarageText}>Загрузка...</p>
+        </div>
+      ) : fetchError ? (
+        <div className={styles.emptyGarage}>
+          <p className={styles.emptyGarageText}>{fetchError}</p>
         </div>
       ) : cars.length === 0 ? (
         <div className={styles.emptyGarage}>

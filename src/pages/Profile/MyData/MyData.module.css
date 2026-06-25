@@ -36,6 +36,12 @@
 
 .saveBtn { width: 340px; }
 
+.saveError {
+  margin-top: 8px;
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+}
+
 .toast {
   position: fixed;
   top: 24px;

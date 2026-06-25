@@ -9,6 +9,7 @@ export function useGarage() {
 
   const [cars,           setCars]           = useState([]);
   const [loading,        setLoading]        = useState(true);
+  const [fetchError,     setFetchError]     = useState(null);
   const [page,           setPage]           = useState(1);
   const [toast,          setToast]          = useState(false);
   const [toastMsg,       setToastMsg]       = useState('');
@@ -30,7 +31,10 @@ export function useGarage() {
     if (!user?.id || !token) return;
     VehicleService.getByUser(user.id, token)
       .then(setCars)
-      .catch(() => setCars([]))
+      .catch(() => {
+        setCars([]);
+        setFetchError('Не удалось загрузить гараж. Попробуйте позже.');
+      })
       .finally(() => setLoading(false));
   }, [user?.id, token]);
 
@@ -98,7 +102,7 @@ export function useGarage() {
   const canEdit = editIsDirty && eModel.trim() && eMake.trim() && ePlate.trim();
 
   return {
-    cars, loading, paged, totalPages,
+    cars, loading, fetchError, paged, totalPages,
     page, setPage,
     toast, toastMsg,
     openMenu, setOpenMenu,

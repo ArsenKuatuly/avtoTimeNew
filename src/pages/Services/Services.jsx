@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './Services.module.css';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
@@ -31,6 +31,7 @@ export default function Services() {
   const [serviceType, setServiceType]   = useState('carwash');
   const [companies, setCompanies]       = useState([]);
   const [loading, setLoading]           = useState(true);
+  const [listError, setListError]       = useState(null);
   const [search, setSearch]             = useState('');
   const [filterOpen, setFilterOpen]   = useState(false);
   const [minRating, setMinRating]     = useState(null);
@@ -44,6 +45,7 @@ export default function Services() {
   const [reviews, setReviews]           = useState([]);
   const [checkedActions, setCheckedActions] = useState([]);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError,   setDetailError]   = useState(null);
   const [imgIndex, setImgIndex]           = useState(0);
   const [reviewsTotal, setReviewsTotal]   = useState(0);
 
@@ -78,6 +80,7 @@ export default function Services() {
 
   useEffect(() => {
     setLoading(true);
+    setListError(null);
     fetch(`${BASE_URL}/api/v1/partners/list?with_profile=true&per_page=100&city_id=1&id_sort=true`)
       .then(r => r.json())
       .then(data => {
@@ -86,18 +89,16 @@ export default function Services() {
           ? list.filter(c => c.type?.code === 'carwash')
           : list.filter(c => c.type?.code !== 'carwash');
         setCompanies(filtered);
-        setLoading(false);
       })
-      .catch(err => {
-        console.error('companies error:', err);
-        setLoading(false);
-      });
+      .catch(() => setListError('Не удалось загрузить список. Попробуйте позже.'))
+      .finally(() => setLoading(false));
   }, [serviceType]);
 
 
   useEffect(() => {
     if (!selected) return;
     setDetailLoading(true);
+    setDetailError(null);
     setActions([]);
     setReviews([]);
     setReviewsTotal(0);
@@ -117,7 +118,10 @@ export default function Services() {
       setActions(acts);
       setReviews(revs);
       setDetailLoading(false);
-    }).catch(() => setDetailLoading(false));
+    }).catch(() => {
+      setDetailError('Не удалось загрузить информацию. Попробуйте позже.');
+      setDetailLoading(false);
+    });
   }, [selected]);
 
 
@@ -429,6 +433,8 @@ export default function Services() {
         <div className={styles.list}>
           {loading ? (
             <p className={styles.listEmpty}>Загрузка...</p>
+          ) : listError ? (
+            <p className={styles.listEmpty}>{listError}</p>
           ) : filtered.length === 0 ? (
             <p className={styles.listEmpty}>Ничего не найдено</p>
           ) : filtered.map(c => (
@@ -535,6 +541,8 @@ export default function Services() {
 
                   {detailLoading ? (
                     <p className={styles.listEmpty}>Загрузка...</p>
+                  ) : detailError ? (
+                    <p className={styles.listEmpty}>{detailError}</p>
                   ) : actions.length === 0 ? (
                     <p className={styles.listEmpty}>Нет доступных услуг</p>
                   ) : (
