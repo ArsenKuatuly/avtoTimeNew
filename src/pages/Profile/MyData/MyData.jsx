@@ -1,31 +1,17 @@
-import { useState } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import styles from './MyData.module.css';
 import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
+import { useProfile } from '../../../hooks/useProfile';
 import deletelogo from '../../../assets/icons/deletelogo.png';
 import galochka   from '../../../assets/icons/galochka.png';
 
 export default function MyData({ user }) {
-  const { logout }    = useAuth();
-  const navigate      = useNavigate();
-  const [firstName,   setFirstName]   = useState(user?.firstName || '');
-  const [saved,       setSaved]       = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-
-  const isDirty = firstName !== (user?.firstName || '');
-
-  const handleSave = () => {
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
-  };
-
-  const handleDelete = () => {
-    logout();
-    navigate('/');
-    sessionStorage.setItem('accountDeleted', '1');
-  };
+  const {
+    firstName, setFirstName,
+    isDirty, saved,
+    showConfirm, setShowConfirm,
+    handleSave, handleDelete,
+  } = useProfile(user);
 
   return (
     <div className={styles.section}>

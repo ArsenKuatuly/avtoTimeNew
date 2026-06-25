@@ -1,89 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../../context/AuthContext';
-import { getCarsByUser, toCar } from '../../../api/vehicles';
 import styles from './MyGarage.module.css';
 import { Button, Input } from '../../../components/ui';
+import { useGarage } from '../../../hooks/useGarage';
 import garagenet   from '../../../assets/icons/garagenet.png';
 import errorGarage from '../../../assets/icons/errorGarage.png';
 import deletelogo  from '../../../assets/icons/deletelogo.png';
 import galochka    from '../../../assets/icons/galochka.png';
 
 const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
-const GARAGE_PAGE_SIZE = 6;
 
 export default function MyGarage() {
-  const { user, token }               = useAuth();
-  const [cars, setCars]               = useState([]);
-  const [loadingCars, setLoadingCars] = useState(true);
-  const [page, setPage]               = useState(1);
-  const [showAdd, setShowAdd]         = useState(false);
-  const [toast, setToast]             = useState(false);
-  const [openMenu, setOpenMenu]       = useState(null);
-  const [body,  setBody]              = useState('');
-  const [model, setModel]             = useState('');
-  const [make,  setMake]              = useState('');
-  const [plate, setPlate]             = useState('');
-  const [deleteCar, setDeleteCar]     = useState(null);
-  const [mobileActionCar, setMobileActionCar] = useState(null);
-  const [editCar, setEditCar]         = useState(null);
-  const [eBody,  setEBody]            = useState('');
-  const [eModel, setEModel]           = useState('');
-  const [eMake,  setEMake]            = useState('');
-  const [ePlate, setEPlate]           = useState('');
-  const [toastMsg, setToastMsg]       = useState('');
-
-  useEffect(() => {
-    if (!user?.id || !token) return;
-    getCarsByUser(user.id, token)
-      .then(res => res.json())
-      .then(data => {
-        const list = data?.data || data || [];
-        setCars(Array.isArray(list) ? list.map(toCar) : []);
-      })
-      .catch(() => setCars([]))
-      .finally(() => setLoadingCars(false));
-  }, [user?.id, token]);
-
-  const totalPages = Math.max(1, Math.ceil(cars.length / GARAGE_PAGE_SIZE));
-  const paged = cars.slice((page - 1) * GARAGE_PAGE_SIZE, page * GARAGE_PAGE_SIZE);
-
-  const showToast = (msg) => { setToastMsg(msg); setToast(true); setTimeout(() => setToast(false), 3000); };
-
-  const openAdd = () => { setBody('Седан'); setModel(''); setMake(''); setPlate(''); setShowAdd(true); };
-
-  const handleAdd = () => {
-    setCars(prev => [{ id: Date.now(), model, make, plate, body }, ...prev]);
-    setShowAdd(false);
-    setPage(1);
-    showToast('Авто добавлено');
-  };
-
-  const openEdit = (car) => {
-    setEditCar(car);
-    setEBody(car.body); setEModel(car.model); setEMake(car.make); setEPlate(car.plate);
-    setOpenMenu(null);
-  };
-
-  const handleEdit = () => {
-    setCars(prev => prev.map(c => c.id === editCar.id
-      ? { ...c, body: eBody, model: eModel, make: eMake, plate: ePlate }
-      : c
-    ));
-    setEditCar(null);
-    showToast('Авто отредактировано');
-  };
-
-  const handleDelete = (car) => { setDeleteCar(car); setOpenMenu(null); };
-
-  const confirmDelete = () => {
-    setCars(prev => prev.filter(c => c.id !== deleteCar.id));
-    setDeleteCar(null);
-    showToast('Машина удалена');
-  };
-
-  const canAdd = model.trim() && make.trim() && plate.trim();
-  const editIsDirty = editCar && (eBody !== editCar.body || eModel !== editCar.model || eMake !== editCar.make || ePlate !== editCar.plate);
-  const canEdit = editIsDirty && eModel.trim() && eMake.trim() && ePlate.trim();
+  const {
+    cars, loading: loadingCars, paged, totalPages,
+    page, setPage,
+    toast, toastMsg,
+    openMenu, setOpenMenu,
+    showAdd, setShowAdd,
+    body, setBody,
+    model, setModel,
+    make, setMake,
+    plate, setPlate,
+    canAdd, openAdd, handleAdd,
+    deleteCar, setDeleteCar,
+    handleDelete, confirmDelete,
+    editCar, setEditCar,
+    eBody, setEBody,
+    eModel, setEModel,
+    eMake, setEMake,
+    ePlate, setEPlate,
+    canEdit, openEdit, handleEdit,
+    mobileActionCar, setMobileActionCar,
+  } = useGarage();
 
   return (
     <div className={styles.section}>
