@@ -7,23 +7,28 @@ import { MONTHS_NOM, DAY_SHORT, formatDateLabel } from '../../utils/formatDate';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
-const TIME_GROUPS = [
-  { label: 'Утро', slots: [
-    {t:'09:00',ok:true}, {t:'09:30',ok:true}, {t:'10:00',ok:false},{t:'10:30',ok:true},
-    {t:'11:00',ok:true}, {t:'11:30',ok:false},{t:'12:00',ok:false},{t:'12:30',ok:true},
-    {t:'13:00',ok:true}, {t:'13:30',ok:true}, {t:'14:00',ok:false},{t:'14:30',ok:true},
-  ]},
-  { label: 'День', slots: [
-    {t:'12:00',ok:true},{t:'12:30',ok:false},{t:'13:00',ok:true},{t:'13:30',ok:true},
-    {t:'14:00',ok:false},{t:'14:30',ok:true},{t:'15:00',ok:true},{t:'15:30',ok:false},
-    {t:'16:00',ok:true},{t:'16:30',ok:true},{t:'17:00',ok:false},{t:'17:30',ok:true},
-  ]},
-  { label: 'Вечер', slots: [
-    {t:'18:00',ok:true},{t:'18:30',ok:false},{t:'19:00',ok:true},{t:'19:30',ok:true},
-    {t:'20:00',ok:false},{t:'20:30',ok:true},{t:'21:00',ok:true},{t:'21:30',ok:false},
-    {t:'22:00',ok:true},{t:'22:30',ok:true},{t:'23:00',ok:false},{t:'23:30',ok:true},
-  ]},
-];
+const BASE_URL = 'https://api.services.avtotime.kz';
+
+const toApiDate = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+
+const groupSlots = (slots) => {
+  const groups = [
+    { label: 'Утро',  from: 6,  to: 11, slots: [] },
+    { label: 'День',  from: 12, to: 17, slots: [] },
+    { label: 'Вечер', from: 18, to: 23, slots: [] },
+  ];
+  slots.forEach(s => {
+    const hour = parseInt(s.time.slice(0, 2), 10);
+    const group = groups.find(g => hour >= g.from && hour <= g.to);
+    if (group) group.slots.push({ t: s.time.slice(0, 5), ok: s.is_available });
+  });
+  return groups.filter(g => g.slots.length > 0);
+};
 
 export default function BookOrder() {
   const navigate = useNavigate();
@@ -40,6 +45,8 @@ export default function BookOrder() {
   const [pickerSlot, setPickerSlot] = useState(null);
   const [weekOffset, setWeekOffset] = useState(0);
   const [promo, setPromo]     = useState('');
+  const [timeGroups, setTimeGroups]     = useState([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
 
   const [smsDigits, setSmsDigits] = useState(['', '', '', '']);
   const [timer, setTimer]         = useState(59);
@@ -51,6 +58,17 @@ export default function BookOrder() {
     const id = setInterval(() => setTimer(t => t > 0 ? t - 1 : 0), 1000);
     return () => clearInterval(id);
   }, [step]);
+
+  useEffect(() => {
+    if (!company?.id || !pickerDate) return;
+    setSlotsLoading(true);
+    setPickerSlot(null);
+    fetch(`${BASE_URL}/api/v1/partners/get-time-slots/${company.id}?date=${toApiDate(pickerDate)}`)
+      .then(r => r.json())
+      .then(data => setTimeGroups(groupSlots(data?.data || [])))
+      .catch(() => setTimeGroups([]))
+      .finally(() => setSlotsLoading(false));
+  }, [company?.id, pickerDate]);
 
   const handlePhone = (e) => {
     const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
@@ -72,7 +90,7 @@ export default function BookOrder() {
   });
   const isSameDay = (a, b) => a && b && a.toDateString() === b.toDateString();
 
-  const pickerTime = pickerSlot ? TIME_GROUPS[pickerSlot.g].slots[pickerSlot.i].t : null;
+  const pickerTime = pickerSlot ? timeGroups[pickerSlot.g]?.slots[pickerSlot.i]?.t : null;
 
   const datetimeDisplay = pickerDate && pickerTime
     ? formatDateLabel(pickerDate, pickerTime)
@@ -173,7 +191,11 @@ export default function BookOrder() {
       </div>
 
       <div className={styles.dpScrollArea}>
-        {TIME_GROUPS.map((group, gIdx) => (
+        {slotsLoading ? (
+          <p className={styles.dpGroupLabel}>Загрузка...</p>
+        ) : timeGroups.length === 0 ? (
+          <p className={styles.dpGroupLabel}>Нет доступных слотов</p>
+        ) : timeGroups.map((group, gIdx) => (
           <div key={group.label}>
             <p className={styles.dpGroupLabel}>{group.label}</p>
             <div className={styles.dpGrid}>

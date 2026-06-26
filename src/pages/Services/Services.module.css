@@ -1018,9 +1018,9 @@
 }
 
 .sheetCarCheck {
-  font-size: 18px;
-  color: var(--color-primary);
-  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .sheetBtn {
@@ -1046,3 +1046,90 @@
   cursor: default;
   opacity: 1;
 }
+
+.carSelectorWrap {
+  position: relative;
+}
+
+.carDropOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+.carDrop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--color-white);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+  z-index: 100;
+  padding: 8px 0 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.carDropItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 8px;
+  transition: background 0.15s;
+}
+
+.carDropItem:hover { background: var(--color-bg-light, #f5f5f5); }
+
+.carDropItemActive { background: var(--color-bg-light, #f5f5f5); }
+
+.carDropName {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.carDropSub {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 2px 0 0;
+}
+
+.carDropCheck {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.carDropDivider {
+  height: 1px;
+  background: var(--color-border, #e5e7eb);
+  margin: 4px 0;
+}
+
+.carDropAddBtn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary, #2563eb);
+  gap: 6px;
+  transition: background 0.15s;
+}
+
+.carDropAddBtn:hover { background: var(--color-bg-light, #f5f5f5); }
