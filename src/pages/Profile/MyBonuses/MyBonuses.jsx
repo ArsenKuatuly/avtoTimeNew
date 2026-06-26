@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styles from './MyBonuses.module.css';
-import { MOCK_BONUS_TX, MOCK_PUNCH_CARDS, BONUS_LEVELS, HISTORY_DATES } from '../../../constants/mockBonuses';
+import { MOCK_PUNCH_CARDS, BONUS_LEVELS, HISTORY_DATES } from '../../../constants/mockBonuses';
+import { useAuth } from '../../../context/AuthContext';
+import { useBonuses } from '../../../hooks/useBonuses';
 import bonusIco    from '../../../assets/icons/bonus.svg';
 import bonusActive from '../../../assets/icons/bonusactive.svg';
 import blueCalendar    from '../../../assets/icons/blueCalendar.svg';
@@ -23,16 +25,19 @@ const PERIOD_LABEL = {
 };
 
 export function MobileBonuses() {
-  const [showDateSheet, setShowDateSheet] = useState(false);
-  const [showLevels, setShowLevels]       = useState(false);
+  const { token, user }                     = useAuth();
+  const { bonuses, history, loading, histLoading, hasMore, loadMore } = useBonuses(token, user?.id);
+
+  const [showDateSheet, setShowDateSheet]   = useState(false);
+  const [showLevels, setShowLevels]         = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState('За неделю');
 
-  const nakopleno   = MOCK_BONUS_TX.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0);
-  const ispolzovano = MOCK_BONUS_TX.filter(t => t.amount < 0).reduce((s, t) => s + t.amount, 0);
+  const nakopleno   = history.filter(t => t.bonusCount > 0).reduce((s, t) => s + t.bonusCount, 0);
+  const ispolzovano = history.filter(t => t.bonusCount < 0).reduce((s, t) => s + Math.abs(t.bonusCount), 0);
 
-  const grouped = MOCK_BONUS_TX.reduce((acc, tx) => {
-    if (!acc[tx.date]) acc[tx.date] = [];
-    acc[tx.date].push(tx);
+  const grouped = history.reduce((acc, tx) => {
+    if (!acc[tx.dayLabel]) acc[tx.dayLabel] = [];
+    acc[tx.dayLabel].push(tx);
     return acc;
   }, {});
 
@@ -42,8 +47,12 @@ export function MobileBonuses() {
     <div className={styles.section}>
       <div className={styles.bonusBalanceCard}>
         <p className={styles.bonusBalanceLabel}>Текущий баланс</p>
-        <p className={styles.bonusBalanceAmount}>500 бонусов</p>
-        <p className={styles.bonusBalanceSub}>Получите кэшбек 50% на вторую запись</p>
+        <p className={styles.bonusBalanceAmount}>
+          {loading ? '...' : `${bonuses?.bonusCount ?? 0} бонусов`}
+        </p>
+        <p className={styles.bonusBalanceSub}>
+          {bonuses ? `Получите кэшбек ${bonuses.loyaltyValue}% на следующую запись` : ''}
+        </p>
       </div>
 
       <button className={styles.bonusLevelsLink} onClick={() => setShowLevels(true)}>
@@ -75,24 +84,38 @@ export function MobileBonuses() {
         </div>
       </div>
 
-      {Object.entries(grouped).map(([date, txs]) => (
-        <div key={date} className={styles.bonusTxGroup}>
-          <p className={styles.bonusTxDate}>{date}</p>
-          <div className={styles.bonusTxCard}>
-            {txs.map((tx, i) => (
-              <div key={i} className={`${styles.bonusTxRow} ${i < txs.length - 1 ? styles.bonusTxRowBorder : ''}`}>
-                <div>
-                  <p className={styles.bonusTxName}>{tx.name}</p>
-                  <p className={styles.bonusTxSub}>{tx.sub}</p>
+      {histLoading && history.length === 0 ? (
+        <p className={styles.bonusTxDate}>Загрузка...</p>
+      ) : (
+        Object.entries(grouped).map(([date, txs]) => (
+          <div key={date} className={styles.bonusTxGroup}>
+            <p className={styles.bonusTxDate}>{date}</p>
+            <div className={styles.bonusTxCard}>
+              {txs.map((tx, i) => (
+                <div key={tx.id} className={`${styles.bonusTxRow} ${i < txs.length - 1 ? styles.bonusTxRowBorder : ''}`}>
+                  <div>
+                    <p className={styles.bonusTxName}>{tx.label}</p>
+                    <p className={styles.bonusTxSub}>
+                      {tx.orderPrice != null
+                        ? `Сумма заказа: ${Number(tx.orderPrice).toLocaleString('ru')} ₸`
+                        : 'Подарочные бонусы'}
+                    </p>
+                  </div>
+                  <span className={tx.bonusCount > 0 ? styles.bonusTxPos : styles.bonusTxNeg}>
+                    {tx.bonusCount > 0 ? '+' : ''}{tx.bonusCount.toLocaleString('ru-RU')} Б
+                  </span>
                 </div>
-                <span className={tx.amount > 0 ? styles.bonusTxPos : styles.bonusTxNeg}>
-                  {tx.amount > 0 ? '+' : ''}{tx.amount.toLocaleString('ru-RU')} Б
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      )}
+
+      {hasMore && (
+        <button className={styles.bonusLoadMore} onClick={loadMore} disabled={histLoading}>
+          {histLoading ? 'Загрузка...' : 'Загрузить ещё'}
+        </button>
+      )}
 
       {showLevels && (
         <div className={styles.mobileSheetOverlay} onClick={() => setShowLevels(false)}>

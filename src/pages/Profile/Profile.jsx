@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useBonuses } from '../../hooks/useBonuses';
 import styles from './Profile.module.css';
 import { formatPhone } from '../../utils/formatPhone';
 import MyData          from './MyData/MyData';
@@ -29,7 +30,7 @@ const MENU = [
   { id: 'bookings',      label: 'Мои записи',  icon: icoBookings, iconActive: icoBookingsA },
   { id: 'garage',        label: 'Мой гараж',   icon: icoGarage,   iconActive: icoGarageA   },
   { id: 'cards',         label: 'Мои карты',   icon: icoCards,    iconActive: icoCardsA    },
-  { id: 'bonuses',       label: 'Мои бонусы',  icon: icoBonuses,  iconActive: icoBonusesA, bonus: '1 000 Б' },
+  { id: 'bonuses',       label: 'Мои бонусы',  icon: icoBonuses,  iconActive: icoBonusesA },
   { id: 'notifications', label: 'Уведомления', icon: icoNotif,    iconActive: icoNotifA    },
 ];
 
@@ -41,7 +42,8 @@ const MOBILE_MENU = [
 ];
 
 export default function Profile() {
-  const { user, logout } = useAuth();
+  const { user, token, logout } = useAuth();
+  const { bonuses } = useBonuses(token, user?.id);
   const [activeTab, setActiveTab] = useState('data');
   const [mobileTab, setMobileTab] = useState(null);
 
@@ -66,7 +68,7 @@ export default function Profile() {
             </div>
 
             <nav className={styles.menu}>
-              {MENU.map(({ id, label, icon, iconActive, bonus }) => (
+              {MENU.map(({ id, label, icon, iconActive }) => (
                 <button
                   key={id}
                   className={`${styles.menuItem} ${activeTab === id ? styles.menuItemActive : ''}`}
@@ -74,7 +76,9 @@ export default function Profile() {
                 >
                   <img src={activeTab === id ? iconActive : icon} alt={label} className={styles.menuIcon} />
                   <span className={styles.menuLabel}>{label}</span>
-                  {bonus && <span className={styles.menuBonus}>{bonus}</span>}
+                  {id === 'bonuses' && bonuses != null && (
+                    <span className={styles.menuBonus}>{bonuses.bonusCount.toLocaleString('ru')} Б</span>
+                  )}
                 </button>
               ))}
             </nav>
@@ -99,8 +103,12 @@ export default function Profile() {
               <div className={styles.bonusCard} onClick={() => setMobileTab('bonuses')} style={{ cursor: 'pointer' }}>
                 <div className={styles.bonusCardText}>
                   <p className={styles.bonusCardLabel}>Накоплено</p>
-                  <p className={styles.bonusCardValue}>0 бонусов</p>
-                  <p className={styles.bonusCardSub}>Получите кэшбек 10% на первую запись</p>
+                  <p className={styles.bonusCardValue}>
+                    {bonuses != null ? `${bonuses.bonusCount.toLocaleString('ru')} бонусов` : '...'}
+                  </p>
+                  <p className={styles.bonusCardSub}>
+                    {bonuses ? `Получите кэшбек ${bonuses.loyaltyValue}% на следующую запись` : ''}
+                  </p>
                 </div>
                 <img src={toright} alt="" className={styles.bonusCardArrow} />
               </div>
