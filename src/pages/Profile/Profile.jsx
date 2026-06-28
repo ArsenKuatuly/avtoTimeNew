@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { useBonuses } from '../../hooks/useBonuses';
+import { useAuth } from '../../providers/AuthContext';
+import { useBonuses } from '../../features/bonuses/useBonuses';
 import styles from './Profile.module.css';
 import { formatPhone } from '../../utils/formatPhone';
-import MyData          from './MyData/MyData';
-import MyBookings      from './MyBookings/MyBookings';
-import MyGarage        from './MyGarage/MyGarage';
-import MyCards         from './MyCards/MyCards';
-import MyBonuses, { MobileBonuses } from './MyBonuses/MyBonuses';
-import MyNotifications from './MyNotifications/MyNotifications';
+import MyData          from '../../features/profile/MyData/MyData';
+import MyBookings      from '../../features/bookings/MyBookings/MyBookings';
+import MyGarage        from '../../features/garage/MyGarage/MyGarage';
+import MyCards         from '../../features/profile/MyCards/MyCards';
+import MyBonuses, { MobileBonuses } from '../../features/bonuses/MyBonuses/MyBonuses';
+import MyNotifications from '../../features/profile/MyNotifications/MyNotifications';
 import podarok  from '../../assets/icons/podarok.svg';
 import toright  from '../../assets/icons/toright.png';
 import icoData      from '../../assets/icons/moidannye.svg';
@@ -42,8 +42,8 @@ const MOBILE_MENU = [
 ];
 
 export default function Profile() {
-  const { user, token, logout } = useAuth();
-  const { bonuses } = useBonuses(token, user?.id);
+  const { user, logout } = useAuth();
+  const { bonuses } = useBonuses(user?.id);
   const [activeTab, setActiveTab] = useState('data');
   const [mobileTab, setMobileTab] = useState(null);
 

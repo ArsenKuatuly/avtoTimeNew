@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import AuthModal from './components/AuthModal/AuthModal';
+import { AuthProvider } from './providers/AuthContext';
+import Header from './components/layouts/Header/Header';
+import Footer from './components/layouts/Footer/Footer';
+import AuthModal from './features/auth/AuthModal/AuthModal';
 import Home from './pages/Home/Home';
 import Services from './pages/Services/Services';
 import Partners from './pages/Partners/Partners';
 import Profile from './pages/Profile/Profile';
-import BookingDetail from './pages/BookingDetail/BookingDetail';
+import BookingDetail from './features/bookings/BookingDetail/BookingDetail';
 import BookOrder from './pages/BookOrder/BookOrder';
 import Queue from './pages/Queue/Queue';
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Hero from '../../components/Hero/Hero';
-import Problems from '../../components/Problems/Problems';
-import Tagline from '../../components/Tagline/Tagline';
-import Features from '../../components/Features/Features';
+import Hero from '../../features/landing/Hero/Hero';
+import Problems from '../../features/landing/Problems/Problems';
+import Tagline from '../../features/landing/Tagline/Tagline';
+import Features from '../../features/landing/Features/Features';
 import galochka from '../../assets/icons/galochka.png';
 import styles from './Home.module.css';
 

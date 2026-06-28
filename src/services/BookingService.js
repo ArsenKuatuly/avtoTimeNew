@@ -1,4 +1,4 @@
-import { http } from './http';
+import { axiosWithAuth } from '../interceptors';
 
 const STATUS_MAP = {
   new:         'Новый',
@@ -28,24 +28,24 @@ const formatDate = (iso) => {
 };
 
 export const BookingService = {
-  getList: async (token, params = {}) => {
+  getList: async (params = {}) => {
     const qs = new URLSearchParams(params).toString();
-    const data = await http.get(`/bookings${qs ? `?${qs}` : ''}`, token);
+    const { data } = await axiosWithAuth.get(`/bookings${qs ? `?${qs}` : ''}`);
     const list = data?.data || data || [];
     return Array.isArray(list) ? list.map(toBooking) : [];
   },
 
-  getById: async (id, token) => {
-    const data = await http.get(`/bookings/${id}`, token);
+  getById: async (id) => {
+    const { data } = await axiosWithAuth.get(`/bookings/${id}`);
     return toBooking(data?.data || data);
   },
 
-  create: (token, payload) =>
-    http.post('/bookings', payload, token),
+  create: (payload) =>
+    axiosWithAuth.post('/bookings', payload).then(r => r.data),
 
-  cancel: (id, token, reason) =>
-    http.patch(`/bookings/${id}/cancel`, { reason }, token),
+  cancel: (id, reason) =>
+    axiosWithAuth.patch(`/bookings/${id}/cancel`, { reason }).then(r => r.data),
 
-  addReview: (id, token, { rating, comment }) =>
-    http.post(`/bookings/${id}/reviews`, { rating, comment }, token),
+  addReview: (id, { rating, comment }) =>
+    axiosWithAuth.post(`/bookings/${id}/reviews`, { rating, comment }).then(r => r.data),
 };

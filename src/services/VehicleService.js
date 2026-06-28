@@ -1,4 +1,4 @@
-import { http } from './http';
+import { axiosWithAuth } from '../interceptors';
 
 const toVehicle = (c) => ({
   id:    c.id,
@@ -9,14 +9,14 @@ const toVehicle = (c) => ({
 });
 
 export const VehicleService = {
-  getByUser: async (userId, token) => {
-    const data = await http.get(`/vehicles/cars/list-by-user/${userId}`, token);
+  getByUser: async (userId) => {
+    const { data } = await axiosWithAuth.get(`/vehicles/cars/list-by-user/${userId}`);
     const list = data?.data || data || [];
     return Array.isArray(list) ? list.map(toVehicle) : [];
   },
 
-  getById: async (carId, token) => {
-    const data = await http.get(`/vehicles/cars/${carId}`, token);
+  getById: async (carId) => {
+    const { data } = await axiosWithAuth.get(`/vehicles/cars/${carId}`);
     return toVehicle(data?.data || data);
   },
 };

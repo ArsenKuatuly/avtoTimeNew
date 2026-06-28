@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './Services.module.css';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
@@ -27,7 +27,7 @@ const BODY_TYPES = [
 ];
 
 export default function Services() {
-  const { user, token } = useAuth();
+  const { user } = useAuth();
   const navigate   = useNavigate();
 
   const [serviceType, setServiceType]   = useState('carwash');
@@ -67,8 +67,8 @@ export default function Services() {
 
 
   useEffect(() => {
-    if (!token || !user?.id) return;
-    VehicleService.getByUser(user.id, token).then(cars => {
+    if (!user?.id) return;
+    VehicleService.getByUser(user.id).then(cars => {
       const normalized = cars.map(c => ({
         id:    c.id,
         brand: c.model,
@@ -79,7 +79,7 @@ export default function Services() {
       setLocalCars(normalized);
       if (normalized.length > 0) setActiveCar(normalized[0]);
     }).catch(() => {});
-  }, [token, user?.id]);
+  }, [user?.id]);
 
   useEffect(() => {
     document.body.style.overflow = mobileView === 'list' ? '' : 'hidden';

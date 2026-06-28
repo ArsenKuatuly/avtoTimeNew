@@ -1,4 +1,4 @@
-import { http } from './http';
+import { axiosWithAuth } from '../interceptors';
 
 const OPERATION_LABEL = {
   'write-on':  'Начисление',
@@ -30,8 +30,8 @@ const formatDay = (iso) => {
 };
 
 export const BonusService = {
-  get: async (token, userId) => {
-    const res = await http.get(`/booking/bonuses/get?user_id=${userId}`, token);
+  get: async (userId) => {
+    const { data: res } = await axiosWithAuth.get(`/booking/bonuses/get?user_id=${userId}`);
     const d = res?.data || res;
     return {
       bonusCount:   d.bonus_count,
@@ -41,9 +41,9 @@ export const BonusService = {
     };
   },
 
-  getHistory: async (token, userId, page = 1, perPage = 10) => {
+  getHistory: async (userId, page = 1, perPage = 10) => {
     const qs = new URLSearchParams({ user_id: userId, page, per_page: perPage }).toString();
-    const res = await http.get(`/booking/bonuses/get-history?${qs}`, token);
+    const { data: res } = await axiosWithAuth.get(`/booking/bonuses/get-history?${qs}`);
     const list = res?.data || [];
     const meta = res?.meta || {};
     return {
@@ -54,9 +54,9 @@ export const BonusService = {
     };
   },
 
-  setLoyalty: (token, userId, payload) =>
-    http.post(`/booking/bonuses/set-loyalty?user_id=${userId}`, payload, token),
+  setLoyalty: (userId, payload) =>
+    axiosWithAuth.post(`/booking/bonuses/set-loyalty?user_id=${userId}`, payload).then(r => r.data),
 
-  getStatus: (token) =>
-    http.get('/booking/bonuses/status', token),
+  getStatus: () =>
+    axiosWithAuth.get('/booking/bonuses/status').then(r => r.data),
 };
