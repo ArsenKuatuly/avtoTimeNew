@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useAuth } from '../../../providers/AuthContext';
 import styles from './AuthModal.module.css';
 import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
 import errorAuth from '../../../assets/icons/errorAuth.png';
 import bottomEsc from '../../../assets/icons/bottomEsc.png';
+
+const nameSchema = yup.object({
+  firstName: yup.string().trim().required('Введите имя'),
+});
 
 function PhoneStep() {
   const { submitPhone, closeModal, loading, error } = useAuth();
@@ -146,14 +153,23 @@ function SmsStep() {
 
 function NameStep() {
   const { submitName, loading, error } = useAuth();
-  const [firstName, setFirstName] = useState('');
-  const ready = firstName.trim();
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(nameSchema),
+    defaultValues: { firstName: '' },
+    mode: 'onTouched',
+  });
 
   return (
     <div className={styles.modal}>
       <h2 className={`${styles.title} ${styles.titleCenter}`}>Укажите имя и фамилию</h2>
 
-      <Input label="Имя" value={firstName} onChange={e => setFirstName(e.target.value)} />
+      <Controller
+        name="firstName"
+        control={control}
+        render={({ field }) => (
+          <Input label="Имя" {...field} error={errors.firstName?.message} />
+        )}
+      />
 
       <Input label="Фамилия" value="(Только для дизайна)" disabled />
 
@@ -164,7 +180,7 @@ function NameStep() {
         </div>
       )}
 
-      <Button fullWidth size="lg" loading={loading} disabled={!ready} onClick={() => submitName(firstName, '')}>
+      <Button fullWidth size="lg" loading={loading} disabled={loading} onClick={handleSubmit(({ firstName }) => submitName(firstName, ''))}>
         {loading ? 'Сохранение...' : 'Готово'}
       </Button>
     </div>

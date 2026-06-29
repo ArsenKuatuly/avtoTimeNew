@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import styles from './MyCards.module.css';
+import { Input } from '../../../components/ui';
 import { MOCK_CARDS_INIT } from '../../../constants/mockCards';
 import moicards      from '../../../assets/icons/moicards.png';
 import visaIco       from '../../../assets/icons/visa.svg';
@@ -10,41 +14,40 @@ import calendarIco   from '../../../assets/icons/iconCalendar.png';
 
 const CARDS_PAGE_SIZE = 6;
 
+const cardSchema = yup.object({
+  name:   yup.string().trim().required('Введите наименование'),
+  number: yup.string().trim().required('Введите номер карты'),
+  expiry: yup.string().trim().required('Введите срок действия'),
+  cvv:    yup.string().trim().required('Введите CVV'),
+  holder: yup.string().trim().required('Введите владельца карты'),
+});
+
+function useCardForm(defaultValues = {}) {
+  return useForm({
+    resolver: yupResolver(cardSchema),
+    defaultValues: { name: '', number: '', expiry: '', cvv: '', holder: '', ...defaultValues },
+    mode: 'onTouched',
+  });
+}
+
 function cardTypeIco(number) { return number.startsWith('5') ? mastercardIco : visaIco; }
 function maskNumber(number)  { return '**** **** **** ' + number.slice(-4); }
 
-function CardInput({ label, value, onChange }) {
-  return (
-    <div className={`${styles.garageField} ${value ? styles.garageFieldFilled : ''}`}>
-      <label className={styles.garageLabel}>{label}</label>
-      <input className={styles.garageInput} value={value} onChange={e => onChange(e.target.value)} />
-    </div>
-  );
-}
-
 export default function MyCards() {
-  const [cards, setCards]         = useState(MOCK_CARDS_INIT);
-  const [page, setPage]           = useState(1);
-  const [showAdd, setShowAdd]     = useState(false);
-  const [toastMsg, setToastMsg]   = useState('');
-  const [toast, setToast]         = useState(false);
-  const [openMenu, setOpenMenu]   = useState(null);
+  const [cards, setCards]           = useState(MOCK_CARDS_INIT);
+  const [page, setPage]             = useState(1);
+  const [showAdd, setShowAdd]       = useState(false);
+  const [toastMsg, setToastMsg]     = useState('');
+  const [toast, setToast]           = useState(false);
+  const [openMenu, setOpenMenu]     = useState(null);
   const [deleteCard, setDeleteCard] = useState(null);
-  const [editCard, setEditCard]   = useState(null);
+  const [editCard, setEditCard]     = useState(null);
 
-  const [cName,    setCName]    = useState('');
-  const [cNumber,  setCNumber]  = useState('');
-  const [cExpiry,  setCExpiry]  = useState('');
-  const [cCvv,     setCCvv]     = useState('');
-  const [cHolder,  setCHolder]  = useState('');
-  const [cPrimary, setCPrimary] = useState(false);
+  const [addPrimary,  setAddPrimary]  = useState(false);
+  const [editPrimary, setEditPrimary] = useState(false);
 
-  const [eName,    setEName]    = useState('');
-  const [eNumber,  setENumber]  = useState('');
-  const [eExpiry,  setEExpiry]  = useState('');
-  const [eCvv,     setECvv]     = useState('');
-  const [eHolder,  setEHolder]  = useState('');
-  const [ePrimary, setEPrimary] = useState(false);
+  const addForm  = useCardForm();
+  const editForm = useCardForm();
 
   const totalPages = Math.max(1, Math.ceil(cards.length / CARDS_PAGE_SIZE));
   const paged = cards.slice((page - 1) * CARDS_PAGE_SIZE, page * CARDS_PAGE_SIZE);
@@ -52,14 +55,15 @@ export default function MyCards() {
   const showToast = (msg) => { setToastMsg(msg); setToast(true); setTimeout(() => setToast(false), 3000); };
 
   const openAdd = () => {
-    setCName(''); setCNumber(''); setCExpiry(''); setCCvv(''); setCHolder(''); setCPrimary(false);
+    addForm.reset({ name: '', number: '', expiry: '', cvv: '', holder: '' });
+    setAddPrimary(false);
     setShowAdd(true);
   };
 
-  const handleAdd = () => {
-    const newCard = { id: Date.now(), name: cName, number: cNumber, expiry: cExpiry, cvv: cCvv, holder: cHolder, primary: cPrimary };
+  const onSubmitAdd = (data) => {
+    const newCard = { id: Date.now(), ...data, primary: addPrimary };
     setCards(prev => {
-      const updated = cPrimary ? prev.map(c => ({ ...c, primary: false })) : prev;
+      const updated = addPrimary ? prev.map(c => ({ ...c, primary: false })) : prev;
       return [newCard, ...updated];
     });
     setShowAdd(false);
@@ -69,15 +73,15 @@ export default function MyCards() {
 
   const openEdit = (card) => {
     setEditCard(card);
-    setEName(card.name); setENumber(card.number); setEExpiry(card.expiry);
-    setECvv(card.cvv); setEHolder(card.holder); setEPrimary(card.primary);
+    editForm.reset({ name: card.name, number: card.number, expiry: card.expiry, cvv: card.cvv, holder: card.holder });
+    setEditPrimary(card.primary);
     setOpenMenu(null);
   };
 
-  const handleEdit = () => {
+  const onSubmitEdit = (data) => {
     setCards(prev => prev.map(c => {
-      if (c.id === editCard.id) return { ...c, name: eName, number: eNumber, expiry: eExpiry, cvv: eCvv, holder: eHolder, primary: ePrimary };
-      if (ePrimary) return { ...c, primary: false };
+      if (c.id === editCard.id) return { ...c, ...data, primary: editPrimary };
+      if (editPrimary) return { ...c, primary: false };
       return c;
     }));
     setEditCard(null);
@@ -95,14 +99,6 @@ export default function MyCards() {
     setOpenMenu(null);
     showToast('Основная карта изменена');
   };
-
-  const canAdd = cName.trim() && cNumber.trim() && cExpiry.trim() && cCvv.trim() && cHolder.trim();
-  const editIsDirty = editCard && (
-    eName !== editCard.name || eNumber !== editCard.number ||
-    eExpiry !== editCard.expiry || eCvv !== editCard.cvv ||
-    eHolder !== editCard.holder || ePrimary !== editCard.primary
-  );
-  const canEdit = editIsDirty && eName.trim() && eNumber.trim() && eExpiry.trim() && eCvv.trim() && eHolder.trim();
 
   return (
     <div className={styles.section}>
@@ -172,29 +168,63 @@ export default function MyCards() {
               <h3 className={styles.addCarModalTitle}>Добавление карты</h3>
               <button className={styles.addCarModalClose} onClick={() => setShowAdd(false)}>✕</button>
             </div>
-            <CardInput label="Наименование карты" value={cName}   onChange={setCName}   />
-            <CardInput label="Номер карты"         value={cNumber} onChange={setCNumber} />
+            <Controller
+              name="name"
+              control={addForm.control}
+              render={({ field }) => (
+                <Input label="Наименование карты" {...field} error={addForm.formState.errors.name?.message} />
+              )}
+            />
+            <Controller
+              name="number"
+              control={addForm.control}
+              render={({ field }) => (
+                <Input label="Номер карты" {...field} error={addForm.formState.errors.number?.message} />
+              )}
+            />
             <div className={styles.cardRow}>
-              <div className={`${styles.cardExpiryWrap} ${cExpiry ? styles.garageFieldFilled : ''}`}>
-                <label className={styles.garageLabel}>Срок действия</label>
-                <input className={styles.garageInput} value={cExpiry} onChange={e => setCExpiry(e.target.value)} placeholder="" />
-                <img src={calendarIco} alt="" className={styles.cardExpiryIco} />
-              </div>
+              <Controller
+                name="expiry"
+                control={addForm.control}
+                render={({ field }) => (
+                  <div className={styles.cardExpiryWrap}>
+                    <div className={`${styles.garageField} ${field.value ? styles.garageFieldFilled : ''}`}>
+                      <label className={styles.garageLabel}>Срок действия</label>
+                      <input className={styles.garageInput} {...field} placeholder="" />
+                      <img src={calendarIco} alt="" className={styles.cardExpiryIco} />
+                    </div>
+                    {addForm.formState.errors.expiry && (
+                      <p className={styles.fieldError}>{addForm.formState.errors.expiry.message}</p>
+                    )}
+                  </div>
+                )}
+              />
               <div className={styles.cardCvvWrap}>
-                <CardInput label="CVV" value={cCvv} onChange={setCCvv} />
+                <Controller
+                  name="cvv"
+                  control={addForm.control}
+                  render={({ field }) => (
+                    <Input label="CVV" {...field} error={addForm.formState.errors.cvv?.message} />
+                  )}
+                />
               </div>
             </div>
-            <CardInput label="Фамилия и имя" value={cHolder} onChange={setCHolder} />
+            <Controller
+              name="holder"
+              control={addForm.control}
+              render={({ field }) => (
+                <Input label="Фамилия и имя" {...field} error={addForm.formState.errors.holder?.message} />
+              )}
+            />
             <div className={styles.cardToggleRow}>
               <span className={styles.cardToggleLabel}>Сделать основной</span>
-              <div className={`${styles.toggle} ${cPrimary ? styles.toggleOn : ''}`} onClick={() => setCPrimary(p => !p)}>
+              <div className={`${styles.toggle} ${addPrimary ? styles.toggleOn : ''}`} onClick={() => setAddPrimary(p => !p)}>
                 <div className={styles.toggleThumb} />
               </div>
             </div>
             <button
-              className={`${styles.addCarSubmit} ${canAdd ? styles.addCarSubmitActive : styles.addCarSubmitDisabled}`}
-              disabled={!canAdd}
-              onClick={handleAdd}
+              className={`${styles.addCarSubmit} ${styles.addCarSubmitActive}`}
+              onClick={addForm.handleSubmit(onSubmitAdd)}
             >Добавить</button>
           </div>
         </div>
@@ -207,29 +237,63 @@ export default function MyCards() {
               <h3 className={styles.addCarModalTitle}>Редактирование карты</h3>
               <button className={styles.addCarModalClose} onClick={() => setEditCard(null)}>✕</button>
             </div>
-            <CardInput label="Наименование карты" value={eName}   onChange={setEName}   />
-            <CardInput label="Номер карты"         value={eNumber} onChange={setENumber} />
+            <Controller
+              name="name"
+              control={editForm.control}
+              render={({ field }) => (
+                <Input label="Наименование карты" {...field} error={editForm.formState.errors.name?.message} />
+              )}
+            />
+            <Controller
+              name="number"
+              control={editForm.control}
+              render={({ field }) => (
+                <Input label="Номер карты" {...field} error={editForm.formState.errors.number?.message} />
+              )}
+            />
             <div className={styles.cardRow}>
-              <div className={`${styles.cardExpiryWrap} ${eExpiry ? styles.garageFieldFilled : ''}`}>
-                <label className={styles.garageLabel}>Срок действия</label>
-                <input className={styles.garageInput} value={eExpiry} onChange={e => setEExpiry(e.target.value)} placeholder="" />
-                <img src={calendarIco} alt="" className={styles.cardExpiryIco} />
-              </div>
+              <Controller
+                name="expiry"
+                control={editForm.control}
+                render={({ field }) => (
+                  <div className={styles.cardExpiryWrap}>
+                    <div className={`${styles.garageField} ${field.value ? styles.garageFieldFilled : ''}`}>
+                      <label className={styles.garageLabel}>Срок действия</label>
+                      <input className={styles.garageInput} {...field} placeholder="" />
+                      <img src={calendarIco} alt="" className={styles.cardExpiryIco} />
+                    </div>
+                    {editForm.formState.errors.expiry && (
+                      <p className={styles.fieldError}>{editForm.formState.errors.expiry.message}</p>
+                    )}
+                  </div>
+                )}
+              />
               <div className={styles.cardCvvWrap}>
-                <CardInput label="CVV" value={eCvv} onChange={setECvv} />
+                <Controller
+                  name="cvv"
+                  control={editForm.control}
+                  render={({ field }) => (
+                    <Input label="CVV" {...field} error={editForm.formState.errors.cvv?.message} />
+                  )}
+                />
               </div>
             </div>
-            <CardInput label="Фамилия и имя" value={eHolder} onChange={setEHolder} />
+            <Controller
+              name="holder"
+              control={editForm.control}
+              render={({ field }) => (
+                <Input label="Фамилия и имя" {...field} error={editForm.formState.errors.holder?.message} />
+              )}
+            />
             <div className={styles.cardToggleRow}>
               <span className={styles.cardToggleLabel}>Сделать основной</span>
-              <div className={`${styles.toggle} ${ePrimary ? styles.toggleOn : ''}`} onClick={() => setEPrimary(p => !p)}>
+              <div className={`${styles.toggle} ${editPrimary ? styles.toggleOn : ''}`} onClick={() => setEditPrimary(p => !p)}>
                 <div className={styles.toggleThumb} />
               </div>
             </div>
             <button
-              className={`${styles.addCarSubmit} ${canEdit ? styles.addCarSubmitActive : styles.addCarSubmitDisabled}`}
-              disabled={!canEdit}
-              onClick={handleEdit}
+              className={`${styles.addCarSubmit} ${styles.addCarSubmitActive}`}
+              onClick={editForm.handleSubmit(onSubmitEdit)}
             >Редактировать</button>
           </div>
         </div>

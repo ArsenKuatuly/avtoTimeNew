@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import styles from './MyData.module.css';
 import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
@@ -5,13 +9,25 @@ import { useProfile } from '../useProfile';
 import deletelogo from '../../../assets/icons/deletelogo.png';
 import galochka   from '../../../assets/icons/galochka.png';
 
+const profileSchema = yup.object({
+  firstName: yup.string().trim().required('Введите имя'),
+});
+
 export default function MyData({ user }) {
   const {
-    firstName, setFirstName,
-    isDirty, saving, saveError, saved,
+    saving, saveError, saved,
     showConfirm, setShowConfirm,
     handleSave, handleDelete,
-  } = useProfile(user);
+  } = useProfile();
+
+  const { control, handleSubmit, formState: { errors, isDirty }, reset, getValues } = useForm({
+    resolver: yupResolver(profileSchema),
+    defaultValues: { firstName: user?.firstName || '' },
+  });
+
+  useEffect(() => {
+    if (saved) reset({ firstName: getValues('firstName') });
+  }, [saved]);
 
   return (
     <div className={styles.section}>
@@ -42,12 +58,18 @@ export default function MyData({ user }) {
       )}
 
       <div className={styles.form}>
-        <Input label="Имя"     value={firstName} onChange={e => setFirstName(e.target.value)} />
+        <Controller
+          name="firstName"
+          control={control}
+          render={({ field }) => (
+            <Input label="Имя" {...field} error={errors.firstName?.message} />
+          )}
+        />
         <Input label="Фамилия" value="(Только для дизайна)" readOnly />
         <Input label="Номер телефона" value={formatPhone(user?.phone)} readOnly />
       </div>
 
-      <Button size="lg" disabled={!isDirty || saving} loading={saving} onClick={handleSave} className={styles.saveBtn}>
+      <Button size="lg" disabled={!isDirty || saving} loading={saving} onClick={handleSubmit(({ firstName }) => handleSave(firstName))} className={styles.saveBtn}>
         Сохранить
       </Button>
 

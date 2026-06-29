@@ -1,5 +1,12 @@
 ﻿.section {}
 
+.fieldError {
+  margin: 4px 0 0 4px;
+  font-family: var(--font-main);
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+}
+
 .sectionHeader {
   display: flex;
   align-items: center;

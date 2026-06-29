@@ -4,18 +4,15 @@ import { useAuth } from '../../providers/AuthContext';
 import { AuthService } from '../../services/AuthService';
 import { useAsync } from '../../hooks/useAsync';
 
-export function useProfile(user) {
+export function useProfile() {
   const { logout } = useAuth();
   const navigate          = useNavigate();
   const { loading: saving, error: saveError, run } = useAsync();
 
-  const [firstName,   setFirstName]   = useState(user?.firstName || '');
   const [saved,       setSaved]       = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const isDirty = firstName !== (user?.firstName || '');
-
-  const handleSave = () =>
+  const handleSave = (firstName) =>
     run(() => AuthService.updateProfile({ first_name: firstName }))
       .then(() => {
         setSaved(true);
@@ -30,8 +27,6 @@ export function useProfile(user) {
   };
 
   return {
-    firstName, setFirstName,
-    isDirty,
     saving, saveError,
     saved,
     showConfirm, setShowConfirm,

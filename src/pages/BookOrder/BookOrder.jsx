@@ -1,11 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './BookOrder.module.css';
-import { Button, Modal } from '../../components/ui';
+import { Button, Input, Modal } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { MONTHS_NOM, DAY_SHORT, formatDateLabel } from '../../utils/formatDate';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
+
+const bookingSchema = yup.object({
+  name:  yup.string().trim().required('Введите имя'),
+  phone: yup.string()
+    .required('Введите номер телефона')
+    .test('phone', 'Введите корректный номер', v => v && v.replace(/\D/g, '').length === 11),
+});
 
 const BASE_URL = 'https://api.services.avtotime.kz';
 
@@ -39,8 +49,14 @@ export default function BookOrder() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
 
-  const [name, setName]       = useState('');
-  const [phone, setPhone]     = useState('');
+  const { control, watch, formState: { errors, isValid } } = useForm({
+    resolver: yupResolver(bookingSchema),
+    defaultValues: { name: '', phone: '' },
+    mode: 'onTouched',
+  });
+  const watchedName  = watch('name');
+  const watchedPhone = watch('phone');
+
   const [pickerDate, setPickerDate] = useState(() => { const d = new Date(); d.setHours(0,0,0,0); return d; });
   const [pickerSlot, setPickerSlot] = useState(null);
   const [weekOffset, setWeekOffset] = useState(0);
@@ -70,16 +86,16 @@ export default function BookOrder() {
       .finally(() => setSlotsLoading(false));
   }, [company?.id, pickerDate]);
 
-  const handlePhone = (e) => {
+  const formatPhone = (e, onChange) => {
     const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
-    if (!digits) { setPhone(''); return; }
+    if (!digits) { onChange(''); return; }
     let d = digits.startsWith('8') || digits.startsWith('7') ? digits.slice(1) : digits;
     let result = '+7';
     if (d.length > 0) result += ' ' + d.slice(0, 3);
     if (d.length >= 3) result += ' ' + d.slice(3, 6);
     if (d.length >= 6) result += ' ' + d.slice(6, 8);
     if (d.length >= 8) result += ' ' + d.slice(8, 10);
-    setPhone(result);
+    onChange(result);
   };
 
   const today = new Date(); today.setHours(0,0,0,0);
@@ -96,7 +112,7 @@ export default function BookOrder() {
     ? formatDateLabel(pickerDate, pickerTime)
     : '';
 
-  const formFilled   = name.trim() && phone.trim() && datetimeDisplay;
+  const formFilled = isValid && datetimeDisplay;
   const carLabel     = company?.car_label || 'KIA Optima/123 sss 01';
   const serviceLabel = selectedActions.map(a => a.name).join(', ') || 'Кузов, салон';
   const dateLabel    = datetimeDisplay || '12 июня, 09:00';
@@ -136,7 +152,7 @@ export default function BookOrder() {
       <div className={styles.smsBox}>
         <h2 className={styles.smsTitle}>Код из SMS</h2>
         <p className={styles.smsSub}>Введите код из SMS отправленный на номер</p>
-        <p className={styles.smsPhone}>{phone || '+7 777 777 77 77'}</p>
+        <p className={styles.smsPhone}>{watchedPhone || '+7 777 777 77 77'}</p>
         <div className={styles.otpRow}>
           {smsDigits.map((d, i) => (
             <input
@@ -230,17 +246,28 @@ export default function BookOrder() {
         <div className={styles.formLeft}>
           <h1 className={styles.formTitle}>Оформление записи</h1>
 
-          <div className={styles.field}>
-            <input className={styles.fieldInput} value={name}
-              onChange={e => setName(e.target.value)} placeholder="Имя" />
-            <label className={styles.fieldLabel}>Имя</label>
-          </div>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field }) => (
+              <Input label="Имя" {...field} error={errors.name?.message} />
+            )}
+          />
 
-          <div className={styles.field}>
-            <input className={styles.fieldInput} value={phone}
-              onChange={handlePhone} placeholder="Номер телефона" />
-            <label className={styles.fieldLabel}>Номер телефона</label>
-          </div>
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field: { onChange, ...field } }) => (
+              <Input
+                label="Номер телефона"
+                {...field}
+                onChange={e => formatPhone(e, onChange)}
+                type="tel"
+                maxLength={16}
+                error={errors.phone?.message}
+              />
+            )}
+          />
 
           <div className={styles.field}>
             <div className={styles.dateWrap} onClick={() => setShowDatePicker(true)}>
@@ -297,7 +324,7 @@ export default function BookOrder() {
         <p className={styles.modalSection}>Детали</p>
         <div className={styles.modalRow}>
           <span className={styles.modalKey}>Имя</span>
-          <span className={styles.modalVal}>{name}</span>
+          <span className={styles.modalVal}>{watchedName}</span>
         </div>
         <div className={styles.modalRow}>
           <span className={styles.modalKey}>Автомойка</span>
