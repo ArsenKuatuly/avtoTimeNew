@@ -1,0 +1,21 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 0 40px;
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 16px;
+}
+
+.text {
+  font-family: var(--font-main);
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: 0;
+}

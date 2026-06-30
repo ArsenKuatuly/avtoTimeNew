@@ -3,13 +3,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styles from './MyCards.module.css';
-import { Input } from '../../../components/ui';
+import { Input, Pagination, Toast, EmptyState, ConfirmDialog, useToast } from '../../../components/ui';
 import { MOCK_CARDS_INIT } from '../../../constants/mockCards';
 import moicards      from '../../../assets/icons/moicards.png';
 import visaIco       from '../../../assets/icons/visa.svg';
 import mastercardIco from '../../../assets/icons/mastercard.svg';
 import deletelogo    from '../../../assets/icons/deletelogo.png';
-import galochka      from '../../../assets/icons/galochka.png';
 import calendarIco   from '../../../assets/icons/iconCalendar.png';
 
 const CARDS_PAGE_SIZE = 6;
@@ -37,11 +36,10 @@ export default function MyCards() {
   const [cards, setCards]           = useState(MOCK_CARDS_INIT);
   const [page, setPage]             = useState(1);
   const [showAdd, setShowAdd]       = useState(false);
-  const [toastMsg, setToastMsg]     = useState('');
-  const [toast, setToast]           = useState(false);
   const [openMenu, setOpenMenu]     = useState(null);
   const [deleteCard, setDeleteCard] = useState(null);
   const [editCard, setEditCard]     = useState(null);
+  const { visible: toast, message: toastMsg, showToast } = useToast();
 
   const [addPrimary,  setAddPrimary]  = useState(false);
   const [editPrimary, setEditPrimary] = useState(false);
@@ -51,8 +49,6 @@ export default function MyCards() {
 
   const totalPages = Math.max(1, Math.ceil(cards.length / CARDS_PAGE_SIZE));
   const paged = cards.slice((page - 1) * CARDS_PAGE_SIZE, page * CARDS_PAGE_SIZE);
-
-  const showToast = (msg) => { setToastMsg(msg); setToast(true); setTimeout(() => setToast(false), 3000); };
 
   const openAdd = () => {
     addForm.reset({ name: '', number: '', expiry: '', cvv: '', holder: '' });
@@ -102,12 +98,7 @@ export default function MyCards() {
 
   return (
     <div className={styles.section}>
-      {toast && (
-        <div className={styles.toast}>
-          <img src={galochka} alt="✓" className={styles.toastCheck} />
-          {toastMsg}
-        </div>
-      )}
+      <Toast message={toastMsg} visible={toast} />
 
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Мои карты</h2>
@@ -115,10 +106,7 @@ export default function MyCards() {
       </div>
 
       {cards.length === 0 ? (
-        <div className={styles.emptyGarage}>
-          <img src={moicards} alt="" className={styles.emptyGarageImg} />
-          <p className={styles.emptyGarageText}>Добавленных карт еще нет</p>
-        </div>
+        <EmptyState icon={moicards} text="Добавленных карт еще нет" />
       ) : (
         <>
           <div className={styles.carGrid}>
@@ -151,13 +139,7 @@ export default function MyCards() {
             ))}
           </div>
 
-          {totalPages > 1 && (
-            <div className={styles.pagination}>
-              <button className={styles.pageBtn} disabled={page === 1} onClick={() => setPage(p => p - 1)}>‹</button>
-              <span className={styles.pageInfo}>{page} из {totalPages}</span>
-              <button className={styles.pageBtn} disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>›</button>
-            </div>
-          )}
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}
 
@@ -299,25 +281,15 @@ export default function MyCards() {
         </div>
       )}
 
-      {deleteCard && (
-        <div className={styles.confirmOverlay} onClick={() => setDeleteCard(null)}>
-          <div className={styles.deleteCarModal} onClick={e => e.stopPropagation()}>
-            <div className={styles.deleteCarTop}>
-              <img src={deletelogo} alt="" className={styles.deleteCarIco} />
-              <div>
-                <h3 className={styles.deleteCarTitle}>Удаление карты</h3>
-                <p className={styles.deleteCarText}>
-                  Вы действительно хотите удалить карту {deleteCard.name} {maskNumber(deleteCard.number)}?
-                </p>
-              </div>
-            </div>
-            <div className={styles.confirmBtns}>
-              <button className={styles.confirmBack} onClick={() => setDeleteCard(null)}>Назад</button>
-              <button className={styles.confirmDelete} onClick={handleDelete}>Удалить</button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={!!deleteCard}
+        icon={deletelogo}
+        title="Удаление карты"
+        message={deleteCard ? `Вы действительно хотите удалить карту ${deleteCard.name} ${maskNumber(deleteCard.number)}?` : ''}
+        cancelLabel="Назад"
+        onConfirm={handleDelete}
+        onCancel={() => setDeleteCard(null)}
+      />
     </div>
   );
 }

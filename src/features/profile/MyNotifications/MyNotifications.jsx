@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './MyNotifications.module.css';
+import { Pagination, EmptyState } from '../../../components/ui';
 import { MOCK_NOTIFS } from '../../../constants/mockNotifications';
 import icoNotif from '../../../assets/icons/uvedomleniya.svg';
 
@@ -29,12 +30,7 @@ export default function MyNotifications() {
     return (
       <div className={styles.section}>
         <h2 className={styles.sectionTitle}>Уведомления</h2>
-        <div className={styles.notifEmpty}>
-          <div className={styles.notifEmptyCircle}>
-            <img src={icoNotif} alt="" className={styles.notifEmptyIco} />
-          </div>
-          <p className={styles.notifEmptyText}>Уведомлений еще нет</p>
-        </div>
+        <EmptyState icon={icoNotif} text="Уведомлений еще нет" />
       </div>
     );
   }
@@ -57,13 +53,7 @@ export default function MyNotifications() {
         )}
       </div>
 
-      {totalPages > 1 && (
-        <div className={styles.pagination}>
-          <button className={styles.pageBtn} disabled={page === 1} onClick={() => setPage(p => p - 1)}>‹</button>
-          <span className={styles.pageInfo}>{page} из {totalPages}</span>
-          <button className={styles.pageBtn} disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>›</button>
-        </div>
-      )}
+      <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>
   );
 }

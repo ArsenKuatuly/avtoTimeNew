@@ -4,6 +4,7 @@ import styles from './MyBookings.module.css';
 import MobileBookingDetail from './MobileBookingDetail';
 import { STATUS_COLOR } from '../../../utils/statusColors';
 import { useBookings } from '../useBookings';
+import { Pagination, EmptyState } from '../../../components/ui';
 import carImg      from '../../../assets/icons/car.svg';
 import zapiseinet  from '../../../assets/icons/zapiseinet.png';
 import mestoIco    from '../../../assets/icons/mesto.png';
@@ -104,13 +105,7 @@ export default function MyBookings({ onBackToProfile }) {
       </div>
 
       {paged.length === 0 ? (
-        <div className={styles.emptyBookings}>
-          <div className={styles.emptyBookingsCircle}>
-            <img src={zapiseinet} alt="" className={styles.emptyBookingsImgSm} />
-          </div>
-          <img src={zapiseinet} alt="Нет записей" className={styles.emptyBookingsImg} />
-          <p className={styles.emptyBookingsText}>Записей еще нет</p>
-        </div>
+        <EmptyState icon={zapiseinet} text="Записей еще нет" />
       ) : (
         <>
           <div className={styles.bookingList}>
@@ -125,13 +120,7 @@ export default function MyBookings({ onBackToProfile }) {
               </Fragment>
             ))}
           </div>
-          {totalPages > 1 && (
-            <div className={styles.pagination}>
-              <button className={styles.pageBtn} disabled={page === 1} onClick={() => setPage(p => p - 1)}>‹</button>
-              <span className={styles.pageInfo}>{page} из {totalPages}</span>
-              <button className={styles.pageBtn} disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>›</button>
-            </div>
-          )}
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}
 

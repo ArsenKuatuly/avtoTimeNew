@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import styles from './MyGarage.module.css';
-import { Button, Input } from '../../../components/ui';
+import { Button, Input, Pagination, Toast, Spinner, EmptyState, ConfirmDialog } from '../../../components/ui';
 import { useGarage } from '../useGarage';
 import { useCarForm } from '../useCarForm';
 import garagenet   from '../../../assets/icons/garagenet.png';
 import errorGarage from '../../../assets/icons/errorGarage.png';
 import deletelogo  from '../../../assets/icons/deletelogo.png';
-import galochka    from '../../../assets/icons/galochka.png';
 
 const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 
@@ -49,12 +48,7 @@ export default function MyGarage() {
 
   return (
     <div className={styles.section}>
-      {toast && (
-        <div className={styles.toast}>
-          <img src={galochka} alt="✓" className={styles.toastCheck} />
-          {toastMsg}
-        </div>
-      )}
+      <Toast message={toastMsg} visible={toast} />
 
       <div className={styles.sectionHeader}>
         <h2 className={styles.sectionTitle}>Мой гараж</h2>
@@ -65,20 +59,11 @@ export default function MyGarage() {
       </div>
 
       {loadingCars ? (
-        <div className={styles.emptyGarage}>
-          <p className={styles.emptyGarageText}>Загрузка...</p>
-        </div>
+        <Spinner />
       ) : fetchError ? (
-        <div className={styles.emptyGarage}>
-          <p className={styles.emptyGarageText}>{fetchError}</p>
-        </div>
+        <EmptyState text={fetchError} />
       ) : cars.length === 0 ? (
-        <div className={styles.emptyGarage}>
-          <span className={styles.emptyGarageIconWrap}>
-            <img src={garagenet} alt="Гараж пуст" className={styles.emptyGarageImg} />
-          </span>
-          <p className={styles.emptyGarageText}>Добавленных авто еще нет</p>
-        </div>
+        <EmptyState icon={garagenet} text="Добавленных авто еще нет" />
       ) : (
         <>
           <div className={styles.carGrid}>
@@ -121,13 +106,7 @@ export default function MyGarage() {
             })}
           </div>
 
-          {totalPages > 1 && (
-            <div className={styles.pagination}>
-              <button className={styles.pageBtn} disabled={page === 1} onClick={() => setPage(p => p - 1)}>‹</button>
-              <span className={styles.pageInfo}>{page} из {totalPages}</span>
-              <button className={styles.pageBtn} disabled={page === totalPages} onClick={() => setPage(p => p + 1)}>›</button>
-            </div>
-          )}
+          <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
         </>
       )}
 
@@ -170,25 +149,14 @@ export default function MyGarage() {
         </div>
       )}
 
-      {deleteCar && (
-        <div className={styles.confirmOverlay} onClick={() => setDeleteCar(null)}>
-          <div className={styles.deleteCarModal} onClick={e => e.stopPropagation()}>
-            <div className={styles.deleteCarTop}>
-              <img src={deletelogo} alt="" className={styles.deleteCarIco} />
-              <div>
-                <h3 className={styles.deleteCarTitle}>Удаление авто</h3>
-                <p className={styles.deleteCarText}>
-                  Вы действительно хотите удалить авто {[deleteCar.model, deleteCar.make].filter(Boolean).join(' ')}/{deleteCar.plate}?
-                </p>
-              </div>
-            </div>
-            <div className={styles.confirmBtns}>
-              <Button variant="secondary" className={styles.confirmBtn} onClick={() => setDeleteCar(null)}>Отмена</Button>
-              <Button className={styles.confirmBtn} onClick={confirmDelete}>Удалить</Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmDialog
+        open={!!deleteCar}
+        icon={deletelogo}
+        title="Удаление авто"
+        message={deleteCar ? `Вы действительно хотите удалить авто ${[deleteCar.model, deleteCar.make].filter(Boolean).join(' ')}/${deleteCar.plate}?` : ''}
+        onConfirm={confirmDelete}
+        onCancel={() => setDeleteCar(null)}
+      />
 
       {mobileActionCar && (
         <div className={styles.mobileSheetOverlay} onClick={() => setMobileActionCar(null)}>

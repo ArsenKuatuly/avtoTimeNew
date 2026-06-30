@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
+import { useToast } from '../../components/ui';
 
 const PAGE_SIZE = 6;
 
@@ -11,9 +12,8 @@ export function useGarage() {
   const [loading,         setLoading]         = useState(true);
   const [fetchError,      setFetchError]      = useState(null);
   const [page,            setPage]            = useState(1);
-  const [toast,           setToast]           = useState(false);
-  const [toastMsg,        setToastMsg]        = useState('');
   const [openMenu,        setOpenMenu]        = useState(null);
+  const { visible: toast, message: toastMsg, showToast } = useToast();
   const [showAdd,         setShowAdd]         = useState(false);
   const [deleteCar,       setDeleteCar]       = useState(null);
   const [mobileActionCar, setMobileActionCar] = useState(null);
@@ -32,12 +32,6 @@ export function useGarage() {
 
   const totalPages = Math.max(1, Math.ceil(cars.length / PAGE_SIZE));
   const paged      = cars.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  const showToast = (msg) => {
-    setToastMsg(msg);
-    setToast(true);
-    setTimeout(() => setToast(false), 3000);
-  };
 
   const openAdd = () => setShowAdd(true);
 
