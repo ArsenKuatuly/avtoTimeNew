@@ -3,7 +3,7 @@ import Hero from '../../features/landing/Hero/Hero';
 import Problems from '../../features/landing/Problems/Problems';
 import Tagline from '../../features/landing/Tagline/Tagline';
 import Features from '../../features/landing/Features/Features';
-import galochka from '../../assets/icons/galochka.png';
+import galochka from '../../assets/icons/galochka.svg';
 import styles from './Home.module.css';
 
 export default function Home() {

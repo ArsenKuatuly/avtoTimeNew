@@ -1,11 +1,11 @@
 import styles from './Hero.module.css';
 
-import herophone   from '../../../assets/icons/herophone.png';
+import herophone   from '../../../assets/icons/heroPhone.png';
 import mobilephone from '../../../assets/icons/mobilePhone.svg';
 import qrcode     from '../../../assets/icons/qr-avto.svg';
 import playmarket from '../../../assets/icons/playMarket.svg';
 import appstore   from '../../../assets/icons/appStore.svg';
-import pautinka   from '../../../assets/icons/pautinka.png';
+import pautinka   from '../../../assets/icons/pautinka.svg';
 
 export default function Hero() {
   return (

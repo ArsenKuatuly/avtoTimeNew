@@ -6,14 +6,14 @@ import { STATUS_COLOR } from '../../../utils/statusColors';
 import { useBookingDetail } from '../useBookingDetail';
 import { ROUTES } from '../../../config/routes.config';
 import carImg   from '../../../assets/icons/car.svg';
-import toright  from '../../../assets/icons/toright.png';
-import galochka from '../../../assets/icons/galochka.png';
-import strechImg        from '../../../assets/icons/strech.png';
+import toright  from '../../../assets/icons/toRight.svg';
+import galochka from '../../../assets/icons/galochka.svg';
+import strechImg        from '../../../assets/icons/strech.svg';
 import yellowStar       from '../../../assets/icons/yellowStar.svg';
-import transparentStar  from '../../../assets/icons/transparentStar.png';
-import icoRect          from '../../../assets/icons/rectangle.png';
-import icoBlueRect      from '../../../assets/icons/blueRectangle.png';
-import icoGalochkaRect  from '../../../assets/icons/galochkaRectangle.png';
+import transparentStar  from '../../../assets/icons/transparentStar.svg';
+import icoRect          from '../../../assets/icons/rectangle.svg';
+import icoBlueRect      from '../../../assets/icons/blueRectangle.svg';
+import icoGalochkaRect  from '../../../assets/icons/galochkaRectangle.svg';
 
 const CANCEL_REASONS = [
   'Изменились планы',

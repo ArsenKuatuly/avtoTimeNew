@@ -5,9 +5,8 @@ import { Button, Input, Select, Pagination, Toast, Spinner, EmptyState, ConfirmD
 import { useGarage } from '../useGarage';
 import { useCarForm } from '../useCarForm';
 import { useCarSelects } from '../useCarSelects';
-import garagenet   from '../../../assets/icons/garagenet.png';
-import errorGarage from '../../../assets/icons/errorGarage.png';
-import deletelogo  from '../../../assets/icons/deletelogo.png';
+import errorGarage from '../../../assets/icons/errorGarage.svg';
+import deletelogo  from '../../../assets/icons/deleteLogo.svg';
 
 const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 
@@ -100,7 +99,7 @@ export default function MyGarage() {
       ) : fetchError ? (
         <EmptyState text={fetchError} />
       ) : cars.length === 0 ? (
-        <EmptyState icon={garagenet} text="Добавленных авто еще нет" />
+        <EmptyState text="Добавленных авто еще нет" />
       ) : (
         <>
           <div className={styles.carGrid}>

@@ -5,11 +5,11 @@ import * as yup from 'yup';
 import styles from './MyCards.module.css';
 import { Input, Pagination, Toast, EmptyState, ConfirmDialog, useToast } from '../../../components/ui';
 import { MOCK_CARDS_INIT } from '../../../constants/mockCards';
-import moicards      from '../../../assets/icons/moicards.png';
+import moicards      from '../../../assets/icons/moicards.svg';
 import visaIco       from '../../../assets/icons/visa.svg';
 import mastercardIco from '../../../assets/icons/mastercard.svg';
-import deletelogo    from '../../../assets/icons/deletelogo.png';
-import calendarIco   from '../../../assets/icons/iconCalendar.png';
+import deletelogo    from '../../../assets/icons/deleteLogo.svg';
+import calendarIco   from '../../../assets/icons/iconCalendar.svg';
 
 const CARDS_PAGE_SIZE = 6;
 

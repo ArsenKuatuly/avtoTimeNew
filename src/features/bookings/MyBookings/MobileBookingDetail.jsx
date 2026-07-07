@@ -3,13 +3,13 @@ import styles from './MyBookings.module.css';
 import { CANCEL_REASONS } from '../../../constants/mockBookings';
 import { STATUS_COLOR } from '../../../utils/statusColors';
 import carImg    from '../../../assets/icons/car.svg';
-import galochka  from '../../../assets/icons/galochka.png';
-import strechImg from '../../../assets/icons/strech.png';
+import galochka  from '../../../assets/icons/galochka.svg';
+import strechImg from '../../../assets/icons/strech.svg';
 import ico2gis   from '../../../assets/icons/2gis.svg';
 import qrcode2   from '../../../assets/icons/qrcode2.png';
 import errorAuth from '../../../assets/icons/errorAuth.svg';
 import yellowStar      from '../../../assets/icons/yellowStar.svg';
-import transparentStar from '../../../assets/icons/transparentStar.png';
+import transparentStar from '../../../assets/icons/transparentStar.svg';
 
 export default function MobileBookingDetail({ booking, onBack }) {
   const [cancelled, setCancelled]             = useState(false);

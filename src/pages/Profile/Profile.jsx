@@ -10,7 +10,7 @@ import MyCards         from '../../features/profile/MyCards/MyCards';
 import MyBonuses, { MobileBonuses } from '../../features/bonuses/MyBonuses/MyBonuses';
 import MyNotifications from '../../features/profile/MyNotifications/MyNotifications';
 import podarok  from '../../assets/icons/podarok.svg';
-import toright  from '../../assets/icons/toright.png';
+import toright  from '../../assets/icons/toRight.svg';
 import icoData      from '../../assets/icons/moidannye.svg';
 import icoWProfile  from '../../assets/icons/wprofile.svg';
 import icoBookings  from '../../assets/icons/moizapisi.svg';
@@ -18,12 +18,12 @@ import icoGarage    from '../../assets/icons/moigarage.svg';
 import icoCards     from '../../assets/icons/moikarty.svg';
 import icoBonuses   from '../../assets/icons/moibonusy.svg';
 import icoNotif     from '../../assets/icons/uvedomleniya.svg';
-import icoDataA     from '../../assets/icons/bmoidannye.png';
-import icoBookingsA from '../../assets/icons/bmoizapisi.png';
-import icoGarageA   from '../../assets/icons/bmoigarage.png';
-import icoCardsA    from '../../assets/icons/bmoikarty.png';
-import icoBonusesA  from '../../assets/icons/bmoibonusy.png';
-import icoNotifA    from '../../assets/icons/buvedomleniya.png';
+import icoDataA     from '../../assets/icons/bmoidannye.svg';
+import icoBookingsA from '../../assets/icons/bmoizapisi.svg';
+import icoGarageA   from '../../assets/icons/bmoigarage.svg';
+import icoCardsA    from '../../assets/icons/bmoikarty.svg';
+import icoBonusesA  from '../../assets/icons/bmoibonusy.svg';
+import icoNotifA    from '../../assets/icons/buvedomleniya.svg';
 
 const MENU = [
   { id: 'data',          label: 'Мои данные',  icon: icoData,     iconActive: icoDataA     },

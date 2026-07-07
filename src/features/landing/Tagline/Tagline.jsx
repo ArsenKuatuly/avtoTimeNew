@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './Tagline.module.css';
 
-import logo   from '../../../assets/icons/logo.png';
-import block1 from '../../../assets/icons/block1.png';
-import block2 from '../../../assets/icons/block2.png';
-import block3 from '../../../assets/icons/block3.png';
+import logo   from '../../../assets/icons/logo.svg';
+import block1 from '../../../assets/icons/block1.svg';
+import block2 from '../../../assets/icons/block2.svg';
+import block3 from '../../../assets/icons/block3.svg';
 
 export default function Tagline() {
   const wrapRef = useRef(null);

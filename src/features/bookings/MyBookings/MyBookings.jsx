@@ -7,9 +7,9 @@ import { useBookings } from '../useBookings';
 import { Pagination, EmptyState } from '../../../components/ui';
 import { bookingDetailPath } from '../../../config/routes.config';
 import carImg      from '../../../assets/icons/car.svg';
-import zapiseinet  from '../../../assets/icons/zapiseinet.png';
+import zapiseinet  from '../../../assets/icons/zapiseinet.svg';
 import mestoIco    from '../../../assets/icons/mesto.png';
-import calendarIco from '../../../assets/icons/iconCalendar.png';
+import calendarIco from '../../../assets/icons/iconCalendar.svg';
 import icoFilter   from '../../../assets/icons/filter.svg';
 
 const STATUS_TABS = ['Все', 'Новый', 'В процессе', 'Завершён', 'Отменён'];

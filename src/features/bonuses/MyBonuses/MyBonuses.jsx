@@ -9,9 +9,9 @@ import blueCalendar    from '../../../assets/icons/blueCalendar.svg';
 import blueInformation from '../../../assets/icons/blueInformation.svg';
 import logoNakopleno   from '../../../assets/icons/logoNakopleno.svg';
 import logoIspolzovano from '../../../assets/icons/logoIspolzovano.svg';
-import icoRect     from '../../../assets/icons/rectangle.png';
-import icoBlueRect from '../../../assets/icons/blueRectangle.png';
-import icoGalRect  from '../../../assets/icons/galochkaRectangle.png';
+import icoRect     from '../../../assets/icons/rectangle.svg';
+import icoBlueRect from '../../../assets/icons/blueRectangle.svg';
+import icoGalRect  from '../../../assets/icons/galochkaRectangle.svg';
 
 const PUNCH_TOTAL = 5;
 const DATE_PERIODS = ['Вчера', 'За неделю', 'За месяц', 'За пол года', 'За период'];

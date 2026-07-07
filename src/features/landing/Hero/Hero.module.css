@@ -133,17 +133,17 @@
   position: absolute;
   bottom: -60px;
   right: -60px;
-  width: 735px;
+  width: 670px;
   object-fit: contain;
   pointer-events: none;
 }
 
 .phone {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: -13px;
+  bottom: -255px;
   z-index: 1;
-  height: 520px;
+  height: 755px;
   object-fit: contain;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
   cursor: pointer;
@@ -159,12 +159,12 @@
   .inner { padding: 48px 60px; }
   .left  { flex: 0 0 460px; }
   .title { font-size: 36px; }
-  .phone { height: 400px; }
+  .phone { height: 615px; bottom: -213px; }
   .pautinka { width: 520px; }
 }
 
 @media (max-width: 940px) {
-  .phone { height: 320px; }
+  .phone { height: 525px; bottom: -178px; }
   .pautinka { width: 445px; }
 }
 
@@ -205,6 +205,7 @@
     transition: none;
     pointer-events: none;
     cursor: default;
+    bottom: 0;
   }
   .phoneMobile:hover {
     transform: none;

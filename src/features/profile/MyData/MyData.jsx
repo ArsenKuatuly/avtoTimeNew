@@ -6,8 +6,8 @@ import styles from './MyData.module.css';
 import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
 import { useProfile } from '../useProfile';
-import deletelogo from '../../../assets/icons/deletelogo.png';
-import galochka   from '../../../assets/icons/galochka.png';
+import deletelogo from '../../../assets/icons/deleteLogo.svg';
+import galochka   from '../../../assets/icons/galochka.svg';
 
 const profileSchema = yup.object({
   firstName: yup.string().trim().required('Введите имя'),

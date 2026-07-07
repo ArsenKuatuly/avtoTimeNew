@@ -6,8 +6,8 @@ import { useAuth } from '../../../providers/AuthContext';
 import styles from './AuthModal.module.css';
 import { Button, Input } from '../../../components/ui';
 import { formatPhone } from '../../../utils/formatPhone';
-import errorAuth from '../../../assets/icons/errorAuth.png';
-import bottomEsc from '../../../assets/icons/bottomEsc.png';
+import errorAuth from '../../../assets/icons/errorAuth.svg';
+import bottomEsc from '../../../assets/icons/bottomEsc.svg';
 
 const nameSchema = yup.object({
   firstName: yup.string().trim().required('Введите имя'),
