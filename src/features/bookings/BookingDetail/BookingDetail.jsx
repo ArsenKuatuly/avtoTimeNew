@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import styles from './BookingDetail.module.css';
 import { Button } from '../../../components/ui';
 import { STATUS_COLOR } from '../../../utils/statusColors';
+import { useBookingDetail } from '../useBookingDetail';
 import carImg   from '../../../assets/icons/car.svg';
 import toright  from '../../../assets/icons/toright.png';
 import galochka from '../../../assets/icons/galochka.png';
@@ -12,33 +13,6 @@ import transparentStar  from '../../../assets/icons/transparentStar.png';
 import icoRect          from '../../../assets/icons/rectangle.png';
 import icoBlueRect      from '../../../assets/icons/blueRectangle.png';
 import icoGalochkaRect  from '../../../assets/icons/galochkaRectangle.png';
-
-const MOCK_BOOKINGS = {
-  '1': { id: '1', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня, 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Новый',      payment: 'Картой онлайн', name: 'Акжол', queueNum: 4, carsBefore: 2 },
-  '2': { id: '2', label: 'Онлайн-запись',    service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня, 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'В процессе', payment: 'Наличными',    name: 'Акжол', queueNum: 2, carsBefore: 0 },
-  '3': { id: '3', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня, 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Завершён',   payment: 'Картой онлайн', name: 'Акжол', queueNum: null, carsBefore: null },
-  '4': { id: '4', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня, 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Отменён',    payment: 'Картой онлайн', name: 'Акжол', queueNum: null, carsBefore: null },
-  '5': { id: '5', label: 'Запись в очередь', service: 'Кузов · Салон · Силикон · Воск', price: '5 000 ₸', date: '12 июня, 09:00', wash: 'Auto-wash', address: 'ул. Ж. Молдагалиева', status: 'Отменён',    payment: 'Наличными',    name: 'Акжол', queueNum: null, carsBefore: null },
-};
-
-const QUEUE_STEPS_BY_STATUS = {
-  'Новый':      [
-    { label: 'Встал в очередь',  sub: null,          time: '10:06', state: 'done'    },
-    { label: 'Начало мойки',     sub: '(Бокс №2)',   time: '10:12', state: 'active'  },
-    { label: 'Завершено',        sub: null,          time: null,    state: 'pending' },
-  ],
-  'В процессе': [
-    { label: 'Встал в очередь',  sub: null,          time: '10:06', state: 'done'   },
-    { label: 'Начало мойки',     sub: '(Бокс №2)',   time: '10:12', state: 'done'   },
-    { label: 'Завершено',        sub: null,          time: null,    state: 'active' },
-  ],
-  'Завершён':   [
-    { label: 'Встал в очередь',  sub: null,          time: '10:06', state: 'done' },
-    { label: 'Начало мойки',     sub: '(Бокс №2)',   time: '10:12', state: 'done' },
-    { label: 'Завершено',        sub: null,          time: '11:05', state: 'done' },
-  ],
-};
-
 
 const CANCEL_REASONS = [
   'Изменились планы',
@@ -51,56 +25,58 @@ const CANCEL_REASONS = [
 export default function BookingDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const booking = MOCK_BOOKINGS[id];
 
-  const [showCancel, setShowCancel] = useState(false);
+  const {
+    loading, error,
+    booking,
+    cancelled, reviewed, toast,
+    handleCancel, handleReview,
+  } = useBookingDetail(id);
+
+  const [showCancel,  setShowCancel]  = useState(false);
   const [showReasons, setShowReasons] = useState(false);
-  const [reason, setReason]         = useState('');
-  const [comment, setComment]       = useState('');
-  const [cancelled, setCancelled]     = useState(false);
-  const [toast, setToast]             = useState(false);
+  const [reason,      setReason]      = useState('');
+  const [comment,     setComment]     = useState('');
 
-  const [showReview, setShowReview]   = useState(false);
-  const [rating, setRating]           = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
-  const [reviewComment, setReviewComment] = useState('');
-  const [reviewed, setReviewed]       = useState(false);
+  const [showReview,     setShowReview]     = useState(false);
+  const [rating,         setRating]         = useState(0);
+  const [hoverRating,    setHoverRating]    = useState(0);
+  const [reviewComment,  setReviewComment]  = useState('');
 
-  if (!booking) {
+  if (loading) {
+    return <div className={styles.notFound}><p>Загрузка...</p></div>;
+  }
+
+  if (error || !booking) {
     return (
       <div className={styles.notFound}>
-        <p>Запись не найдена</p>
+        <p>{error || 'Запись не найдена'}</p>
         <button onClick={() => navigate('/profile')}>← Назад</button>
       </div>
     );
   }
 
-  const { status } = booking;
-  const currentStatus = cancelled ? 'Отменён' : status;
+  const currentStatus = cancelled ? 'Отменён' : booking.status;
   const { bg, color } = STATUS_COLOR[currentStatus] || { bg: '#F3F4F6', color: '#6B7280' };
-  const canCancel = (status === 'Новый' || status === 'В процессе') && !cancelled;
+  const canCancel  = (booking.status === 'Новый' || booking.status === 'В процессе') && !cancelled;
+  const canReview  = currentStatus === 'Завершён';
+  const timeline   = !cancelled ? booking.timeline : null;
 
-  const openCancel = () => { setReason(''); setComment(''); setShowReasons(false); setShowCancel(true); };
+  const openCancel  = () => { setReason(''); setComment(''); setShowReasons(false); setShowCancel(true); };
+  const openReview  = () => { setRating(0); setHoverRating(0); setReviewComment(''); setShowReview(true); };
 
-  const openReview = () => { setRating(0); setHoverRating(0); setReviewComment(''); setShowReview(true); };
+  const handleCancelConfirm = () => {
+    setShowCancel(false);
+    handleCancel(reason);
+  };
 
   const handleReviewSubmit = () => {
     setShowReview(false);
-    setReviewed(true);
-    setToast(true);
-    setTimeout(() => setToast(false), 3000);
+    handleReview(rating, reviewComment);
   };
 
   const RATING_LABELS = ['', 'Ужасно!', 'Плохо', 'Есть замечания', 'Хорошо', 'Превосходно!'];
   const activeRating = hoverRating || rating;
-  const canReview = currentStatus === 'Завершён';
-
-  const handleCancelConfirm = () => {
-    setShowCancel(false);
-    setCancelled(true);
-    setToast(true);
-    setTimeout(() => setToast(false), 3000);
-  };
 
   return (
     <div className={styles.page}>
@@ -175,7 +151,7 @@ export default function BookingDetail() {
             </div>
           </div>
 
-          {QUEUE_STEPS_BY_STATUS[currentStatus] && (
+          {timeline && (
             <div className={styles.queueBlock}>
               {(currentStatus === 'Новый' || currentStatus === 'В процессе') && booking.queueNum !== null && (
                 <div className={styles.queueCountRow}>
@@ -183,19 +159,21 @@ export default function BookingDetail() {
                     <span className={styles.queueCountLabel}>Номер в очереди</span>
                     <span className={styles.queueCountVal}>{booking.queueNum}</span>
                   </div>
-                  <div className={styles.queueCountCard}>
-                    <span className={styles.queueCountLabel}>Перед вами</span>
-                    <span className={styles.queueCountVal} style={{ color: '#006FFD' }}>
-                      {booking.carsBefore} {booking.carsBefore === 1 ? 'машина' : 'машины'}
-                    </span>
-                  </div>
+                  {booking.carsBefore !== null && (
+                    <div className={styles.queueCountCard}>
+                      <span className={styles.queueCountLabel}>Перед вами</span>
+                      <span className={styles.queueCountVal} style={{ color: '#006FFD' }}>
+                        {booking.carsBefore} {booking.carsBefore === 1 ? 'машина' : 'машины'}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
 
               <div className={styles.queueTimeline}>
                 <p className={styles.queueTimelineTitle}>Статус вашей очереди</p>
-                {QUEUE_STEPS_BY_STATUS[currentStatus].map((step, i, arr) => {
-                  const ico = step.state === 'done' ? icoGalochkaRect
+                {timeline.map((step, i, arr) => {
+                  const ico = step.state === 'done'   ? icoGalochkaRect
                             : step.state === 'active' ? icoBlueRect
                             : icoRect;
                   const isLast = i === arr.length - 1;

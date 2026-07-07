@@ -4,9 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './BookOrder.module.css';
-import { Button, Input, Modal } from '../../components/ui';
+import { Button, Input, Modal, Select } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { MONTHS_NOM, DAY_SHORT, formatDateLabel } from '../../utils/formatDate';
+import { useAuth } from '../../providers/AuthContext';
+import { VehicleService } from '../../services/VehicleService';
+import { BookingService } from '../../services/BookingService';
+import { AuthService } from '../../services/AuthService';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
@@ -43,11 +47,28 @@ const groupSlots = (slots) => {
 export default function BookOrder() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
   const { company, selectedActions = [], total = 0 } = location.state || {};
 
   const [step, setStep]               = useState(1);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const [cars,        setCars]        = useState([]);
+  const [carsLoading,  setCarsLoading] = useState(false);
+  const [carId,        setCarId]       = useState('');
+  const [draftId,      setDraftId]     = useState(null);
+  const [submitting,   setSubmitting]  = useState(false);
+  const [submitError,  setSubmitError] = useState('');
+
+  useEffect(() => {
+    if (!user?.id) return;
+    setCarsLoading(true);
+    VehicleService.getByUser(user.id)
+      .then(setCars)
+      .catch(() => setCars([]))
+      .finally(() => setCarsLoading(false));
+  }, [user?.id]);
 
   const { control, watch, formState: { errors, isValid } } = useForm({
     resolver: yupResolver(bookingSchema),
@@ -112,10 +133,64 @@ export default function BookOrder() {
     ? formatDateLabel(pickerDate, pickerTime)
     : '';
 
-  const formFilled = isValid && datetimeDisplay;
-  const carLabel     = company?.car_label || 'KIA Optima/123 sss 01';
+  const formFilled = isValid && datetimeDisplay && !!carId;
+  const carOptions   = cars.map(c => ({ id: c.id, name: [c.model, c.make].filter(Boolean).join(' ') + (c.plate ? ` · ${c.plate}` : '') }));
+  const selectedCar   = cars.find(c => String(c.id) === String(carId));
+  const carLabel      = selectedCar ? `${selectedCar.model} ${selectedCar.make}/${selectedCar.plate}` : 'Выберите авто';
   const serviceLabel = selectedActions.map(a => a.name).join(', ') || 'Кузов, салон';
   const dateLabel    = datetimeDisplay || '12 июня, 09:00';
+
+  const toApiTime  = (t) => t.length === 5 ? `${t}:00` : t;
+  const toApiPhone = (formatted) => formatted.replace(/\D/g, '').slice(1);
+
+  const handleConfirmBooking = async () => {
+    setSubmitError('');
+    setSubmitting(true);
+    try {
+      const draft = await BookingService.createDraft({
+        partnerId:   company?.id,
+        userId:      user?.id,
+        carId,
+        date:        toApiDate(pickerDate),
+        time:        toApiTime(pickerTime),
+        offeringIds: selectedActions.map(a => a.id),
+      });
+      setDraftId(draft?.id || draft?.data?.id);
+      await AuthService.sendCode(toApiPhone(watchedPhone));
+      setShowConfirm(false);
+      setStep(2);
+    } catch {
+      setSubmitError('Не удалось создать запись. Попробуйте ещё раз.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setTimer(59);
+    try { await AuthService.sendCode(toApiPhone(watchedPhone)); } catch {}
+  };
+
+  const handleVerifyCode = async () => {
+    setSubmitError('');
+    setSubmitting(true);
+    try {
+      await AuthService.checkCode(toApiPhone(watchedPhone), smsCode);
+      await BookingService.book(draftId);
+      const checkoutData = await BookingService.checkout(draftId);
+      const payUrl = checkoutData?.payment_url || checkoutData?.url || checkoutData?.redirect_url
+        || checkoutData?.data?.payment_url || checkoutData?.data?.url;
+      if (payUrl) {
+        window.location.href = payUrl;
+      } else {
+        setStep(3);
+      }
+    } catch {
+      setSubmitError('Неверный код или не удалось завершить оплату.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   if (step === 3) return (
     <div className={styles.successPage}>
@@ -168,11 +243,14 @@ export default function BookOrder() {
             />
           ))}
         </div>
-        <Button fullWidth className={styles.actionBtn} disabled={smsCode.length < 4} onClick={() => setStep(3)}>Продолжить</Button>
+        <Button fullWidth className={styles.actionBtn} disabled={smsCode.length < 4 || submitting} onClick={handleVerifyCode}>
+          {submitting ? 'Проверка...' : 'Продолжить'}
+        </Button>
+        {submitError && <p className={styles.smsSub}>{submitError}</p>}
         <p className={styles.smsTimer}>
           {timer > 0
             ? `Отправить код еще раз через 00:${String(timer).padStart(2,'0')}`
-            : <span className={styles.smsResend} onClick={() => setTimer(59)}>Отправить код ещё раз</span>}
+            : <span className={styles.smsResend} onClick={handleResendCode}>Отправить код ещё раз</span>}
         </p>
       </div>
     </div>
@@ -270,6 +348,17 @@ export default function BookOrder() {
           />
 
           <div className={styles.field}>
+            <Select
+              label="Автомобиль"
+              value={carId}
+              onChange={setCarId}
+              options={carOptions}
+              loading={carsLoading}
+              placeholder={cars.length === 0 && !carsLoading ? 'Нет добавленных авто' : '— Выберите авто —'}
+            />
+          </div>
+
+          <div className={styles.field}>
             <div className={styles.dateWrap} onClick={() => setShowDatePicker(true)}>
               <input className={styles.fieldInput} value={datetimeDisplay} readOnly
                 placeholder="Дата и время" />
@@ -353,8 +442,9 @@ export default function BookOrder() {
             <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
           </div>
         </div>
-        <Button fullWidth size="lg" onClick={() => { setShowConfirm(false); setStep(2); }}>
-          Перейти к оплате
+        {submitError && <p className={styles.modalRow}>{submitError}</p>}
+        <Button fullWidth size="lg" disabled={submitting} onClick={handleConfirmBooking}>
+          {submitting ? 'Оформляем...' : 'Перейти к оплате'}
         </Button>
       </Modal>
     </div>

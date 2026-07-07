@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Controller } from 'react-hook-form';
 import styles from './MyGarage.module.css';
-import { Button, Input, Pagination, Toast, Spinner, EmptyState, ConfirmDialog } from '../../../components/ui';
+import { Button, Input, Select, Pagination, Toast, Spinner, EmptyState, ConfirmDialog } from '../../../components/ui';
 import { useGarage } from '../useGarage';
 import { useCarForm } from '../useCarForm';
+import { useCarSelects } from '../useCarSelects';
 import garagenet   from '../../../assets/icons/garagenet.png';
 import errorGarage from '../../../assets/icons/errorGarage.png';
 import deletelogo  from '../../../assets/icons/deletelogo.png';
@@ -12,17 +13,13 @@ const BODY_TYPES = ['Хэтчбек', 'Седан', 'Кроссовер'];
 
 export default function MyGarage() {
   const {
-    cars, loading: loadingCars, fetchError, paged, totalPages,
+    cars, loading: loadingCars, fetchError, saving, paged, totalPages,
     page, setPage,
     toast, toastMsg,
     openMenu, setOpenMenu,
-    showAdd, setShowAdd,
-    openAdd, handleAdd,
-    deleteCar, setDeleteCar,
-    handleDelete, confirmDelete,
-    editCar, setEditCar,
-    openEdit, handleEdit,
-    mobileActionCar, setMobileActionCar,
+    modal, closeModal,
+    openAdd, openEdit, openDelete, openMobile,
+    handleAdd, handleEdit, confirmDelete,
   } = useGarage();
 
   const [addBody,  setAddBody]  = useState('Седан');
@@ -31,20 +28,60 @@ export default function MyGarage() {
   const addForm  = useCarForm();
   const editForm = useCarForm();
 
+  const addSelects  = useCarSelects();
+  const editSelects = useCarSelects();
+
+  const [addError,  setAddError]  = useState('');
+  const [editError, setEditError] = useState('');
+
   const onOpenAdd = () => {
-    addForm.reset({ make: '', model: '', plate: '' });
+    addForm.reset({ plate: '' });
     setAddBody('Седан');
+    addSelects.reset();
+    setAddError('');
     openAdd();
   };
 
   const onOpenEdit = (car) => {
-    editForm.reset({ make: car.make, model: car.model, plate: car.plate });
+    editForm.reset({ plate: car.plate });
     setEditBody(car.body);
+    setEditError('');
+    editSelects.reset();
+    editSelects.init(car.model, car.make);
     openEdit(car);
   };
 
-  const onSubmitAdd = (data) => handleAdd({ ...data, body: addBody });
-  const onSubmitEdit = (data) => handleEdit({ ...data, body: editBody });
+  const onSubmitAdd = (formData) => {
+    if (!addSelects.brandId || !addSelects.seriesId) {
+      setAddError('Выберите марку и модель');
+      return;
+    }
+    setAddError('');
+    handleAdd({
+      model:    addSelects.brandName,
+      make:     addSelects.seriesName,
+      brandId:  addSelects.brandId,
+      seriesId: addSelects.seriesId,
+      plate:    formData.plate,
+      body:     addBody,
+    });
+  };
+
+  const onSubmitEdit = (formData) => {
+    if (!editSelects.brandId || !editSelects.seriesId) {
+      setEditError('Выберите марку и модель');
+      return;
+    }
+    setEditError('');
+    handleEdit({
+      model:    editSelects.brandName,
+      make:     editSelects.seriesName,
+      brandId:  editSelects.brandId,
+      seriesId: editSelects.seriesId,
+      plate:    formData.plate,
+      body:     editBody,
+    });
+  };
 
   return (
     <div className={styles.section}>
@@ -75,7 +112,7 @@ export default function MyGarage() {
                 <div
                   key={car.id}
                   className={`${styles.carCard} ${hasError ? styles.carCardError : ''}`}
-                  onClick={() => { if (openMenu === car.id) { setOpenMenu(null); return; } setMobileActionCar(car); }}
+                  onClick={() => { if (openMenu === car.id) { setOpenMenu(null); return; } openMobile(car); }}
                 >
                   <div className={styles.carCardTop}>
                     <div>
@@ -90,7 +127,7 @@ export default function MyGarage() {
                       {openMenu === car.id && (
                         <div className={styles.carMenuDropdown}>
                           <button className={styles.carMenuItem} onClick={() => onOpenEdit(car)}>Редактировать</button>
-                          <button className={styles.carMenuItemDelete} onClick={() => handleDelete(car)}>Удалить</button>
+                          <button className={styles.carMenuItemDelete} onClick={() => openDelete(car)}>Удалить</button>
                         </div>
                       )}
                     </div>
@@ -110,11 +147,11 @@ export default function MyGarage() {
         </>
       )}
 
-      {showAdd && (
-        <div className={styles.confirmOverlay} onClick={() => setShowAdd(false)}>
+      {modal.type === 'add' && (
+        <div className={styles.confirmOverlay} onClick={closeModal}>
           <div className={styles.addCarModal} onClick={e => e.stopPropagation()}>
             <div className={styles.addCarModalHead}>
-              <button className={styles.addCarModalClose} onClick={() => setShowAdd(false)}>✕</button>
+              <button className={styles.addCarModalClose} onClick={closeModal}>✕</button>
               <h3 className={styles.addCarModalTitle}>Добавление авто</h3>
             </div>
             <p className={styles.addCarLabel}>Тип кузова</p>
@@ -123,57 +160,54 @@ export default function MyGarage() {
                 <button key={t} className={`${styles.bodyChip} ${addBody === t ? styles.bodyChipActive : ''}`} onClick={() => setAddBody(t)}>{t}</button>
               ))}
             </div>
-            <Controller
-              name="make"
-              control={addForm.control}
-              render={({ field }) => (
-                <Input label="Марка" {...field} error={addForm.formState.errors.make?.message} />
-              )}
+            <Select
+              label="Марка"
+              value={addSelects.brandId}
+              options={addSelects.brands}
+              onChange={addSelects.onBrandChange}
             />
-            <Controller
-              name="model"
-              control={addForm.control}
-              render={({ field }) => (
-                <Input label="Модель" {...field} error={addForm.formState.errors.model?.message} />
-              )}
+            <Select
+              label="Модель"
+              value={addSelects.seriesId}
+              options={addSelects.series}
+              loading={addSelects.loadingSeries}
+              disabled={!addSelects.brandId}
+              onChange={addSelects.onSeriesChange}
             />
-            <Controller
-              name="plate"
-              control={addForm.control}
-              render={({ field }) => (
-                <Input label="Гос номер" {...field} error={addForm.formState.errors.plate?.message} />
-              )}
-            />
-            <Button fullWidth onClick={addForm.handleSubmit(onSubmitAdd)}>Добавить</Button>
+            {addError && <p className={styles.fieldError}>{addError}</p>}
+            <Controller name="plate" control={addForm.control} render={({ field }) => (
+              <Input label="Гос номер" {...field} error={addForm.formState.errors.plate?.message} />
+            )} />
+            <Button fullWidth loading={saving} disabled={saving} onClick={addForm.handleSubmit(onSubmitAdd)}>Добавить</Button>
           </div>
         </div>
       )}
 
       <ConfirmDialog
-        open={!!deleteCar}
+        open={modal.type === 'delete'}
         icon={deletelogo}
         title="Удаление авто"
-        message={deleteCar ? `Вы действительно хотите удалить авто ${[deleteCar.model, deleteCar.make].filter(Boolean).join(' ')}/${deleteCar.plate}?` : ''}
+        message={modal.car ? `Вы действительно хотите удалить авто ${[modal.car.model, modal.car.make].filter(Boolean).join(' ')}/${modal.car.plate}?` : ''}
         onConfirm={confirmDelete}
-        onCancel={() => setDeleteCar(null)}
+        onCancel={closeModal}
       />
 
-      {mobileActionCar && (
-        <div className={styles.mobileSheetOverlay} onClick={() => setMobileActionCar(null)}>
+      {modal.type === 'mobile' && (
+        <div className={styles.mobileSheetOverlay} onClick={closeModal}>
           <div className={styles.mobileActionSheet} onClick={e => e.stopPropagation()}>
             <h3 className={styles.mobileActionTitle}>Действие</h3>
-            <button className={styles.mobileActionBtn} onClick={() => { onOpenEdit(mobileActionCar); setMobileActionCar(null); }}>Редактировать</button>
-            <button className={styles.mobileActionBtn} onClick={() => { handleDelete(mobileActionCar); setMobileActionCar(null); }}>Удалить</button>
+            <button className={styles.mobileActionBtn} onClick={() => onOpenEdit(modal.car)}>Редактировать</button>
+            <button className={styles.mobileActionBtn} onClick={() => openDelete(modal.car)}>Удалить</button>
           </div>
         </div>
       )}
 
-      {editCar && (
-        <div className={styles.confirmOverlay} onClick={() => setEditCar(null)}>
+      {modal.type === 'edit' && (
+        <div className={styles.confirmOverlay} onClick={closeModal}>
           <div className={styles.addCarModal} onClick={e => e.stopPropagation()}>
             <div className={styles.addCarModalHead}>
               <h3 className={styles.addCarModalTitle}>Редактирование авто</h3>
-              <button className={styles.addCarModalClose} onClick={() => setEditCar(null)}>✕</button>
+              <button className={styles.addCarModalClose} onClick={closeModal}>✕</button>
             </div>
             <p className={styles.addCarLabel}>Кузов</p>
             <div className={styles.bodyChips}>
@@ -181,28 +215,25 @@ export default function MyGarage() {
                 <button key={t} className={`${styles.bodyChip} ${editBody === t ? styles.bodyChipActive : ''}`} onClick={() => setEditBody(t)}>{t}</button>
               ))}
             </div>
-            <Controller
-              name="model"
-              control={editForm.control}
-              render={({ field }) => (
-                <Input label="Модель" {...field} error={editForm.formState.errors.model?.message} />
-              )}
+            <Select
+              label="Марка"
+              value={editSelects.brandId}
+              options={editSelects.brands}
+              onChange={editSelects.onBrandChange}
             />
-            <Controller
-              name="make"
-              control={editForm.control}
-              render={({ field }) => (
-                <Input label="Марка" {...field} error={editForm.formState.errors.make?.message} />
-              )}
+            <Select
+              label="Модель"
+              value={editSelects.seriesId}
+              options={editSelects.series}
+              loading={editSelects.loadingSeries}
+              disabled={!editSelects.brandId}
+              onChange={editSelects.onSeriesChange}
             />
-            <Controller
-              name="plate"
-              control={editForm.control}
-              render={({ field }) => (
-                <Input label="Гос номер" {...field} error={editForm.formState.errors.plate?.message} />
-              )}
-            />
-            <Button fullWidth onClick={editForm.handleSubmit(onSubmitEdit)}>Редактировать</Button>
+            {editError && <p className={styles.fieldError}>{editError}</p>}
+            <Controller name="plate" control={editForm.control} render={({ field }) => (
+              <Input label="Гос номер" {...field} error={editForm.formState.errors.plate?.message} />
+            )} />
+            <Button fullWidth loading={saving} disabled={saving} onClick={editForm.handleSubmit(onSubmitEdit)}>Редактировать</Button>
           </div>
         </div>
       )}

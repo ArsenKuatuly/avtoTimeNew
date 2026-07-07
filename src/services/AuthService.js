@@ -7,4 +7,5 @@ export const AuthService = {
   refreshToken: (refreshToken) => axiosClassic.get(`/auth/refresh?refresh_token=${refreshToken}`).then(r => r.data),
   getMe:        ()             => axiosWithAuth.get('/users/me').then(r => r.data),
   updateProfile:(data)         => axiosWithAuth.post('/users/update-profile', data).then(r => r.data),
+  deleteAccount: ()            => axiosWithAuth.delete('/users/delete').then(r => r.data),
 };

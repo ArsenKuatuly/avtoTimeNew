@@ -1,5 +1,17 @@
 ﻿.section {}
 
+.loadingText {
+  text-align: center;
+  color: #6B7280;
+  padding: 40px 0;
+}
+
+.errorText {
+  text-align: center;
+  color: #EF4444;
+  padding: 40px 0;
+}
+
 .sectionHeader {
   display: flex;
   align-items: center;

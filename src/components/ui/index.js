@@ -8,3 +8,4 @@ export { useToast } from './Toast/useToast';
 export { default as Spinner } from './Spinner/Spinner';
 export { default as EmptyState } from './EmptyState/EmptyState';
 export { default as ConfirmDialog } from './ConfirmDialog/ConfirmDialog';
+export { default as Select } from './Select/Select';

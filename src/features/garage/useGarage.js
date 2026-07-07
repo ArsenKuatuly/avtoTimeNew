@@ -8,16 +8,14 @@ const PAGE_SIZE = 6;
 export function useGarage() {
   const { user } = useAuth();
 
-  const [cars,            setCars]            = useState([]);
-  const [loading,         setLoading]         = useState(true);
-  const [fetchError,      setFetchError]      = useState(null);
-  const [page,            setPage]            = useState(1);
-  const [openMenu,        setOpenMenu]        = useState(null);
+  const [cars,       setCars]       = useState([]);
+  const [loading,    setLoading]    = useState(true);
+  const [fetchError, setFetchError] = useState(null);
+  const [saving,     setSaving]     = useState(false);
+  const [page,       setPage]       = useState(1);
+  const [openMenu,   setOpenMenu]   = useState(null);
+  const [modal,      setModal]      = useState({ type: null, car: null });
   const { visible: toast, message: toastMsg, showToast } = useToast();
-  const [showAdd,         setShowAdd]         = useState(false);
-  const [deleteCar,       setDeleteCar]       = useState(null);
-  const [mobileActionCar, setMobileActionCar] = useState(null);
-  const [editCar,         setEditCar]         = useState(null);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -33,50 +31,62 @@ export function useGarage() {
   const totalPages = Math.max(1, Math.ceil(cars.length / PAGE_SIZE));
   const paged      = cars.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  const openAdd = () => setShowAdd(true);
+  const closeModal  = ()    => setModal({ type: null, car: null });
+  const openAdd     = ()    => setModal({ type: 'add',    car: null });
+  const openEdit    = (car) => { setModal({ type: 'edit',   car }); setOpenMenu(null); };
+  const openDelete  = (car) => { setModal({ type: 'delete', car }); setOpenMenu(null); };
+  const openMobile  = (car) => setModal({ type: 'mobile', car });
 
-  const handleAdd = (data) => {
-    setCars(prev => [{ id: Date.now(), ...data }, ...prev]);
-    setShowAdd(false);
-    setPage(1);
-    showToast('Авто добавлено');
+  const handleAdd = async (data) => {
+    setSaving(true);
+    try {
+      const created = await VehicleService.create(data, user.id);
+      setCars(prev => [created, ...prev]);
+      closeModal();
+      setPage(1);
+      showToast('Авто добавлено');
+    } catch {
+      showToast('Не удалось добавить авто');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const openEdit = (car) => {
-    setEditCar(car);
-    setOpenMenu(null);
+  const handleEdit = async (data) => {
+    setSaving(true);
+    try {
+      const updated = await VehicleService.update(modal.car.id, data);
+      setCars(prev => prev.map(c => c.id === modal.car.id ? updated : c));
+      closeModal();
+      showToast('Авто отредактировано');
+    } catch {
+      showToast('Не удалось сохранить изменения');
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleEdit = (data) => {
-    setCars(prev => prev.map(c =>
-      c.id === editCar.id ? { ...c, ...data } : c
-    ));
-    setEditCar(null);
-    showToast('Авто отредактировано');
-  };
-
-  const handleDelete = (car) => {
-    setDeleteCar(car);
-    setOpenMenu(null);
-  };
-
-  const confirmDelete = () => {
-    setCars(prev => prev.filter(c => c.id !== deleteCar.id));
-    setDeleteCar(null);
-    showToast('Машина удалена');
+  const confirmDelete = async () => {
+    setSaving(true);
+    try {
+      await VehicleService.delete(modal.car.id);
+      setCars(prev => prev.filter(c => c.id !== modal.car.id));
+      closeModal();
+      showToast('Машина удалена');
+    } catch {
+      showToast('Не удалось удалить авто');
+    } finally {
+      setSaving(false);
+    }
   };
 
   return {
-    cars, loading, fetchError, paged, totalPages,
+    cars, loading, fetchError, saving, paged, totalPages,
     page, setPage,
     toast, toastMsg,
     openMenu, setOpenMenu,
-    showAdd, setShowAdd,
-    openAdd, handleAdd,
-    deleteCar, setDeleteCar,
-    handleDelete, confirmDelete,
-    editCar, setEditCar,
-    openEdit, handleEdit,
-    mobileActionCar, setMobileActionCar,
+    modal, closeModal,
+    openAdd, openEdit, openDelete, openMobile,
+    handleAdd, handleEdit, confirmDelete,
   };
 }

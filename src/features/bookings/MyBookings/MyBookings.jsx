@@ -65,6 +65,7 @@ function MobileBookingCard({ booking }) {
 export default function MyBookings({ onBackToProfile }) {
   const navigate = useNavigate();
   const {
+    loading, error,
     activeFilter,
     filterStatusDraft, setFilterStatusDraft,
     filterPeriodDraft, setFilterPeriodDraft,
@@ -104,7 +105,11 @@ export default function MyBookings({ onBackToProfile }) {
         ))}
       </div>
 
-      {paged.length === 0 ? (
+      {loading ? (
+        <p className={styles.loadingText}>Загрузка...</p>
+      ) : error ? (
+        <p className={styles.errorText}>{error}</p>
+      ) : paged.length === 0 ? (
         <EmptyState icon={zapiseinet} text="Записей еще нет" />
       ) : (
         <>

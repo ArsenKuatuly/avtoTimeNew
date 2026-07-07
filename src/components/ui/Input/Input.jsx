@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Input.module.css';
 
-export default function Input({
+const Input = React.forwardRef(function Input({
   label,
   value,
   onChange,
@@ -10,7 +10,7 @@ export default function Input({
   disabled = false,
   className = '',
   ...rest
-}) {
+}, ref) {
   const filled = String(value ?? '').length > 0;
 
   const wrapCls = [
@@ -26,6 +26,7 @@ export default function Input({
       <div className={wrapCls}>
         {label && <label className={styles.floatLabel}>{label}</label>}
         <input
+          ref={ref}
           className={styles.floatInput}
           type={type}
           value={value}
@@ -37,4 +38,6 @@ export default function Input({
       {error && <p className={styles.errorText}>{error}</p>}
     </div>
   );
-}
+});
+
+export default Input;
