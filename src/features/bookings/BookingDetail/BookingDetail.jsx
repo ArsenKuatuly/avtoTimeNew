@@ -4,6 +4,7 @@ import styles from './BookingDetail.module.css';
 import { Button } from '../../../components/ui';
 import { STATUS_COLOR } from '../../../utils/statusColors';
 import { useBookingDetail } from '../useBookingDetail';
+import { ROUTES } from '../../../config/routes.config';
 import carImg   from '../../../assets/icons/car.svg';
 import toright  from '../../../assets/icons/toright.png';
 import galochka from '../../../assets/icons/galochka.png';
@@ -51,7 +52,7 @@ export default function BookingDetail() {
     return (
       <div className={styles.notFound}>
         <p>{error || 'Запись не найдена'}</p>
-        <button onClick={() => navigate('/profile')}>← Назад</button>
+        <button onClick={() => navigate(ROUTES.profile)}>← Назад</button>
       </div>
     );
   }
@@ -89,7 +90,7 @@ export default function BookingDetail() {
 
       <div className={styles.inner}>
         <div className={styles.navbar}>
-          <button className={styles.backBtn} onClick={() => navigate('/profile')}>
+          <button className={styles.backBtn} onClick={() => navigate(ROUTES.profile)}>
             <span className={styles.backArrow}>‹</span> Назад
           </button>
         </div>

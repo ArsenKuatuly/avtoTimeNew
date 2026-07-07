@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './providers/AuthContext';
+import { Routes, Route } from 'react-router-dom';
+import AppProviders from './providers/AppProviders';
+import { ROUTES } from './config/routes.config';
 import Header from './components/layouts/Header/Header';
 import Footer from './components/layouts/Footer/Footer';
 import AuthModal from './features/auth/AuthModal/AuthModal';
@@ -14,22 +15,20 @@ import Queue from './pages/Queue/Queue';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/partners" element={<Partners />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/booking/:id" element={<BookingDetail />} />
-          <Route path="/book" element={<BookOrder />} />
-          <Route path="/queue" element={<Queue />} />
-        </Routes>
-        <Footer />
-        <AuthModal />
-      </BrowserRouter>
-    </AuthProvider>
+    <AppProviders>
+      <Header />
+      <Routes>
+        <Route path={ROUTES.home} element={<Home />} />
+        <Route path={ROUTES.services} element={<Services />} />
+        <Route path={ROUTES.partners} element={<Partners />} />
+        <Route path={ROUTES.profile} element={<Profile />} />
+        <Route path={ROUTES.bookingDetail} element={<BookingDetail />} />
+        <Route path={ROUTES.book} element={<BookOrder />} />
+        <Route path={ROUTES.queue} element={<Queue />} />
+      </Routes>
+      <Footer />
+      <AuthModal />
+    </AppProviders>
   );
 }
 

@@ -4,6 +4,7 @@ import { formatCurrency } from '../../utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
+import { ROUTES } from '../../config/routes.config';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
 import searchIco   from '../../assets/icons/iconSearch.png';
@@ -721,14 +722,14 @@ export default function Services() {
             </div>
 
             <div className={styles.detailFooter}>
-              <button className={styles.queueBtn} onClick={() => navigate('/queue', { state: { company: selected } })}>Встать в очередь</button>
+              <button className={styles.queueBtn} onClick={() => navigate(ROUTES.queue, { state: { company: selected } })}>Встать в очередь</button>
               <button
                 className={styles.bookBtn}
                 disabled={checkedActions.length === 0}
                 onClick={() => {
                   const selectedActs = actions.filter(a => checkedActions.includes(a.id));
                   const total = selectedActs.reduce((sum, a) => sum + getPrice(a), 0);
-                  navigate('/book', { state: { company: selected, selectedActions: selectedActs, total } });
+                  navigate(ROUTES.book, { state: { company: selected, selectedActions: selectedActs, total } });
                 }}
               >
                 Записаться онлайн

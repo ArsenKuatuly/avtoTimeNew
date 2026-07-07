@@ -5,6 +5,7 @@ import MobileBookingDetail from './MobileBookingDetail';
 import { STATUS_COLOR } from '../../../utils/statusColors';
 import { useBookings } from '../useBookings';
 import { Pagination, EmptyState } from '../../../components/ui';
+import { bookingDetailPath } from '../../../config/routes.config';
 import carImg      from '../../../assets/icons/car.svg';
 import zapiseinet  from '../../../assets/icons/zapiseinet.png';
 import mestoIco    from '../../../assets/icons/mesto.png';
@@ -117,7 +118,7 @@ export default function MyBookings({ onBackToProfile }) {
             {paged.map(booking => (
               <Fragment key={booking.id}>
                 <div className={styles.desktopBookingWrap}>
-                  <BookingCard booking={booking} onClick={() => navigate(`/booking/${booking.id}`)} />
+                  <BookingCard booking={booking} onClick={() => navigate(bookingDetailPath(booking.id))} />
                 </div>
                 <div className={styles.mobileBookingWrap} onClick={() => setSelectedBooking(booking)}>
                   <MobileBookingCard booking={booking} />

@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './Queue.module.css';
 import { Button } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { ROUTES } from '../../config/routes.config';
 import blueCar     from '../../assets/icons/blueCar.svg';
 import yellowCar   from '../../assets/icons/yellowCar.svg';
 import redCar      from '../../assets/icons/redCar.svg';
@@ -111,8 +112,8 @@ export default function Queue() {
         <p className={styles.queueNum}>№ 7</p>
       </div>
       <div className={styles.successBtns}>
-        <Button fullWidth className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</Button>
-        <Button fullWidth onClick={() => navigate('/profile')}>В мои записи</Button>
+        <Button fullWidth className={styles.successBtnGray} onClick={() => navigate(ROUTES.services)}>В автосервисы</Button>
+        <Button fullWidth onClick={() => navigate(ROUTES.profile)}>В мои записи</Button>
       </div>
     </div>
   );

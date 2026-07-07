@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthContext';
 import { AuthService } from '../../services/AuthService';
 import { useAsync } from '../../hooks/useAsync';
+import { ROUTES } from '../../config/routes.config';
 
 export function useProfile() {
   const { logout } = useAuth();
@@ -22,7 +23,7 @@ export function useProfile() {
 
   const handleDelete = () => {
     logout();
-    navigate('/');
+    navigate(ROUTES.home);
     sessionStorage.setItem('accountDeleted', '1');
   };
 

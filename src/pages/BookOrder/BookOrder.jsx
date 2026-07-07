@@ -11,6 +11,7 @@ import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
 import { BookingService } from '../../services/BookingService';
 import { AuthService } from '../../services/AuthService';
+import { ROUTES } from '../../config/routes.config';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
@@ -199,8 +200,8 @@ export default function BookOrder() {
       <p className={styles.successSub}>{company ? `Автомойка ${company.name} ожидает вас:` : 'Ожидает вас:'}</p>
       <p className={styles.successDate}>{dateLabel}</p>
       <div className={styles.successBtns}>
-        <Button variant="ghost" fullWidth className={styles.successBtnGray} onClick={() => navigate('/services')}>В автосервисы</Button>
-        <Button fullWidth onClick={() => navigate('/profile')}>В мои записи</Button>
+        <Button variant="ghost" fullWidth className={styles.successBtnGray} onClick={() => navigate(ROUTES.services)}>В автосервисы</Button>
+        <Button fullWidth onClick={() => navigate(ROUTES.profile)}>В мои записи</Button>
       </div>
     </div>
   );
@@ -318,7 +319,7 @@ export default function BookOrder() {
 
   return (
     <div className={styles.formPage}>
-      <button className={styles.backBtn} onClick={() => navigate('/services')}>‹ назад</button>
+      <button className={styles.backBtn} onClick={() => navigate(ROUTES.services)}>‹ назад</button>
 
       <div className={styles.formLayout}>
         <div className={styles.formLeft}>

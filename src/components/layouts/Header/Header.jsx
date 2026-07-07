@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../../providers/AuthContext';
+import { ROUTES } from '../../../config/routes.config';
 
 import logo           from '../../../assets/icons/logo.svg';
 import insta          from '../../../assets/icons/instaLogo.svg';
@@ -15,9 +16,9 @@ import playmarket     from '../../../assets/icons/playMarket.svg';
 import appstore       from '../../../assets/icons/appStore.svg';
 
 const NAV = [
-  { to: '/',         label: 'Главная'     },
-  { to: '/services', label: 'Автосервисы' },
-  { to: '/partners', label: 'Партнерам'   },
+  { to: ROUTES.home,     label: 'Главная'     },
+  { to: ROUTES.services, label: 'Автосервисы' },
+  { to: ROUTES.partners, label: 'Партнерам'   },
 ];
 
 export default function Header() {
@@ -44,7 +45,7 @@ export default function Header() {
             <img src={burgerbutton} alt="Menu" className={styles.burgerIcon} />
           </button>
 
-          <NavLink to="/" className={styles.logo}>
+          <NavLink to={ROUTES.home} className={styles.logo}>
             <img src={logo} alt="AVTO-TIME" />
           </NavLink>
 
@@ -84,7 +85,7 @@ export default function Header() {
 
             {user ? (
               <div className={styles.authIcons}>
-                <button className={styles.iconBtn} aria-label="Profile" onClick={() => navigate('/profile')}>
+                <button className={styles.iconBtn} aria-label="Profile" onClick={() => navigate(ROUTES.profile)}>
                   <img src={profilelogo} alt="Profile" className={styles.profileIcon} />
                 </button>
                 <button className={styles.iconBtn} onClick={logout} aria-label="Logout">
@@ -104,7 +105,7 @@ export default function Header() {
           <div className={styles.drawer} onClick={e => e.stopPropagation()}>
 
             <div className={styles.drawerHead}>
-              <NavLink to="/" className={styles.drawerLogo} onClick={closeMenu}>
+              <NavLink to={ROUTES.home} className={styles.drawerLogo} onClick={closeMenu}>
                 <img src={logo} alt="AVTO-TIME" className={styles.drawerLogoImg} />
               </NavLink>
               <button className={styles.drawerClose} onClick={closeMenu} aria-label="Close">
@@ -129,7 +130,7 @@ export default function Header() {
             {user ? (
               <button
                 className={styles.drawerProfileBtn}
-                onClick={() => { navigate('/profile'); closeMenu(); }}
+                onClick={() => { navigate(ROUTES.profile); closeMenu(); }}
               >
                 <img src={mobileprofile} alt="" className={styles.drawerProfileIco} />
                 Профиль
