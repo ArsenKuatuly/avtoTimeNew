@@ -58,7 +58,20 @@
   align-items: center;
   gap: 12px;
   padding: 14px 20px;
+  width: 100%;
+  background: none;
+  border: none;
   border-bottom: 1px solid var(--color-separator);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+.giftRow:hover { background: var(--color-background); }
+
+.giftRowActive {
+  border-left-color: var(--color-primary);
+  background: var(--color-primary-light);
 }
 
 .giftIcon {

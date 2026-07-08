@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../../providers/AuthContext';
 import { ROUTES } from '../../../config/routes.config';
+import { GeoService } from '../../../services/GeoService';
 
 import logo           from '../../../assets/icons/logo.svg';
 import insta          from '../../../assets/icons/instaLogo.svg';
 import phone          from '../../../assets/icons/phoneLogo.svg';
 import geo            from '../../../assets/icons/adressLogo.svg';
+import chevron        from '../../../assets/icons/toRight.svg';
 import profilelogo    from '../../../assets/icons/profileLogo.svg';
 import mobileprofile  from '../../../assets/icons/mobileprofile.png';
 import exitlogo       from '../../../assets/icons/exitLogo.svg';
@@ -21,17 +23,58 @@ const NAV = [
   { to: ROUTES.partners, label: 'Партнерам'   },
 ];
 
+const CITY_KEY     = 'avtotime_city';
+const DEFAULT_CITY = { id: null, name: 'Астана' };
+
+const readSavedCity = () => {
+  try {
+    const raw = localStorage.getItem(CITY_KEY);
+    return raw ? JSON.parse(raw) : DEFAULT_CITY;
+  } catch {
+    return DEFAULT_CITY;
+  }
+};
+
 export default function Header() {
   const { user, openLogin, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
 
+  const [cities,       setCities]       = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(false);
+  const [cityOpen,     setCityOpen]     = useState(false);
+  const [selectedCity, setSelectedCity] = useState(readSavedCity);
+  const cityRef = useRef(null);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    setCitiesLoading(true);
+    GeoService.getCities(1)
+      .then(setCities)
+      .catch(() => {})
+      .finally(() => setCitiesLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (!cityOpen) return;
+    const onClickOutside = (e) => {
+      if (cityRef.current && !cityRef.current.contains(e.target)) setCityOpen(false);
+    };
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [cityOpen]);
+
+  const selectCity = (city) => {
+    setSelectedCity(city);
+    localStorage.setItem(CITY_KEY, JSON.stringify(city));
+    setCityOpen(false);
+  };
 
   const openMenu  = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
@@ -78,9 +121,30 @@ export default function Header() {
               </>
             )}
 
-            <div className={styles.contactItem}>
-              <img src={geo} alt="Astana" className={styles.icon} />
-              <span>Астана</span>
+            <div className={styles.cityWrap} ref={cityRef}>
+              <button className={styles.contactItem} onClick={() => setCityOpen(o => !o)}>
+                <img src={geo} alt="" className={styles.icon} />
+                <span>{selectedCity.name}</span>
+                
+              </button>
+
+              {cityOpen && (
+                <div className={styles.cityDropdown}>
+                  {citiesLoading && cities.length === 0 ? (
+                    <p className={styles.cityLoading}>Загрузка...</p>
+                  ) : (
+                    cities.map((city) => (
+                      <button
+                        key={city.id}
+                        className={`${styles.cityItem} ${selectedCity.id === city.id ? styles.cityItemActive : ''}`}
+                        onClick={() => selectCity(city)}
+                      >
+                        {city.name}
+                      </button>
+                    ))
+                  )}
+                </div>
+              )}
             </div>
 
             {user ? (

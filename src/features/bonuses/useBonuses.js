@@ -20,12 +20,12 @@ export function useBonuses(userId) {
       .finally(() => setLoading(false));
   }, [userId]);
 
-  const loadHistory = useCallback(async (p = 1) => {
+  const loadHistory = useCallback(async (p = 1, append = false) => {
     if (!userId) return;
     setHistLoading(true);
     try {
       const res = await BonusService.getHistory(userId, p);
-      setHistory(prev => p === 1 ? res.items : [...prev, ...res.items]);
+      setHistory(prev => append ? [...prev, ...res.items] : res.items);
       setPage(res.currentPage);
       setLastPage(res.lastPage);
       setTotal(res.total);
@@ -41,7 +41,11 @@ export function useBonuses(userId) {
   }, [loadHistory]);
 
   const loadMore = () => {
-    if (page < lastPage && !histLoading) loadHistory(page + 1);
+    if (page < lastPage && !histLoading) loadHistory(page + 1, true);
+  };
+
+  const goToPage = (p) => {
+    if (p >= 1 && p <= lastPage && !histLoading) loadHistory(p, false);
   };
 
   return {
@@ -55,6 +59,7 @@ export function useBonuses(userId) {
     total,
     hasMore: page < lastPage,
     loadMore,
+    goToPage,
     refresh: () => {
       BonusService.get(userId).then(setBonuses).catch(setError);
       loadHistory(1);

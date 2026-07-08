@@ -106,8 +106,67 @@
   color: var(--color-white);
   text-decoration: none;
   white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 .contactLink:hover { opacity: 0.8; }
+
+.cityWrap {
+  position: relative;
+}
+
+.cityChevron {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
+  transform: rotate(90deg);
+  transition: transform 0.15s;
+  opacity: 0.85;
+}
+.cityChevronOpen { transform: rotate(-90deg); }
+
+.cityDropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+  padding: 8px;
+  z-index: 150;
+}
+
+.cityItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cityItem:hover { background: var(--color-background); }
+.cityItemActive { color: var(--color-primary); font-weight: 700; background: var(--color-primary-light); }
+
+.cityLoading {
+  padding: 10px 12px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
 
 .loginBtn {
   height: 42px;
@@ -231,7 +290,7 @@
     margin-right: 0;
   }
 
-  .contactItem      { display: none; }
+  .cityWrap         { display: none; }
   .contactLink span { display: none; }
 
   .loginBtn { display: none; }

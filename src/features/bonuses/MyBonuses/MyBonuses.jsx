@@ -170,6 +170,107 @@ export function MobileBonuses() {
   );
 }
 
+export function DesktopBonuses() {
+  const { user }                             = useAuth();
+  const { history, histLoading, page, lastPage, goToPage } = useBonuses(user?.id);
+
+  const [showPeriodMenu, setShowPeriodMenu] = useState(false);
+  const [selectedPeriod, setSelectedPeriod] = useState(null);
+
+  const grouped = history.reduce((acc, tx) => {
+    if (!acc[tx.dayLabel]) acc[tx.dayLabel] = [];
+    acc[tx.dayLabel].push(tx);
+    return acc;
+  }, {});
+
+  return (
+    <>
+      <main className={styles.desktopBonusesCard}>
+        <h2 className={styles.sectionTitle} style={{ marginBottom: 24 }}>Мои бонусы</h2>
+
+        {histLoading && history.length === 0 ? (
+          <p className={styles.bonusTxDate}>Загрузка...</p>
+        ) : (
+          Object.entries(grouped).map(([date, txs]) => (
+            <div key={date} className={styles.bonusTxGroup}>
+              <p className={styles.bonusTxDate}>{date}</p>
+              <div className={styles.bonusTxCard}>
+                {txs.map((tx, i) => (
+                  <div key={tx.id} className={`${styles.bonusTxRow} ${i < txs.length - 1 ? styles.bonusTxRowBorder : ''}`}>
+                    <div>
+                      <p className={styles.bonusTxName}>{tx.label}</p>
+                      <p className={styles.bonusTxSub}>
+                        {tx.orderPrice != null
+                          ? `Покупка на сумму: ${Number(tx.orderPrice).toLocaleString('ru')} ₸`
+                          : 'Подарочные бонусы'}
+                      </p>
+                    </div>
+                    <span className={tx.bonusCount > 0 ? styles.bonusTxPos : styles.bonusTxNeg}>
+                      {tx.bonusCount > 0 ? '+' : ''}{tx.bonusCount.toLocaleString('ru-RU')} Б
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        )}
+
+        {lastPage > 1 && (
+          <div className={styles.desktopPagination}>
+            <button className={styles.pageArrow} onClick={() => goToPage(page - 1)} disabled={page <= 1 || histLoading}>‹</button>
+            <span className={styles.pageBox}>{page}</span>
+            <span className={styles.pageOf}>из {lastPage}</span>
+            <button className={styles.pageArrow} onClick={() => goToPage(page + 1)} disabled={page >= lastPage || histLoading}>›</button>
+          </div>
+        )}
+      </main>
+
+      <aside className={styles.desktopBonusesAside}>
+        <div className={styles.periodWrap}>
+          <button className={styles.periodButton} onClick={() => setShowPeriodMenu(s => !s)}>
+            <span>{selectedPeriod ? PERIOD_LABEL[selectedPeriod] : 'Период'}</span>
+            <img src={blueCalendar} alt="" className={styles.bonusCalIco} />
+          </button>
+          {showPeriodMenu && (
+            <div className={styles.periodDropdown}>
+              {DATE_PERIODS.map(p => (
+                <div
+                  key={p}
+                  className={styles.cancelReasonItem}
+                  onClick={() => { setSelectedPeriod(p); setShowPeriodMenu(false); }}
+                >
+                  <span className={styles.cancelReasonText}>{p}</span>
+                  {selectedPeriod === p && <span className={styles.cancelReasonCheck}>✓</span>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className={styles.levelsCard}>
+          <div className={styles.levelsTimeline}>
+            {BONUS_LEVELS.map((lvl, idx) => {
+              const ico = lvl.state === 'done' ? icoGalRect : lvl.state === 'current' ? icoBlueRect : icoRect;
+              return (
+                <div key={idx} className={styles.levelsTimelineItem}>
+                  <div className={styles.levelsTimelineLeft}>
+                    <img src={ico} alt="" className={styles.levelStepIco} />
+                    {idx < BONUS_LEVELS.length - 1 && <div className={styles.levelStepLine} />}
+                  </div>
+                  <div className={styles.levelsTimelineRight}>
+                    <p className={styles.levelStepCashback}>{lvl.cashback}</p>
+                    <p className={styles.levelStepLabel}>{lvl.label}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </aside>
+    </>
+  );
+}
+
 export default function MyBonuses() {
   const [detail, setDetail] = useState(null);
 

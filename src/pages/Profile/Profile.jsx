@@ -7,7 +7,7 @@ import MyData          from '../../features/profile/MyData/MyData';
 import MyBookings      from '../../features/bookings/MyBookings/MyBookings';
 import MyGarage        from '../../features/garage/MyGarage/MyGarage';
 import MyCards         from '../../features/profile/MyCards/MyCards';
-import MyBonuses, { MobileBonuses } from '../../features/bonuses/MyBonuses/MyBonuses';
+import MyBonuses, { MobileBonuses, DesktopBonuses } from '../../features/bonuses/MyBonuses/MyBonuses';
 import MyNotifications from '../../features/profile/MyNotifications/MyNotifications';
 import podarok  from '../../assets/icons/podarok.svg';
 import toright  from '../../assets/icons/toRight.svg';
@@ -18,6 +18,9 @@ import icoGarage    from '../../assets/icons/moigarage.svg';
 import icoCards     from '../../assets/icons/moikarty.svg';
 import icoBonuses   from '../../assets/icons/moibonusy.svg';
 import icoNotif     from '../../assets/icons/uvedomleniya.svg';
+import icoWBookings from '../../assets/icons/wmoizpisi.svg';
+import icoWGarage   from '../../assets/icons/wmoigarage.svg';
+import icoWNotif    from '../../assets/icons/wuvedomleniya.svg';
 import icoDataA     from '../../assets/icons/bmoidannye.svg';
 import icoBookingsA from '../../assets/icons/bmoizapisi.svg';
 import icoGarageA   from '../../assets/icons/bmoigarage.svg';
@@ -35,10 +38,10 @@ const MENU = [
 ];
 
 const MOBILE_MENU = [
-  { id: 'data',          label: 'Мои данные',  icon: icoWProfile },
-  { id: 'bookings',      label: 'Мои записи',  icon: icoBookings },
-  { id: 'garage',        label: 'Мой гараж',   icon: icoGarage   },
-  { id: 'notifications', label: 'Уведомления', icon: icoNotif    },
+  { id: 'data',          label: 'Мои данные',  icon: icoWProfile  },
+  { id: 'bookings',      label: 'Мои записи',  icon: icoWBookings },
+  { id: 'garage',        label: 'Мой гараж',   icon: icoWGarage   },
+  { id: 'notifications', label: 'Уведомления', icon: icoWNotif    },
 ];
 
 export default function Profile() {
@@ -59,13 +62,16 @@ export default function Profile() {
               <p className={styles.userPhone}>{formatPhone(user?.phone)}</p>
             </div>
 
-            <div className={styles.giftRow}>
+            <button
+              className={`${styles.giftRow} ${activeTab === 'gift' ? styles.giftRowActive : ''}`}
+              onClick={() => setActiveTab('gift')}
+            >
               <img src={podarok} alt="Подарок" className={styles.giftIcon} />
               <div>
                 <p className={styles.giftTitle}>Мойка в подарок</p>
                 <p className={styles.giftSub}>Как получить?</p>
               </div>
-            </div>
+            </button>
 
             <nav className={styles.menu}>
               {MENU.map(({ id, label, icon, iconActive }) => (
@@ -84,14 +90,18 @@ export default function Profile() {
             </nav>
           </aside>
 
-          <main className={styles.content}>
-            {activeTab === 'data'          && <MyData user={user} />}
-            {activeTab === 'bookings'      && <MyBookings />}
-            {activeTab === 'garage'        && <MyGarage />}
-            {activeTab === 'notifications' && <MyNotifications />}
-            {activeTab === 'bonuses'       && <MyBonuses />}
-            {activeTab === 'cards'         && <MyCards />}
-          </main>
+          {activeTab === 'bonuses' ? (
+            <DesktopBonuses />
+          ) : (
+            <main className={styles.content}>
+              {activeTab === 'data'          && <MyData user={user} />}
+              {activeTab === 'bookings'      && <MyBookings />}
+              {activeTab === 'garage'        && <MyGarage />}
+              {activeTab === 'notifications' && <MyNotifications />}
+              {activeTab === 'gift'          && <MyBonuses />}
+              {activeTab === 'cards'         && <MyCards />}
+            </main>
+          )}
         </div>
 
         <div className={styles.mobileProfile}>
@@ -117,7 +127,7 @@ export default function Profile() {
                 {MOBILE_MENU.map(({ id, label, icon }) => (
                   <button key={id} className={styles.mobileMenuItem} onClick={() => setMobileTab(id)}>
                     <span className={styles.mobileMenuIconWrap}>
-                      {id === 'data' && <img src={icon} alt="" className={styles.mobileMenuIcon} />}
+                      <img src={icon} alt="" className={styles.mobileMenuIcon} />
                     </span>
                     <span className={styles.mobileMenuLabel}>{label}</span>
                   </button>
