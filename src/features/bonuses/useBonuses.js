@@ -16,7 +16,7 @@ export function useBonuses(userId) {
     setLoading(true);
     BonusService.get(userId)
       .then(setBonuses)
-      .catch(setError)
+      .catch(e => setError(e.message || 'Не удалось загрузить бонусы'))
       .finally(() => setLoading(false));
   }, [userId]);
 
@@ -30,7 +30,7 @@ export function useBonuses(userId) {
       setLastPage(res.lastPage);
       setTotal(res.total);
     } catch (e) {
-      setError(e);
+      setError(e.message || 'Не удалось загрузить историю');
     } finally {
       setHistLoading(false);
     }
@@ -61,7 +61,7 @@ export function useBonuses(userId) {
     loadMore,
     goToPage,
     refresh: () => {
-      BonusService.get(userId).then(setBonuses).catch(setError);
+      BonusService.get(userId).then(setBonuses).catch(e => setError(e.message || 'Не удалось загрузить бонусы'));
       loadHistory(1);
     },
   };

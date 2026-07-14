@@ -26,7 +26,7 @@ const PERIOD_LABEL = {
 
 export function MobileBonuses() {
   const { user }                            = useAuth();
-  const { bonuses, history, loading, histLoading, hasMore, loadMore } = useBonuses(user?.id);
+  const { bonuses, history, loading, histLoading, error, hasMore, loadMore } = useBonuses(user?.id);
 
   const [showDateSheet, setShowDateSheet]   = useState(false);
   const [showLevels, setShowLevels]         = useState(false);
@@ -84,7 +84,9 @@ export function MobileBonuses() {
         </div>
       </div>
 
-      {histLoading && history.length === 0 ? (
+      {error ? (
+        <p className={styles.errorText}>{error}</p>
+      ) : histLoading && history.length === 0 ? (
         <p className={styles.bonusTxDate}>Загрузка...</p>
       ) : (
         Object.entries(grouped).map(([date, txs]) => (
@@ -172,7 +174,7 @@ export function MobileBonuses() {
 
 export function DesktopBonuses() {
   const { user }                             = useAuth();
-  const { history, histLoading, page, lastPage, goToPage } = useBonuses(user?.id);
+  const { history, histLoading, error, page, lastPage, goToPage } = useBonuses(user?.id);
 
   const [showPeriodMenu, setShowPeriodMenu] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState(null);
@@ -188,7 +190,9 @@ export function DesktopBonuses() {
       <main className={styles.desktopBonusesCard}>
         <h2 className={styles.sectionTitle} style={{ marginBottom: 24 }}>Мои бонусы</h2>
 
-        {histLoading && history.length === 0 ? (
+        {error ? (
+          <p className={styles.errorText}>{error}</p>
+        ) : histLoading && history.length === 0 ? (
           <p className={styles.bonusTxDate}>Загрузка...</p>
         ) : (
           Object.entries(grouped).map(([date, txs]) => (

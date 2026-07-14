@@ -24,6 +24,17 @@
   flex-shrink: 0;
 }
 
+.toastError {
+  background: var(--color-error, #EF4444);
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
+.cross {
+  font-size: 16px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
 @keyframes slideIn {
   from { transform: translateX(80px); opacity: 0; }
   to   { transform: translateX(0);    opacity: 1; }

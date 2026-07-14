@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './BookingDetail.module.css';
-import { Button } from '../../../components/ui';
+import { Button, Toast } from '../../../components/ui';
 import { STATUS_COLOR } from '../../../utils/statusColors';
 import { useBookingDetail } from '../useBookingDetail';
 import { ROUTES } from '../../../config/routes.config';
 import carImg   from '../../../assets/icons/car.svg';
 import toright  from '../../../assets/icons/toRight.svg';
-import galochka from '../../../assets/icons/galochka.svg';
 import strechImg        from '../../../assets/icons/strech.svg';
 import yellowStar       from '../../../assets/icons/yellowStar.svg';
 import transparentStar  from '../../../assets/icons/transparentStar.svg';
@@ -30,7 +29,7 @@ export default function BookingDetail() {
   const {
     loading, error,
     booking,
-    cancelled, reviewed, toast,
+    cancelled, reviewed, toast, toastError,
     handleCancel, handleReview,
   } = useBookingDetail(id);
 
@@ -81,12 +80,15 @@ export default function BookingDetail() {
 
   return (
     <div className={styles.page}>
-      {toast && (
-        <div className={styles.toast}>
-          <img src={galochka} alt="✓" className={styles.toastIcon} />
-          {reviewed && !cancelled ? 'Отзыв оставлен' : 'Запись отменена'}
-        </div>
-      )}
+      <Toast
+        visible={toast}
+        type={toastError ? 'error' : 'success'}
+        message={
+          toastError
+            ? 'Не удалось выполнить действие'
+            : reviewed && !cancelled ? 'Отзыв оставлен' : 'Запись отменена'
+        }
+      />
 
       <div className={styles.inner}>
         <div className={styles.navbar}>

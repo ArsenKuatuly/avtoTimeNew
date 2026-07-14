@@ -1,5 +1,11 @@
 ﻿.section {}
 
+.errorText {
+  text-align: center;
+  color: var(--color-error, #EF4444);
+  padding: 40px 0;
+}
+
 .sectionTitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
