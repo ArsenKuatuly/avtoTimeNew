@@ -120,24 +120,29 @@ export const BookingService = {
   create: (payload) =>
     axiosWithAuth.post('/bookings', payload).then(r => r.data),
 
-  createDraft: ({ partnerId, userId, carId, date, time, offeringIds }) =>
-    axiosWithAuth.post('/booking/create-draft', null, {
-      params: { partner_id: partnerId, user_id: userId, car_id: carId, date, time, offerings: offeringIds },
+  createDraft: ({ partnerId, userId, carId, date, time, offeringIds, isInner = 0 }) =>
+    axiosWithAuth.post('/booking/create-draft', {
+      partner_id: partnerId, user_id: userId, car_id: carId, date, time, offerings: offeringIds, is_inner: isInner,
     }).then(r => r.data),
 
   createDraftLQ: ({ partnerId, userId, carId, date, offeringIds, isInner = 1 }) =>
-    axiosWithAuth.post('/booking/create-draft-lq', null, {
-      params: { partner_id: partnerId, user_id: userId, car_id: carId, date, offerings: offeringIds, is_inner: isInner },
+    axiosWithAuth.post('/booking/create-draft-lq', {
+      partner_id: partnerId, user_id: userId, car_id: carId, date, offerings: offeringIds, is_inner: isInner,
     }).then(r => r.data),
 
-  book: (draftId) =>
-    axiosWithAuth.post('/booking/book', null, { params: { draft_id: draftId } }).then(r => r.data),
+  book: (draftId, { useBonus = false, paymentMethod = 'kaspi' } = {}) => {
+    const formData = new FormData();
+    formData.append('draft_id', draftId);
+    formData.append('use_bonus', useBonus);
+    formData.append('payment_method', paymentMethod);
+    return axiosWithAuth.post('/booking/book/', formData).then(r => r.data);
+  },
 
   addToQueue: (draftId) =>
-    axiosWithAuth.post('/booking/add-to-queue', null, { params: { draft_id: draftId } }).then(r => r.data),
+    axiosWithAuth.post('/booking/add-to-queue', { draft_id: draftId }).then(r => r.data),
 
   checkout: (draftId) =>
-    axiosWithAuth.get('/booking/checkout', { params: { draft_id: draftId } }).then(r => r.data),
+    axiosWithAuth.get('/booking/checkout', { params: { draftId } }).then(r => r.data),
 
   cancel: (id, reason) =>
     axiosWithAuth.post(`/booking/delete/${id}`, { reason }).then(r => r.data),

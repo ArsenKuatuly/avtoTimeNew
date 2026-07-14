@@ -39,6 +39,8 @@ axiosWithAuth.interceptors.response.use(
         const newToken   = data?.token || data?.access_token || data?.data?.token;
         const newRefresh = data?.refresh_token || data?.data?.refresh_token;
 
+        if (!newToken) throw new Error('No token in refresh response');
+
         localStorage.setItem(TOKEN_KEY, newToken);
         if (newRefresh) localStorage.setItem(REFRESH_KEY, newRefresh);
 

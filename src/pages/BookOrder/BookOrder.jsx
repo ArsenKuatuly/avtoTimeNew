@@ -113,10 +113,14 @@ export default function BookOrder() {
     if (!digits) { onChange(''); return; }
     let d = digits.startsWith('8') || digits.startsWith('7') ? digits.slice(1) : digits;
     let result = '+7';
-    if (d.length > 0) result += ' ' + d.slice(0, 3);
-    if (d.length >= 3) result += ' ' + d.slice(3, 6);
-    if (d.length >= 6) result += ' ' + d.slice(6, 8);
-    if (d.length >= 8) result += ' ' + d.slice(8, 10);
+    const g1 = d.slice(0, 3);
+    const g2 = d.slice(3, 6);
+    const g3 = d.slice(6, 8);
+    const g4 = d.slice(8, 10);
+    if (g1) result += ' ' + g1;
+    if (g2) result += ' ' + g2;
+    if (g3) result += ' ' + g3;
+    if (g4) result += ' ' + g4;
     onChange(result);
   };
 
@@ -135,9 +139,9 @@ export default function BookOrder() {
     : '';
 
   const formFilled = isValid && datetimeDisplay && !!carId;
-  const carOptions   = cars.map(c => ({ id: c.id, name: [c.model, c.make].filter(Boolean).join(' ') + (c.plate ? ` · ${c.plate}` : '') }));
+  const carOptions   = cars.map(c => ({ id: c.id, name: [c.brandName, c.seriesName].filter(Boolean).join(' ') + (c.plate ? ` · ${c.plate}` : '') }));
   const selectedCar   = cars.find(c => String(c.id) === String(carId));
-  const carLabel      = selectedCar ? `${selectedCar.model} ${selectedCar.make}/${selectedCar.plate}` : 'Выберите авто';
+  const carLabel      = selectedCar ? `${selectedCar.brandName} ${selectedCar.seriesName}/${selectedCar.plate}` : 'Выберите авто';
   const serviceLabel = selectedActions.map(a => a.name).join(', ') || 'Кузов, салон';
   const dateLabel    = datetimeDisplay || '12 июня, 09:00';
 
@@ -156,12 +160,12 @@ export default function BookOrder() {
         time:        toApiTime(pickerTime),
         offeringIds: selectedActions.map(a => a.id),
       });
-      setDraftId(draft?.id || draft?.data?.id);
+      setDraftId(draft?.data?.draft_id || draft?.draft_id);
       await AuthService.sendCode(toApiPhone(watchedPhone));
       setShowConfirm(false);
       setStep(2);
-    } catch {
-      setSubmitError('Не удалось создать запись. Попробуйте ещё раз.');
+    } catch (err) {
+      setSubmitError(err.response?.data?.message || 'Не удалось создать запись. Попробуйте ещё раз.');
     } finally {
       setSubmitting(false);
     }
@@ -325,28 +329,32 @@ export default function BookOrder() {
         <div className={styles.formLeft}>
           <h1 className={styles.formTitle}>Оформление записи</h1>
 
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <Input label="Имя" {...field} error={errors.name?.message} />
-            )}
-          />
+          <div className={styles.field}>
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Input label="Имя" {...field} error={errors.name?.message} />
+              )}
+            />
+          </div>
 
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field: { onChange, ...field } }) => (
-              <Input
-                label="Номер телефона"
-                {...field}
-                onChange={e => formatPhone(e, onChange)}
-                type="tel"
-                maxLength={16}
-                error={errors.phone?.message}
-              />
-            )}
-          />
+          <div className={styles.field}>
+            <Controller
+              name="phone"
+              control={control}
+              render={({ field: { onChange, ...field } }) => (
+                <Input
+                  label="Номер телефона"
+                  {...field}
+                  onChange={e => formatPhone(e, onChange)}
+                  type="tel"
+                  maxLength={16}
+                  error={errors.phone?.message}
+                />
+              )}
+            />
+          </div>
 
           <div className={styles.field}>
             <Select
@@ -399,7 +407,7 @@ export default function BookOrder() {
             </div>
             <div className={styles.summaryRow}>
               <span className={styles.summaryKey}>К оплате</span>
-              <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
+              <span className={styles.summaryPrice}>{formatCurrency(total)}</span>
             </div>
           </div>
           <div className={styles.formBtnWrap}>
@@ -440,7 +448,7 @@ export default function BookOrder() {
           </div>
           <div className={styles.modalRow}>
             <span className={styles.modalKey}>К оплате</span>
-            <span className={styles.summaryPrice}>{total ? formatCurrency(total) : '5 000 ₸'}</span>
+            <span className={styles.summaryPrice}>{formatCurrency(total)}</span>
           </div>
         </div>
         {submitError && <p className={styles.modalRow}>{submitError}</p>}

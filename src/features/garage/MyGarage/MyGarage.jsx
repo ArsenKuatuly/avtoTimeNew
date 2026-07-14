@@ -46,7 +46,7 @@ export default function MyGarage() {
     setEditBody(car.body);
     setEditError('');
     editSelects.reset();
-    editSelects.init(car.model, car.make);
+    editSelects.init(car.brandName, car.seriesName);
     openEdit(car);
   };
 
@@ -57,12 +57,12 @@ export default function MyGarage() {
     }
     setAddError('');
     handleAdd({
-      model:    addSelects.brandName,
-      make:     addSelects.seriesName,
-      brandId:  addSelects.brandId,
-      seriesId: addSelects.seriesId,
-      plate:    formData.plate,
-      body:     addBody,
+      brandName:  addSelects.brandName,
+      seriesName: addSelects.seriesName,
+      brandId:    addSelects.brandId,
+      seriesId:   addSelects.seriesId,
+      plate:      formData.plate,
+      body:       addBody,
     });
   };
 
@@ -73,12 +73,12 @@ export default function MyGarage() {
     }
     setEditError('');
     handleEdit({
-      model:    editSelects.brandName,
-      make:     editSelects.seriesName,
-      brandId:  editSelects.brandId,
-      seriesId: editSelects.seriesId,
-      plate:    formData.plate,
-      body:     editBody,
+      brandName:  editSelects.brandName,
+      seriesName: editSelects.seriesName,
+      brandId:    editSelects.brandId,
+      seriesId:   editSelects.seriesId,
+      plate:      formData.plate,
+      body:       editBody,
     });
   };
 
@@ -104,8 +104,8 @@ export default function MyGarage() {
         <>
           <div className={styles.carGrid}>
             {paged.map(car => {
-              const hasError = !car.make;
-              const title = [car.model, car.make].filter(Boolean).join(' ');
+              const hasError = !car.seriesName;
+              const title = [car.brandName, car.seriesName].filter(Boolean).join(' ');
               const sub = `${car.plate}/${car.body.toLowerCase()}`;
               return (
                 <div
@@ -186,7 +186,7 @@ export default function MyGarage() {
         open={modal.type === 'delete'}
         icon={deletelogo}
         title="Удаление авто"
-        message={modal.car ? `Вы действительно хотите удалить авто ${[modal.car.model, modal.car.make].filter(Boolean).join(' ')}/${modal.car.plate}?` : ''}
+        message={modal.car ? `Вы действительно хотите удалить авто ${[modal.car.brandName, modal.car.seriesName].filter(Boolean).join(' ')}/${modal.car.plate}?` : ''}
         onConfirm={confirmDelete}
         onCancel={closeModal}
       />

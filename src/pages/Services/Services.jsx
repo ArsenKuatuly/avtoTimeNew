@@ -72,8 +72,8 @@ export default function Services() {
     VehicleService.getByUser(user.id).then(cars => {
       const normalized = cars.map(c => ({
         id:    c.id,
-        brand: c.model,
-        model: c.make,
+        brand: c.brandName,
+        model: c.seriesName,
         plate: c.plate,
         body:  c.body,
       }));
