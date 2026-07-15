@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../../providers/AuthContext';
 import { ROUTES } from '../../../config/routes.config';
-import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/company.config';
+import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/constants';
 import { GeoService } from '../../../services/GeoService';
 
 import logo           from '../../../assets/icons/logo.svg';

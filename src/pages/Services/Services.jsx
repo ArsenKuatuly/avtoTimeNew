@@ -6,7 +6,7 @@ import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
 import { ROUTES } from '../../config/routes.config';
 import { BASE_URL, IMAGE_BASE } from '../../config/api.config';
-import { SERVICE_TYPES, ASTANA_CENTER } from '../../config/company.config';
+import { SERVICE_TYPES, ASTANA_CENTER } from '../../config/constants';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
 import searchIco   from '../../assets/icons/iconSearch.png';

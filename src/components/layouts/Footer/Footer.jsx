@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
-import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/company.config';
+import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/constants';
 
 import bluelogo   from '../../../assets/icons/blueLogo.svg';
 import blackinsta from '../../../assets/icons/blackInsta.svg';

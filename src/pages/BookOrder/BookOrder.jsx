@@ -13,7 +13,7 @@ import { BookingService } from '../../services/BookingService';
 import { AuthService } from '../../services/AuthService';
 import { ROUTES } from '../../config/routes.config';
 import { BASE_URL } from '../../config/api.config';
-import { COMPANY_PHONE } from '../../config/company.config';
+import { COMPANY_PHONE } from '../../config/constants';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
