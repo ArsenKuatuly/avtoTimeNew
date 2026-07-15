@@ -4,13 +4,13 @@ import styles from './Queue.module.css';
 import { Button } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { ROUTES } from '../../config/routes.config';
+import { BASE_URL } from '../../config/api.config';
 import blueCar     from '../../assets/icons/blueCar.svg';
 import yellowCar   from '../../assets/icons/yellowCar.svg';
 import redCar      from '../../assets/icons/redCar.svg';
 import greenAccess from '../../assets/icons/greenAccess.svg';
 import galochka    from '../../assets/icons/galochka.svg';
 
-const BASE_URL = 'https://api.services.avtotime.kz';
 const MODELS   = ['Toyota Camry', 'Kia Optima', 'BMW 3-Series', 'Mercedes C200', 'Hyundai Sonata', 'Nissan Qashqai'];
 
 const WASHING = [
@@ -58,7 +58,7 @@ export default function Queue() {
     if (!company?.id) return;
     setOfferingsLoading(true);
     setOfferingsError(null);
-    fetch(`${BASE_URL}/api/v1/partner-offerings/list?partner_id=${company.id}`)
+    fetch(`${BASE_URL}/partner-offerings/list?partner_id=${company.id}`)
       .then(r => r.json())
       .then(data => setOfferings(data.data || []))
       .catch(() => setOfferingsError('Не удалось загрузить услуги'))

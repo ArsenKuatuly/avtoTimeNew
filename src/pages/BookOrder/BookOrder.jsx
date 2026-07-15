@@ -12,6 +12,7 @@ import { VehicleService } from '../../services/VehicleService';
 import { BookingService } from '../../services/BookingService';
 import { AuthService } from '../../services/AuthService';
 import { ROUTES } from '../../config/routes.config';
+import { BASE_URL } from '../../config/api.config';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
@@ -21,8 +22,6 @@ const bookingSchema = yup.object({
     .required('Введите номер телефона')
     .test('phone', 'Введите корректный номер', v => v && v.replace(/\D/g, '').length === 11),
 });
-
-const BASE_URL = 'https://api.services.avtotime.kz';
 
 const toApiDate = (d) => {
   const y = d.getFullYear();
@@ -101,7 +100,7 @@ export default function BookOrder() {
     if (!company?.id || !pickerDate) return;
     setSlotsLoading(true);
     setPickerSlot(null);
-    fetch(`${BASE_URL}/api/v1/partners/get-time-slots/${company.id}?date=${toApiDate(pickerDate)}`)
+    fetch(`${BASE_URL}/partners/get-time-slots/${company.id}?date=${toApiDate(pickerDate)}`)
       .then(r => r.json())
       .then(data => setTimeGroups(groupSlots(data?.data || [])))
       .catch(() => setTimeGroups([]))

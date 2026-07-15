@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
 import { ROUTES } from '../../config/routes.config';
+import { BASE_URL, IMAGE_BASE } from '../../config/api.config';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
 import searchIco   from '../../assets/icons/iconSearch.png';
@@ -15,7 +16,6 @@ import blueGalochka   from '../../assets/icons/blueGalochka.svg';
 import mapIcon        from '../../assets/icons/mapIcon.svg';
 import blueMapIcon    from '../../assets/icons/blueMapIcon.svg';
 
-const BASE_URL      = 'https://api.services.avtotime.kz';
 const SERVICE_TYPES = [
   { code: 'carwash',  label: 'Автомойки'   },
   { code: 'oilchange', label: 'Замена масла' },
@@ -100,7 +100,7 @@ export default function Services() {
   useEffect(() => {
     setLoading(true);
     setListError(null);
-    fetch(`${BASE_URL}/api/v1/partners/list?with_profile=true&per_page=100&city_id=1&id_sort=true`)
+    fetch(`${BASE_URL}/partners/list?with_profile=true&per_page=100&city_id=1&id_sort=true`)
       .then(r => r.json())
       .then(data => {
         const list = Array.isArray(data) ? data : (data.data || []);
@@ -126,9 +126,9 @@ export default function Services() {
     setImgIndex(0);
 
     Promise.all([
-      fetch(`${BASE_URL}/api/v1/partner-offerings/list?partner_id=${selected.id}`)
+      fetch(`${BASE_URL}/partner-offerings/list?partner_id=${selected.id}`)
         .then(r => r.json()),
-      fetch(`${BASE_URL}/api/v1/partners/${selected.id}/reviews?page=1&per_page=15`)
+      fetch(`${BASE_URL}/partners/${selected.id}/reviews?page=1&per_page=15`)
         .then(r => r.json()).catch(() => ({ data: { reviews: [] } })),
     ]).then(([actData, revData]) => {
       const acts = actData.data || [];
@@ -239,7 +239,7 @@ export default function Services() {
     );
   };
 
-  const toAbsUrl   = s => !s ? null : s.startsWith('http') ? s : `${BASE_URL}${s}`;
+  const toAbsUrl   = s => !s ? null : s.startsWith('http') ? s : `${IMAGE_BASE}${s}`;
   const getImages  = c => {
     const fromArr = (c.images || []).map(i => toAbsUrl(i?.url || i?.path)).filter(Boolean);
     if (fromArr.length) return fromArr;
