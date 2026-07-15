@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import styles from './MyGarage.module.css';
 import { Button, Input, Select, Pagination, Toast, Spinner, EmptyState, ConfirmDialog } from '../../../components/ui';
@@ -30,53 +30,51 @@ export default function MyGarage() {
   const addSelects  = useCarSelects();
   const editSelects = useCarSelects();
 
-  const [addError,  setAddError]  = useState('');
-  const [editError, setEditError] = useState('');
+  useEffect(() => {
+    addForm.setValue('brandId', addSelects.brandId, { shouldValidate: addForm.formState.isSubmitted });
+  }, [addSelects.brandId]);
+  useEffect(() => {
+    addForm.setValue('seriesId', addSelects.seriesId, { shouldValidate: addForm.formState.isSubmitted });
+  }, [addSelects.seriesId]);
+  useEffect(() => {
+    editForm.setValue('brandId', editSelects.brandId, { shouldValidate: editForm.formState.isSubmitted });
+  }, [editSelects.brandId]);
+  useEffect(() => {
+    editForm.setValue('seriesId', editSelects.seriesId, { shouldValidate: editForm.formState.isSubmitted });
+  }, [editSelects.seriesId]);
 
   const onOpenAdd = () => {
-    addForm.reset({ plate: '' });
+    addForm.reset({ plate: '', brandId: '', seriesId: '' });
     setAddBody('Седан');
     addSelects.reset();
-    setAddError('');
     openAdd();
   };
 
   const onOpenEdit = (car) => {
-    editForm.reset({ plate: car.plate });
+    editForm.reset({ plate: car.plate, brandId: '', seriesId: '' });
     setEditBody(car.body);
-    setEditError('');
     editSelects.reset();
     editSelects.init(car.brandName, car.seriesName);
     openEdit(car);
   };
 
   const onSubmitAdd = (formData) => {
-    if (!addSelects.brandId || !addSelects.seriesId) {
-      setAddError('Выберите марку и модель');
-      return;
-    }
-    setAddError('');
     handleAdd({
       brandName:  addSelects.brandName,
       seriesName: addSelects.seriesName,
-      brandId:    addSelects.brandId,
-      seriesId:   addSelects.seriesId,
+      brandId:    formData.brandId,
+      seriesId:   formData.seriesId,
       plate:      formData.plate,
       body:       addBody,
     });
   };
 
   const onSubmitEdit = (formData) => {
-    if (!editSelects.brandId || !editSelects.seriesId) {
-      setEditError('Выберите марку и модель');
-      return;
-    }
-    setEditError('');
     handleEdit({
       brandName:  editSelects.brandName,
       seriesName: editSelects.seriesName,
-      brandId:    editSelects.brandId,
-      seriesId:   editSelects.seriesId,
+      brandId:    formData.brandId,
+      seriesId:   formData.seriesId,
       plate:      formData.plate,
       body:       editBody,
     });
@@ -173,7 +171,11 @@ export default function MyGarage() {
               disabled={!addSelects.brandId}
               onChange={addSelects.onSeriesChange}
             />
-            {addError && <p className={styles.fieldError}>{addError}</p>}
+            {(addForm.formState.errors.brandId || addForm.formState.errors.seriesId) && (
+              <p className={styles.fieldError}>
+                {addForm.formState.errors.brandId?.message || addForm.formState.errors.seriesId?.message}
+              </p>
+            )}
             <Controller name="plate" control={addForm.control} render={({ field }) => (
               <Input label="Гос номер" {...field} error={addForm.formState.errors.plate?.message} />
             )} />
@@ -228,7 +230,11 @@ export default function MyGarage() {
               disabled={!editSelects.brandId}
               onChange={editSelects.onSeriesChange}
             />
-            {editError && <p className={styles.fieldError}>{editError}</p>}
+            {(editForm.formState.errors.brandId || editForm.formState.errors.seriesId) && (
+              <p className={styles.fieldError}>
+                {editForm.formState.errors.brandId?.message || editForm.formState.errors.seriesId?.message}
+              </p>
+            )}
             <Controller name="plate" control={editForm.control} render={({ field }) => (
               <Input label="Гос номер" {...field} error={editForm.formState.errors.plate?.message} />
             )} />
