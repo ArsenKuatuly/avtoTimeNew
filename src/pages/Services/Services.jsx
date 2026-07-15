@@ -6,6 +6,7 @@ import { useAuth } from '../../providers/AuthContext';
 import { VehicleService } from '../../services/VehicleService';
 import { ROUTES } from '../../config/routes.config';
 import { BASE_URL, IMAGE_BASE } from '../../config/api.config';
+import { SERVICE_TYPES, ASTANA_CENTER } from '../../config/company.config';
 import yellowStar  from '../../assets/icons/yellowStar.svg';
 import mestoIco    from '../../assets/icons/mesto.png';
 import searchIco   from '../../assets/icons/iconSearch.png';
@@ -16,11 +17,6 @@ import blueGalochka   from '../../assets/icons/blueGalochka.svg';
 import mapIcon        from '../../assets/icons/mapIcon.svg';
 import blueMapIcon    from '../../assets/icons/blueMapIcon.svg';
 
-const SERVICE_TYPES = [
-  { code: 'carwash',  label: 'Автомойки'   },
-  { code: 'oilchange', label: 'Замена масла' },
-];
-const ASTANA_CENTER = [51.1801, 71.4460];
 const BODY_TYPES = [
   { code: 'sedan',     label: 'Седан'     },
   { code: 'hatchback', label: 'Хэтчбек'  },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './Footer.module.css';
+import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/company.config';
 
 import bluelogo   from '../../../assets/icons/blueLogo.svg';
 import blackinsta from '../../../assets/icons/blackInsta.svg';
@@ -37,12 +38,12 @@ export default function Footer() {
         </div>
 
         <div className={styles.contacts}>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
             <img src={blackinsta} alt="Instagram" />
           </a>
-          <a href="tel:+77777777777" className={styles.phone}>
+          <a href={`tel:${COMPANY_PHONE_RAW}`} className={styles.phone}>
             <img src={blackphone} alt="" />
-            <span>+7 777 777 77 77</span>
+            <span>{COMPANY_PHONE}</span>
           </a>
         </div>
 

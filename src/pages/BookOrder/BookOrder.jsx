@@ -13,6 +13,7 @@ import { BookingService } from '../../services/BookingService';
 import { AuthService } from '../../services/AuthService';
 import { ROUTES } from '../../config/routes.config';
 import { BASE_URL } from '../../config/api.config';
+import { COMPANY_PHONE } from '../../config/company.config';
 import logoCalendar from '../../assets/icons/logoCalendar.svg';
 import greenAccess  from '../../assets/icons/greenAccess.svg';
 
@@ -231,7 +232,7 @@ export default function BookOrder() {
       <div className={styles.smsBox}>
         <h2 className={styles.smsTitle}>Код из SMS</h2>
         <p className={styles.smsSub}>Введите код из SMS отправленный на номер</p>
-        <p className={styles.smsPhone}>{watchedPhone || '+7 777 777 77 77'}</p>
+        <p className={styles.smsPhone}>{watchedPhone || COMPANY_PHONE}</p>
         <div className={styles.otpRow}>
           {smsDigits.map((d, i) => (
             <input

@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { useAuth } from '../../../providers/AuthContext';
 import { ROUTES } from '../../../config/routes.config';
+import { COMPANY_PHONE, COMPANY_PHONE_RAW, INSTAGRAM_URL } from '../../../config/company.config';
 import { GeoService } from '../../../services/GeoService';
 
 import logo           from '../../../assets/icons/logo.svg';
@@ -110,13 +111,13 @@ export default function Header() {
           <div className={styles.right}>
             {!user && (
               <>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className={`${styles.iconBtn} ${styles.socialIcon}`} aria-label="Instagram">
+                <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className={`${styles.iconBtn} ${styles.socialIcon}`} aria-label="Instagram">
                   <img src={insta} alt="Instagram" className={styles.icon} />
                 </a>
 
-                <a href="tel:+77777777777" className={`${styles.contactLink} ${styles.socialIcon}`}>
+                <a href={`tel:${COMPANY_PHONE_RAW}`} className={`${styles.contactLink} ${styles.socialIcon}`}>
                   <img src={phone} alt="Phone" className={styles.icon} />
-                  <span>+7 777 777 77 77</span>
+                  <span>{COMPANY_PHONE}</span>
                 </a>
               </>
             )}
@@ -216,11 +217,11 @@ export default function Header() {
               <a href="#"><img src={appstore} alt="App Store" className={styles.drawerBadgeImg} /></a>
             </div>
 
-            <a href="tel:+77777777777" className={styles.drawerContact}>
+            <a href={`tel:${COMPANY_PHONE_RAW}`} className={styles.drawerContact}>
               <img src={phone} alt="" className={styles.icon} />
-              <span>+7 777 777 77 77</span>
+              <span>{COMPANY_PHONE}</span>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.drawerContact}>
+            <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer" className={styles.drawerContact}>
               <img src={insta} alt="Instagram" className={styles.icon} />
             </a>
 
