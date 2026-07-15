@@ -5,6 +5,7 @@ import { Button } from '../../components/ui';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { ROUTES } from '../../config/routes.config';
 import { BASE_URL } from '../../config/api.config';
+import { usePhoneFormat } from '../../hooks/usePhoneFormat';
 import blueCar     from '../../assets/icons/blueCar.svg';
 import yellowCar   from '../../assets/icons/yellowCar.svg';
 import redCar      from '../../assets/icons/redCar.svg';
@@ -65,17 +66,7 @@ export default function Queue() {
       .finally(() => setOfferingsLoading(false));
   }, [company?.id]);
 
-  const handlePhone = (e) => {
-    const digits = e.target.value.replace(/\D/g, '').slice(0, 11);
-    if (!digits) { setPhone(''); return; }
-    let d = digits.startsWith('8') || digits.startsWith('7') ? digits.slice(1) : digits;
-    let r = '+7';
-    if (d.length > 0) r += ' ' + d.slice(0, 3);
-    if (d.length >= 3) r += ' ' + d.slice(3, 6);
-    if (d.length >= 6) r += ' ' + d.slice(6, 8);
-    if (d.length >= 8) r += ' ' + d.slice(8, 10);
-    setPhone(r);
-  };
+  const handlePhone = usePhoneFormat(setPhone);
 
   const openServicesModal = () => {
     setTempIds(selectedOfferings.map(o => o.id));
