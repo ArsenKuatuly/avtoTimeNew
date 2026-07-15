@@ -13,20 +13,20 @@ const nameSchema = yup.object({
   firstName: yup.string().trim().required('Введите имя'),
 });
 
+const phoneSchema = yup.object({
+  phone: yup.string()
+    .test('phone', 'Введите корректный номер', v => v && v.replace(/\D/g, '').length === 11),
+});
+
 function PhoneStep() {
   const { submitPhone, closeModal, loading, error } = useAuth();
-  const [value, setValue] = useState('');
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(phoneSchema),
+    defaultValues: { phone: '' },
+    mode: 'onTouched',
+  });
 
-  const handleChange = (e) => {
-    const allDigits = e.target.value.replace(/\D/g, '');
-    const local = allDigits.length > 1 && allDigits.startsWith('7')
-      ? allDigits.slice(1)
-      : allDigits;
-    setValue(local.length > 0 ? formatPhone(local) : '');
-  };
-
-  const digits = value.replace(/\D/g, '');
-  const isReady = digits.length === 11;
+  const onSubmit = ({ phone }) => submitPhone(phone);
 
   return (
     <div className={styles.modal}>
@@ -35,12 +35,25 @@ function PhoneStep() {
       </button>
       <h2 className={styles.title}>Войти</h2>
 
-      <Input
-        label="Номер телефона"
-        value={value}
-        onChange={handleChange}
-        type="tel"
-        maxLength={16}
+      <Controller
+        name="phone"
+        control={control}
+        render={({ field: { onChange, ...field } }) => (
+          <Input
+            label="Номер телефона"
+            {...field}
+            onChange={e => {
+              const allDigits = e.target.value.replace(/\D/g, '');
+              const local = allDigits.length > 1 && allDigits.startsWith('7')
+                ? allDigits.slice(1)
+                : allDigits;
+              onChange(local.length > 0 ? formatPhone(local) : '');
+            }}
+            type="tel"
+            maxLength={16}
+            error={errors.phone?.message}
+          />
+        )}
       />
 
       {error && (
@@ -50,7 +63,7 @@ function PhoneStep() {
         </div>
       )}
 
-      <Button fullWidth size="lg" loading={loading} disabled={!isReady} onClick={() => submitPhone(value)}>
+      <Button fullWidth size="lg" loading={loading} onClick={handleSubmit(onSubmit)}>
         {loading ? 'Отправка...' : 'Продолжить'}
       </Button>
     </div>
